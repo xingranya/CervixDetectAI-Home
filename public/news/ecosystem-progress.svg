@@ -1,0 +1,21 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="40" fill="#FAFAFA"/>
+  <circle cx="970" cy="138" r="168" fill="#0052FF" fill-opacity="0.08"/>
+  <rect x="100" y="112" width="1000" height="496" rx="38" fill="#0F172A"/>
+  <rect x="156" y="166" width="298" height="22" rx="11" fill="white" fill-opacity="0.82"/>
+  <rect x="156" y="206" width="198" height="18" rx="9" fill="white" fill-opacity="0.3"/>
+  <rect x="156" y="282" width="196" height="252" rx="28" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.1"/>
+  <rect x="392" y="282" width="196" height="252" rx="28" fill="url(#paint0_linear_4_2)"/>
+  <rect x="628" y="282" width="196" height="252" rx="28" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.1"/>
+  <rect x="864" y="282" width="196" height="252" rx="28" fill="white" fill-opacity="0.06" stroke="white" stroke-opacity="0.1"/>
+  <text x="176" y="332" fill="white" fill-opacity="0.78" font-size="28" font-family="Arial, sans-serif">P1</text>
+  <text x="412" y="332" fill="white" font-size="28" font-family="Arial, sans-serif">P2</text>
+  <text x="648" y="332" fill="white" fill-opacity="0.78" font-size="28" font-family="Arial, sans-serif">P3</text>
+  <text x="884" y="332" fill="white" fill-opacity="0.78" font-size="28" font-family="Arial, sans-serif">P4</text>
+  <defs>
+    <linearGradient id="paint0_linear_4_2" x1="392" y1="282" x2="588" y2="534" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0052FF"/>
+      <stop offset="1" stop-color="#4D7CFF"/>
+    </linearGradient>
+  </defs>
+</svg>

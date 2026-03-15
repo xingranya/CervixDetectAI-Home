@@ -1,0 +1,40 @@
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+  --muted: #f3f4f6;
+  --muted-foreground: #4b5563;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --accent: #3b82f6;
+  --accent-strong: #2563eb;
+  --accent-secondary: #3b82f6;
+  --secondary: #10b981;
+  --accent-warm: #f59e0b;
+  --accent-foreground: #ffffff;
+  --dark: #111827;
+  --dark-soft: #1e293b;
+  --ring: rgba(59, 130, 246, 0.34);
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-accent: none;
+  --shadow-accent-lg: none;
+  --surface-blue: #eaf2ff;
+  --surface-blue-strong: #cfe0ff;
+  --surface-green: #eaf7f2;
+  --surface-amber: #fff4df;
+  --surface-dark: #1f2937;
+  --surface-slate: #f7f9fc;
+  --container-width: min(1280px, calc(100vw - 40px));
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --section-spacing: clamp(84px, 9vw, 132px);
+  --font-body: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-brand: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --hero-grid:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px);
+}
