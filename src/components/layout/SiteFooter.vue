@@ -4,6 +4,7 @@ import { siteConfig } from '@/config/site';
 
 <template>
   <footer class="site-footer">
+    <div class="site-footer__bg-pattern"></div>
     <div class="container site-footer__inner">
       <div class="site-footer__brand-block">
         <div class="site-footer__brand">CervixDetectAI</div>
@@ -26,7 +27,7 @@ import { siteConfig } from '@/config/site';
         </div>
       </div>
       <div class="site-footer__filing">
-        <span>© 2026 CervixDetectAI</span>
+        <span>&copy; 2026 CervixDetectAI</span>
         <span>{{ siteConfig.filingNumber }}</span>
       </div>
     </div>
@@ -35,12 +36,34 @@ import { siteConfig } from '@/config/site';
 
 <style scoped>
 .site-footer {
+  position: relative;
   padding: 52px 0 56px;
   color: white;
-  background: var(--dark);
+  background: var(--dark-soft);
+  overflow: hidden;
+}
+
+.site-footer__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.site-footer__bg-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
 }
 
 .site-footer__inner {
+  position: relative;
   display: grid;
   gap: 28px;
 }
@@ -78,8 +101,35 @@ import { siteConfig } from '@/config/site';
 }
 
 .site-footer__links a {
+  position: relative;
   display: inline-flex;
   font-weight: 700;
+  transition:
+    color 0.2s var(--ease-smooth),
+    transform 0.2s var(--ease-spring);
+}
+
+.site-footer__links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-spring);
+}
+
+.site-footer__links a:hover {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.site-footer__links a:hover::after {
+  transform: scaleX(1);
 }
 
 .site-footer__filing {
@@ -88,6 +138,8 @@ import { siteConfig } from '@/config/site';
   gap: 12px 18px;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.95rem;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 760px) {

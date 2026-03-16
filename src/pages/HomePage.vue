@@ -255,7 +255,29 @@ const scenarioCards = [
 <style scoped>
 .home-hero {
   padding: 0;
-  background: var(--accent);
+  background: var(--gradient-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(30, 64, 175, 0.2) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.home-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
 }
 
 .home-hero__grid {
@@ -325,10 +347,35 @@ const scenarioCards = [
 }
 
 .home-fact {
+  position: relative;
   min-height: 124px;
   padding: 18px 18px 20px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition:
+    transform 0.3s var(--ease-spring),
+    background-color 0.3s var(--ease-smooth);
+  overflow: hidden;
+}
+
+.home-fact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(20%, -20%);
+}
+
+.home-fact:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .home-fact__label {
@@ -383,6 +430,7 @@ const scenarioCards = [
 .metrics-section {
   background:
     radial-gradient(circle at 14% 18%, rgba(59, 130, 246, 0.08), transparent 16%),
+    radial-gradient(circle at 86% 82%, rgba(59, 130, 246, 0.05), transparent 16%),
     linear-gradient(180deg, #f7faff 0%, #eef5ff 100%);
 }
 
@@ -440,6 +488,17 @@ const scenarioCards = [
   border-radius: var(--radius-lg);
   border: 1px solid rgba(59, 130, 246, 0.08);
   background: white;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s var(--ease-smooth),
+    border-color 0.3s var(--ease-smooth);
+}
+
+.scenario-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 
 .scenario-card h3 {
@@ -547,9 +606,22 @@ const scenarioCards = [
 }
 
 .contact-banner {
+  position: relative;
   padding: clamp(30px, 5vw, 46px);
   border-radius: 20px;
-  background: var(--accent);
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-accent-lg);
+  overflow: hidden;
+}
+
+.contact-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(37, 99, 235, 0.2) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .contact-banner__title {

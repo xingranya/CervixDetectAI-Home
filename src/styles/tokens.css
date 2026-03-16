@@ -14,11 +14,30 @@
   --dark: #111827;
   --dark-soft: #1e293b;
   --ring: rgba(59, 130, 246, 0.34);
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
-  --shadow-accent: none;
-  --shadow-accent-lg: none;
+
+  /* Enhanced Shadow System */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.16);
+  --shadow-accent: 0 4px 20px rgba(59, 130, 246, 0.15);
+  --shadow-accent-lg: 0 12px 40px rgba(59, 130, 246, 0.2);
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.2);
+  --shadow-glow-sm: 0 0 20px rgba(59, 130, 246, 0.15);
+
+  /* Glass Morphism */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg-dark: rgba(17, 24, 39, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(12px);
+
+  /* Enhanced Gradients */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --gradient-accent: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  --gradient-dark: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%);
+  --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.04) 100%);
+
   --surface-blue: #eaf2ff;
   --surface-blue-strong: #cfe0ff;
   --surface-green: #eaf7f2;
@@ -30,10 +49,18 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --section-spacing: clamp(84px, 9vw, 132px);
+
+  /* Typography */
   --font-body: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-display: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-brand: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'Outfit', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* Animation Timing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
   --hero-grid:
     linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px),
     linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px);

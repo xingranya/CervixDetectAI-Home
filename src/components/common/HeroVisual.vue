@@ -1,7 +1,10 @@
 <template>
   <div class="hero-visual">
-    <div class="hero-visual__shape hero-visual__shape--blue"></div>
-    <div class="hero-visual__shape hero-visual__shape--soft"></div>
+    <div class="hero-visual__bg-shapes">
+      <div class="hero-visual__shape hero-visual__shape--blue"></div>
+      <div class="hero-visual__shape hero-visual__shape--soft"></div>
+      <div class="hero-visual__dots"></div>
+    </div>
 
     <div class="hero-visual__panel hero-visual__panel--primary">
       <div class="hero-visual__eyebrow">SCREENING SYSTEM</div>
@@ -48,6 +51,12 @@
   overflow: hidden;
 }
 
+.hero-visual__bg-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 .hero-visual__shape {
   position: absolute;
 }
@@ -59,6 +68,7 @@
   height: 230px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
+  animation: float-parallax 8s ease-in-out infinite;
 }
 
 .hero-visual__shape--soft {
@@ -68,17 +78,34 @@
   height: 180px;
   background: rgba(255, 255, 255, 0.06);
   transform: rotate(18deg);
+  animation: float-parallax 10s ease-in-out infinite reverse;
+}
+
+.hero-visual__dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.5;
 }
 
 .hero-visual__panel {
   position: absolute;
   border-radius: var(--radius-lg);
   padding: 22px;
-  transition: transform 0.3s ease-out;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: var(--shadow-md);
+  transition:
+    transform 0.3s var(--ease-spring),
+    box-shadow 0.3s var(--ease-smooth);
 }
 
 .hero-visual__panel:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
 }
 
 .hero-visual__panel--primary {
@@ -86,15 +113,15 @@
   left: 56px;
   width: min(78%, 360px);
   color: var(--foreground);
-  background: rgba(255, 255, 255, 0.96);
+  animation: float-card 6s ease-in-out infinite;
 }
 
 .hero-visual__panel--report {
   top: 132px;
   right: 56px;
   width: min(46%, 258px);
-  background: rgba(255, 255, 255, 0.96);
   animation: float-card 5s ease-in-out infinite;
+  animation-delay: -1s;
 }
 
 .hero-visual__panel--score {
@@ -102,15 +129,33 @@
   bottom: 38px;
   width: 210px;
   color: white;
-  background: var(--dark);
+  background: var(--dark-soft);
+  border: none;
+  box-shadow: var(--shadow-lg);
   animation: float-card 4s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.hero-visual__panel--score::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(59, 130, 246, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .hero-visual__panel--flow {
   right: 22px;
   bottom: 80px;
   width: min(46%, 260px);
-  background: rgba(255, 255, 255, 0.92);
+  animation: float-card 7s ease-in-out infinite;
+  animation-delay: -3s;
 }
 
 .hero-visual__eyebrow,
@@ -140,7 +185,8 @@
 .hero-visual__rows span {
   display: block;
   height: 12px;
-  background: rgba(59, 130, 246, 0.18);
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.08));
+  border-radius: 6px;
 }
 
 .hero-visual__rows span:nth-child(2) {
@@ -171,6 +217,11 @@
   background: var(--surface-blue);
   font-size: 0.82rem;
   font-weight: 700;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.hero-visual__panel:hover .hero-visual__report-tags span {
+  transform: translateX(2px);
 }
 
 .hero-visual__score {
@@ -179,11 +230,13 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.05em;
+  text-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
 }
 
 .hero-visual__caption {
   margin-top: 10px;
   font-weight: 600;
+  opacity: 0.9;
 }
 
 .hero-visual__flow {
@@ -201,6 +254,17 @@
   background: var(--surface-slate);
   color: var(--foreground);
   font-weight: 700;
+  transition:
+    transform 0.2s var(--ease-spring),
+    background-color 0.2s var(--ease-smooth);
+}
+
+.hero-visual__panel:hover .hero-visual__flow span {
+  transform: translateX(4px);
+}
+
+.hero-visual__flow span:hover {
+  background: var(--surface-blue);
 }
 
 @media (max-width: 960px) {

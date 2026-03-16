@@ -7,7 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@brand': fileURLToPath(new URL('../shared/brand', import.meta.url)),
+      '@brand': fileURLToPath(new URL('./shared/brand', import.meta.url)),
     },
   },
   server: {
