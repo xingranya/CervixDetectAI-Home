@@ -28,6 +28,7 @@ export interface HomeHeroSlide {
   description: string;
   positioning: string;
   tags: string[];
+  image: string;
 }
 
 export interface HomeOverviewField {

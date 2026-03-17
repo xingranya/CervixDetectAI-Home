@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { siteConfig } from '@/config/site';
-import { getNewsArticleBySlug } from '@/lib/news';
+import { getNewsArticleBySlug, newsArticles } from '@/lib/news';
 import AppButton from '@/components/common/AppButton.vue';
 
 const props = defineProps<{
@@ -15,6 +15,19 @@ const article = computed(() => {
   const slug = props.slug ?? String(route.params.slug ?? '');
   return getNewsArticleBySlug(slug);
 });
+
+const relatedArticles = computed(() => {
+  if (!article.value) return [];
+
+  return newsArticles
+    .filter((item) => item.slug !== article.value?.slug)
+    .sort((left, right) => {
+      const leftScore = left.category === article.value?.category ? 1 : 0;
+      const rightScore = right.category === article.value?.category ? 1 : 0;
+      return rightScore - leftScore;
+    })
+    .slice(0, 3);
+});
 </script>
 
 <template>
@@ -22,16 +35,19 @@ const article = computed(() => {
     <section class="section section--compact">
       <div class="container article-shell">
         <div class="article-hero portal-surface" v-reveal>
-          <div class="article-hero__meta">
-            <span>{{ article.category }}</span>
-            <span>{{ article.publishedAt }}</span>
-            <span>{{ article.readingMinutes }} 分钟阅读</span>
+          <div class="article-hero__content">
+            <div class="article-hero__meta">
+              <span>{{ article.category }}</span>
+              <span>{{ article.publishedAt }}</span>
+              <span>{{ article.readingMinutes }} 分钟阅读</span>
+            </div>
+            <h1 class="article-hero__title">{{ article.title }}</h1>
+            <p class="article-hero__excerpt">{{ article.excerpt }}</p>
+            <div class="article-hero__actions">
+              <AppButton to="/news" variant="secondary">返回新闻中心</AppButton>
+            </div>
           </div>
-          <h1 class="article-hero__title">{{ article.title }}</h1>
-          <p class="article-hero__excerpt">{{ article.excerpt }}</p>
-          <div class="article-hero__actions">
-            <AppButton to="/news" variant="secondary">返回新闻中心</AppButton>
-          </div>
+
           <div class="article-hero__cover">
             <img :src="article.cover" :alt="article.title" />
           </div>
@@ -44,12 +60,39 @@ const article = computed(() => {
         <article class="article-content portal-surface" v-reveal>
           <div class="article-markdown" v-html="article.html"></div>
         </article>
+
         <aside class="article-aside" v-reveal="'120ms'">
           <div class="aside-card">
-            <div class="aside-card__label">项目服务</div>
-            <h2 class="aside-card__title">欢迎进一步了解项目情况与合作信息</h2>
+            <div class="aside-card__label">稿件信息</div>
+            <h2 class="aside-card__title">项目报道已接入官网统一新闻系统</h2>
             <p class="aside-card__description">
-              如需了解{{ siteConfig.projectName }}建设进展、研究方向、公开资料或{{ siteConfig.cooperationDirections.join('、') }}等合作方式，欢迎通过官方联系方式与我们取得联系。
+              当前页面已与首页动态、新闻列表和详情页样式统一，后续只需继续往 <code>content/news</code> 中补充 Markdown 稿件即可自动生成新文章页面。
+            </p>
+            <div class="aside-card__chips">
+              <span>{{ article.category }}</span>
+              <span>{{ article.publishedAt }}</span>
+              <span>{{ article.readingMinutes }} 分钟阅读</span>
+            </div>
+          </div>
+
+          <div class="aside-card aside-card--related" v-if="relatedArticles.length > 0">
+            <div class="aside-card__label">延伸阅读</div>
+            <RouterLink
+              v-for="item in relatedArticles"
+              :key="item.slug"
+              :to="`/news/${item.slug}`"
+              class="aside-card__related-item"
+            >
+              <span>{{ item.publishedAt }}</span>
+              <strong>{{ item.title }}</strong>
+            </RouterLink>
+          </div>
+
+          <div class="aside-card aside-card--service">
+            <div class="aside-card__label">项目服务</div>
+            <h2 class="aside-card__title">欢迎进一步了解合作与项目资料</h2>
+            <p class="aside-card__description">
+              如需了解 {{ siteConfig.projectName }} 的研究方向、合作方式与公开资料，可通过官方联系方式与团队取得联系。
             </p>
             <div class="aside-card__chips">
               <span v-for="item in siteConfig.cooperationDirections" :key="item">{{ item }}</span>
@@ -69,7 +112,7 @@ const article = computed(() => {
       <div class="container">
         <div class="article-empty portal-surface">
           <h1 class="article-empty__title">未找到对应内容</h1>
-          <p class="article-empty__description">该信息可能已调整、下线或链接地址已发生变化。</p>
+          <p class="article-empty__description">该新闻稿可能已调整、下线，或链接地址已经发生变化。</p>
           <div class="article-empty__action">
             <AppButton to="/news">返回新闻中心</AppButton>
           </div>
@@ -81,11 +124,20 @@ const article = computed(() => {
 
 <style scoped>
 .article-shell {
-  max-width: 1120px;
+  max-width: 1180px;
 }
 
 .article-hero {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr);
+  align-items: center;
   padding: clamp(28px, 4vw, 42px);
+}
+
+.article-hero__content {
+  display: grid;
+  gap: 18px;
 }
 
 .article-hero__meta {
@@ -104,33 +156,37 @@ const article = computed(() => {
   border-radius: 999px;
   background: rgba(181, 40, 47, 0.08);
   color: var(--secondary);
+  letter-spacing: 0.02em;
 }
 
 .article-hero__title {
-  max-width: 900px;
-  margin: 18px 0 14px;
+  margin: 0;
   color: var(--foreground);
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.4vw, 4rem);
-  line-height: 1.18;
+  font-size: clamp(2.3rem, 4vw, 3.8rem);
+  line-height: 1.2;
 }
 
 .article-hero__excerpt {
-  max-width: 780px;
+  max-width: 720px;
   margin: 0;
   color: var(--muted-foreground);
   font-size: 1.04rem;
   line-height: 1.88;
 }
 
-.article-hero__actions {
-  margin-top: 22px;
-}
-
 .article-hero__cover {
-  margin-top: 28px;
   overflow: hidden;
   border-radius: var(--card-radius-xl);
+  background: linear-gradient(135deg, rgba(13, 94, 170, 0.14), rgba(181, 40, 47, 0.08));
+  box-shadow: var(--shadow-md);
+}
+
+.article-hero__cover img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
 }
 
 .article-layout {
@@ -145,24 +201,35 @@ const article = computed(() => {
 }
 
 .article-markdown :deep(h2) {
-  margin: 0 0 16px;
+  margin: 38px 0 16px;
+  padding-left: 16px;
+  border-left: 4px solid var(--accent);
   color: var(--foreground);
   font-family: var(--font-display);
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   line-height: 1.3;
+}
+
+.article-markdown :deep(h2:first-child) {
+  margin-top: 0;
 }
 
 .article-markdown :deep(h3) {
   margin: 28px 0 14px;
   color: var(--foreground);
-  font-size: 1.32rem;
+  font-size: 1.28rem;
   line-height: 1.42;
 }
 
 .article-markdown :deep(p) {
   margin: 0 0 18px;
   color: var(--muted-foreground);
-  line-height: 1.92;
+  line-height: 1.96;
+}
+
+.article-markdown :deep(p:first-of-type) {
+  color: var(--foreground);
+  font-size: 1.08rem;
 }
 
 .article-markdown :deep(ul),
@@ -177,17 +244,54 @@ const article = computed(() => {
   margin-top: 8px;
 }
 
-.aside-card {
-  padding: 26px;
-  border-radius: var(--card-radius-xl);
-  border: 1px solid rgba(181, 40, 47, 0.12);
-  background:
-    linear-gradient(180deg, rgba(255, 247, 247, 0.98), rgba(255, 255, 255, 0.98));
+.article-markdown :deep(blockquote) {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border-left: 4px solid var(--secondary);
+  border-radius: 0 var(--card-radius-md) var(--card-radius-md) 0;
+  background: rgba(181, 40, 47, 0.05);
+  color: var(--foreground);
+}
+
+.article-markdown :deep(blockquote p) {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.article-markdown :deep(img) {
+  width: 100%;
+  display: block;
+  margin: 26px 0;
+  border-radius: var(--card-radius-lg);
   box-shadow: var(--shadow-md);
 }
 
+.article-markdown :deep(strong) {
+  color: var(--foreground);
+}
+
+.article-aside {
+  display: grid;
+  gap: 18px;
+}
+
+.aside-card {
+  padding: 24px;
+  border-radius: var(--card-radius-xl);
+  border: 1px solid rgba(13, 94, 170, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 250, 255, 0.92));
+  box-shadow: var(--shadow-sm);
+}
+
+.aside-card--service {
+  border-color: rgba(181, 40, 47, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 247, 247, 0.96), rgba(255, 255, 255, 0.94));
+}
+
 .aside-card__label {
-  color: var(--secondary);
+  color: var(--accent);
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -197,8 +301,8 @@ const article = computed(() => {
 .aside-card__title {
   margin: 16px 0 12px;
   color: var(--foreground);
-  font-size: 1.3rem;
-  line-height: 1.48;
+  font-size: 1.24rem;
+  line-height: 1.46;
 }
 
 .aside-card__description {
@@ -220,9 +324,41 @@ const article = computed(() => {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
+  background: rgba(13, 94, 170, 0.06);
+  color: var(--accent);
+  font-size: 0.86rem;
+}
+
+.aside-card--service .aside-card__chips span {
   background: rgba(181, 40, 47, 0.06);
   color: var(--secondary);
-  font-size: 0.88rem;
+}
+
+.aside-card__related-item {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+  border-bottom: 1px dashed rgba(13, 94, 170, 0.12);
+  color: var(--foreground);
+  transition: transform 0.2s var(--ease-smooth), color 0.2s var(--ease-smooth);
+}
+
+.aside-card__related-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.aside-card__related-item:hover,
+.aside-card__related-item:focus-visible {
+  transform: translateX(4px);
+  color: var(--accent);
+  outline: none;
+}
+
+.aside-card__related-item span {
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .aside-card__actions {
@@ -249,8 +385,16 @@ const article = computed(() => {
 }
 
 @media (max-width: 960px) {
+  .article-hero,
   .article-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .article-content,
+  .aside-card {
+    padding: 20px;
   }
 }
 </style>

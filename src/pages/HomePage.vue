@@ -8,7 +8,7 @@ import PortalSectionHeading from '@/components/common/PortalSectionHeading.vue';
 import QuickEntryCard from '@/components/common/QuickEntryCard.vue';
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 
-const { heroSlides, overviewCard, researchUpdates, notices, topicColumns, quickLinks, servicePanel, metrics } =
+const { heroSlides, researchUpdates, notices, topicColumns, quickLinks, servicePanel, metrics } =
   siteConfig.home;
 
 const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount);
@@ -56,15 +56,6 @@ onUnmounted(() => {
 <template>
   <div class="home-page">
     <section class="portal-hero">
-      <div
-        v-for="(slide, index) in heroSlides"
-        :key="slide.title"
-        class="portal-hero__slide"
-        :class="{ 'is-active': index === heroIndex }"
-      >
-        <div class="portal-hero__overlay"></div>
-      </div>
-
       <div class="container portal-hero__inner">
         <div class="portal-hero__content" v-reveal>
           <div class="portal-hero__eyebrow">
@@ -96,36 +87,34 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <aside class="portal-hero__overview" v-reveal="'120ms'">
-          <div class="portal-hero__overview-label">{{ overviewCard.label }}</div>
-          <h2 class="portal-hero__overview-title">{{ overviewCard.title }}</h2>
-          <div class="portal-hero__overview-grid">
-            <div v-for="item in overviewCard.items" :key="item.label" class="portal-hero__overview-item">
-              <div class="portal-hero__overview-key">{{ item.label }}</div>
-              <div class="portal-hero__overview-value">{{ item.value }}</div>
+        <aside class="portal-hero__aside" v-reveal="'120ms'">
+          <div class="portal-hero__visual">
+            <div
+              v-for="(slide, index) in heroSlides"
+              :key="slide.image"
+              class="portal-hero__visual-slide"
+              :class="{ 'is-active': index === heroIndex }"
+            >
+              <img :src="slide.image" :alt="slide.title" class="portal-hero__visual-image" />
+              <div class="portal-hero__visual-mask"></div>
+              <div class="portal-hero__visual-copy">
+                <span class="portal-hero__visual-kicker">场景轮播</span>
+                <strong>{{ slide.title }}</strong>
+              </div>
+            </div>
+            <div class="portal-hero__visual-dots" aria-label="首页轮播切换">
+              <button
+                v-for="(slide, index) in heroSlides"
+                :key="`visual-${slide.title}`"
+                type="button"
+                class="portal-hero__visual-dot"
+                :class="{ 'is-active': index === heroIndex }"
+                :aria-label="`切换到第 ${index + 1} 张轮播图`"
+                @click="heroIndex = index"
+              ></button>
             </div>
           </div>
-          <div class="portal-hero__overview-footer">
-            <span v-for="item in overviewCard.footer" :key="item">{{ item }}</span>
-          </div>
         </aside>
-      </div>
-
-      <div class="container portal-hero__controller">
-        <div class="portal-hero__controller-title" aria-hidden="true">首页焦点轮播</div>
-        <div class="portal-hero__dots" aria-label="首页轮播切换">
-          <button
-            v-for="(slide, index) in heroSlides"
-            :key="slide.title"
-            type="button"
-            class="portal-hero__dot"
-            :class="{ 'is-active': index === heroIndex }"
-            @click="heroIndex = index"
-          >
-            <span class="portal-hero__dot-index">0{{ index + 1 }}</span>
-            <span class="portal-hero__dot-title">{{ slide.title }}</span>
-          </button>
-        </div>
       </div>
     </section>
 
@@ -417,9 +406,9 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at 82% 18%, rgba(255, 214, 128, 0.16), transparent 16%),
-    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.12), transparent 26%),
-    linear-gradient(135deg, #8e0d18 0%, #b2181f 34%, #9a1420 100%);
+    radial-gradient(circle at 84% 14%, rgba(13, 94, 170, 0.12), transparent 20%),
+    radial-gradient(circle at 10% 10%, rgba(181, 40, 47, 0.08), transparent 14%),
+    linear-gradient(180deg, #f7fbff 0%, #eef5fb 100%);
 }
 
 .portal-hero::before,
@@ -431,49 +420,26 @@ onUnmounted(() => {
 }
 
 .portal-hero::before {
-  right: -80px;
-  bottom: 60px;
-  width: 420px;
-  height: 420px;
+  right: -120px;
+  top: 70px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  opacity: 0.5;
+  background: radial-gradient(circle, rgba(13, 94, 170, 0.08), transparent 68%);
+  opacity: 0.8;
 }
 
 .portal-hero::after {
-  left: 10%;
-  top: 120px;
-  width: 280px;
-  height: 280px;
+  left: -40px;
+  bottom: 40px;
+  width: 220px;
+  height: 220px;
+  border-radius: 28px;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
-  background-size: 16px 16px;
-  opacity: 0.3;
-}
-
-.portal-hero__slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s var(--ease-smooth);
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.06) 0 22%, transparent 22% 100%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 38%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 70%);
-}
-
-.portal-hero__slide.is-active {
-  opacity: 1;
-}
-
-.portal-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.04) 0 1px, transparent 1px);
-  background-size: 84px 84px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 88%);
+    linear-gradient(90deg, rgba(13, 94, 170, 0.06) 0 1px, transparent 1px),
+    linear-gradient(rgba(13, 94, 170, 0.06) 0 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.45;
 }
 
 .portal-hero__inner {
@@ -482,9 +448,8 @@ onUnmounted(() => {
   display: grid;
   gap: 42px;
   align-items: center;
-  grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
-  min-height: 760px;
-  padding: 92px 0 96px;
+  grid-template-columns: minmax(0, 1fr) minmax(520px, 0.98fr);
+  padding: 76px 0 72px;
 }
 
 .portal-hero__content {
@@ -497,7 +462,7 @@ onUnmounted(() => {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--accent);
   font-size: 0.96rem;
   font-weight: 700;
 }
@@ -508,9 +473,8 @@ onUnmounted(() => {
   min-height: 36px;
   padding: 0 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(181, 40, 47, 0.08);
+  color: var(--secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -522,7 +486,7 @@ onUnmounted(() => {
 
 .portal-hero__positioning {
   margin: 0;
-  color: rgba(255, 228, 197, 0.88);
+  color: var(--accent);
   font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -531,7 +495,7 @@ onUnmounted(() => {
 .portal-hero__title {
   max-width: 920px;
   margin: 0;
-  color: white;
+  color: var(--foreground);
   font-family: var(--font-display);
   font-size: clamp(3.1rem, 4.8vw, 5.2rem);
   font-weight: 700;
@@ -541,7 +505,7 @@ onUnmounted(() => {
 .portal-hero__description {
   max-width: 760px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.84);
+  color: var(--muted-foreground);
   font-size: 1.04rem;
   line-height: 1.92;
 }
@@ -563,11 +527,9 @@ onUnmounted(() => {
   gap: 8px;
   padding: 18px 20px;
   border-radius: var(--card-radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 18px 34px rgba(41, 7, 15, 0.12);
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-sm);
   transition:
     transform 0.2s var(--ease-smooth),
     background-color 0.2s var(--ease-smooth),
@@ -577,19 +539,19 @@ onUnmounted(() => {
 .portal-hero__shortcut:hover,
 .portal-hero__shortcut:focus-visible {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: white;
+  border-color: rgba(13, 94, 170, 0.2);
   outline: none;
 }
 
 .portal-hero__shortcut-label {
-  color: white;
+  color: var(--foreground);
   font-size: 0.98rem;
   font-weight: 700;
 }
 
 .portal-hero__shortcut-text {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--muted-foreground);
   font-size: 0.9rem;
   line-height: 1.72;
 }
@@ -608,165 +570,124 @@ onUnmounted(() => {
   min-height: 36px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--foreground);
   font-size: 0.9rem;
 }
 
-.portal-hero__overview {
-  position: relative;
-  padding: 34px;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background:
-    linear-gradient(180deg, rgba(122, 14, 18, 0.42), rgba(72, 9, 18, 0.28)),
-    rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(30px) saturate(140%);
-  -webkit-backdrop-filter: blur(30px) saturate(140%);
-  box-shadow:
-    0 28px 60px rgba(73, 11, 18, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-.portal-hero__overview::after {
-  content: '';
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.portal-hero__overview::before {
-  content: '';
-  position: absolute;
-  left: 18px;
-  right: 18px;
-  top: 18px;
-  bottom: 18px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.portal-hero__overview-label {
-  position: relative;
-  z-index: 1;
-  color: rgba(255, 228, 197, 0.88);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.portal-hero__overview-title {
-  position: relative;
-  z-index: 1;
-  margin: 18px 0 0;
-  color: white;
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 1.34;
-}
-
-.portal-hero__overview-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 14px;
-  margin-top: 24px;
-}
-
-.portal-hero__overview-item {
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.09);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-.portal-hero__overview-key {
-  color: rgba(255, 225, 199, 0.82);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.portal-hero__overview-value {
-  margin-top: 8px;
-  color: white;
-  line-height: 1.8;
-}
-
-.portal-hero__overview-footer {
-  position: relative;
-  z-index: 1;
+.portal-hero__aside {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
+  justify-content: flex-end;
 }
 
-.portal-hero__controller {
+.portal-hero__visual {
   position: relative;
+  width: min(100%, 620px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 32px;
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background:
+    linear-gradient(135deg, rgba(13, 94, 170, 0.08), rgba(181, 40, 47, 0.06)),
+    white;
+  box-shadow: var(--shadow-lg);
+}
+
+.portal-hero__visual-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.03);
+  transition:
+    opacity 0.55s var(--ease-smooth),
+    transform 4.8s var(--ease-smooth);
+}
+
+.portal-hero__visual-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portal-hero__visual-image,
+.portal-hero__visual-mask {
+  position: absolute;
+  inset: 0;
+}
+
+.portal-hero__visual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portal-hero__visual-mask {
+  background:
+    linear-gradient(180deg, rgba(10, 24, 40, 0.06), rgba(10, 24, 40, 0.22)),
+    linear-gradient(135deg, rgba(7, 17, 31, 0) 42%, rgba(7, 17, 31, 0.42) 100%);
+}
+
+.portal-hero__visual-copy {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
   z-index: 1;
-  padding-bottom: 38px;
-}
-
-.portal-hero__controller-title {
-  color: rgba(255, 228, 197, 0.88);
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.portal-hero__dots {
   display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 16px;
-}
-
-.portal-hero__dot {
-  display: grid;
-  gap: 8px;
-  min-height: 88px;
-  padding: 18px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.84);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  color: rgba(255, 255, 255, 0.72);
-  text-align: left;
-  transition:
-    background-color 0.2s var(--ease-smooth),
-    border-color 0.2s var(--ease-smooth),
-    color 0.2s var(--ease-smooth);
+  box-shadow: var(--shadow-md);
 }
 
-.portal-hero__dot:hover,
-.portal-hero__dot.is-active {
-  border-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.18);
-  color: white;
-}
-
-.portal-hero__dot-index {
-  font-size: 0.82rem;
+.portal-hero__visual-kicker {
+  color: var(--accent);
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.portal-hero__dot-title {
-  font-size: 0.96rem;
-  line-height: 1.6;
+.portal-hero__visual-copy strong {
+  color: var(--foreground);
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.portal-hero__visual-dots {
+  position: absolute;
+  right: 18px;
+  bottom: 122px;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.portal-hero__visual-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 0 0 1px rgba(7, 17, 31, 0.08);
+  transition:
+    transform 0.2s var(--ease-smooth),
+    background-color 0.2s var(--ease-smooth),
+    width 0.2s var(--ease-smooth);
+}
+
+.portal-hero__visual-dot.is-active {
+  width: 24px;
+  background: white;
+}
+
+.portal-hero__visual-dot:hover {
+  transform: scale(1.08);
 }
 
 .section--news {
@@ -1288,12 +1209,8 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
 
-  .portal-hero__dots {
-    grid-template-columns: 1fr;
-  }
-
-  .portal-hero__controller {
-    padding-bottom: 28px;
+  .portal-hero__aside {
+    justify-content: center;
   }
 
   .news-feature__indicators {
@@ -1306,8 +1223,11 @@ onUnmounted(() => {
 
 @media (max-width: 1024px) {
   .portal-hero__inner {
-    min-height: auto;
-    padding: 74px 0 78px;
+    padding: 68px 0 64px;
+  }
+
+  .portal-hero__visual {
+    width: min(100%, 640px);
   }
 
   .tab-board__grid {
@@ -1328,10 +1248,16 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
 
-  .portal-hero__overview,
+  .portal-hero__visual,
   .news-list-panel,
   .service-board {
     padding: 24px;
+  }
+
+  .portal-hero__visual {
+    width: min(100%, 560px);
+    padding: 0;
+    aspect-ratio: 4 / 3;
   }
 
   .news-feature {
@@ -1350,7 +1276,8 @@ onUnmounted(() => {
 
 @media (max-width: 520px) {
   .portal-hero__inner {
-    padding: 62px 0 64px;
+    gap: 28px;
+    padding: 56px 0 54px;
   }
 
   .portal-hero__content {
@@ -1364,6 +1291,24 @@ onUnmounted(() => {
   .portal-hero__description,
   .service-board__description {
     font-size: 0.96rem;
+  }
+
+  .portal-hero__visual {
+    width: 100%;
+    border-radius: 24px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .portal-hero__visual-copy {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    padding: 14px;
+  }
+
+  .portal-hero__visual-dots {
+    right: 12px;
+    bottom: 94px;
   }
 
   .news-feature {

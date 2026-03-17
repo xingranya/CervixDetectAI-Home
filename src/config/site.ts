@@ -38,6 +38,7 @@ export const siteConfig: SiteConfig = {
           '依托云端智诊团队，围绕宫颈智能影像分析、云端筛查协同、临床应用支持与成果转化持续推进重点任务，形成更完整的项目展示与服务体系。',
         positioning: '面向宫颈筛查场景的智能影像与云端协同创新门户',
         tags: ['智能影像', '云端协同', '临床应用', '成果转化'],
+        image: 'https://img1.tucang.cc/api/image/show/7c82e065356b5f946edfc957986f29dc',
       },
       {
         title: '以正式门户发布项目进展、阶段成果与合作服务信息',
@@ -45,6 +46,7 @@ export const siteConfig: SiteConfig = {
           '首页集中呈现项目定位、建设进展、研究动态、通知公告、专题能力与服务入口，强化公开发布口径、信息层级与机构化呈现方式。',
         positioning: '项目公开发布、资料服务与合作交流统一窗口',
         tags: ['项目发布', '资料服务', '合作交流', '公开信息'],
+        image: 'https://img1.tucang.cc/api/image/show/147a9669236d85027422d0ed5ae19ee2',
       },
       {
         title: '围绕科研合作、平台共建、临床应用、成果转化形成协同表达',
@@ -52,6 +54,15 @@ export const siteConfig: SiteConfig = {
           '通过首页、新闻中心与关键内页的统一设计语言，系统呈现项目建设方向、业务支撑能力和对外服务价值，提升整体可信度与正式感。',
         positioning: '兼顾机构权威感与医疗科技感的项目官网首页',
         tags: ['科研合作', '平台共建', '新闻中心', '官方门户'],
+        image: 'https://img1.tucang.cc/api/image/show/bbe5c07e013259373b4040f98d50ab6d',
+      },
+      {
+        title: '以真实医院场景和基层实践，承接新闻稿、合作动态与专题展示',
+        description:
+          '首页焦点区接入新的医院实景轮播图，让官网视觉表达和新闻稿内容保持一致，强化项目的真实感、现场感与可信度。',
+        positioning: '真实场景影像驱动的项目官网首屏展示',
+        tags: ['医院场景', '基层实践', '轮播展示', '新闻联动'],
+        image: 'https://img1.tucang.cc/api/image/show/d41453c4bd95ac41a27bb52427be2deb',
       },
     ],
     overviewCard: {
