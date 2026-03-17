@@ -14,7 +14,7 @@ import { siteConfig } from '@/config/site';
           </div>
         </div>
         <p class="site-footer__description">
-          面向临床筛查、智能影像分析与云端协同研究，持续推进团队品牌展示、新闻发布、科研交流与成果转化服务。
+          依托{{ siteConfig.brandName }}持续推进{{ siteConfig.projectName }}建设，面向{{ siteConfig.cooperationDirections.join('、') }}等方向提供新闻发布、资料服务与公开交流支持。
         </p>
       </div>
       <div class="site-footer__links">

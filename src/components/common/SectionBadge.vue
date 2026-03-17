@@ -25,8 +25,8 @@ withDefaults(
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  border-radius: 999px;
   background: var(--foreground);
   overflow: hidden;
 }
@@ -46,10 +46,10 @@ withDefaults(
 
 .section-badge__dot {
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background: var(--accent-warm);
-  border-radius: 2px;
+  border-radius: 50%;
   transition: transform 0.3s var(--ease-spring);
 }
 

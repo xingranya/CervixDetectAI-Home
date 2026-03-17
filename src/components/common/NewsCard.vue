@@ -18,7 +18,7 @@ defineProps<{
     <h3 class="news-card__title">{{ article.title }}</h3>
     <p class="news-card__excerpt">{{ article.excerpt }}</p>
     <span class="news-card__more">
-      <span class="news-card__more-text">阅读全文</span>
+      <span class="news-card__more-text">查看详情</span>
       <span class="news-card__more-arrow">↗</span>
     </span>
   </RouterLink>
@@ -31,14 +31,16 @@ defineProps<{
   height: 100%;
   padding: 28px;
   color: inherit;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(59, 130, 246, 0.08);
-  background: white;
+  border-radius: var(--card-radius-lg);
+  border: 1px solid var(--card-border-strong);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.98));
   box-shadow: var(--shadow-sm);
   transition:
-    transform 0.3s var(--ease-spring),
+    transform 0.24s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth),
-    background-color 0.3s var(--ease-smooth);
+    background-color 0.3s var(--ease-smooth),
+    border-color 0.3s var(--ease-smooth);
   overflow: hidden;
   position: relative;
 }
@@ -46,50 +48,40 @@ defineProps<{
 .news-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(37, 99, 235, 0.01) 100%);
-  opacity: 0;
-  transition: opacity 0.3s var(--ease-smooth);
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--secondary), rgba(13, 94, 170, 0.22));
   pointer-events: none;
 }
 
 .news-card:hover,
 .news-card:focus-visible {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: rgba(13, 94, 170, 0.22);
+  box-shadow: var(--shadow-md);
   background: white;
-}
-
-.news-card:hover::before,
-.news-card:focus-visible::before {
-  opacity: 1;
 }
 
 .news-card:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px var(--ring), var(--shadow-lg);
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px var(--ring), var(--shadow-md);
 }
 
 .news-card__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .news-card__meta span:first-child {
-  padding: 7px 10px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-blue);
-  color: var(--accent);
-  transition: transform 0.2s var(--ease-spring);
-}
-
-.news-card:hover .news-card__meta span:first-child {
-  transform: scale(1.05);
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(181, 40, 47, 0.08);
+  color: var(--secondary);
 }
 
 .news-card__title {

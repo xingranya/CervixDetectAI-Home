@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { siteConfig } from '@/config/site';
 import AppButton from '@/components/common/AppButton.vue';
 import FeatureCard from '@/components/common/FeatureCard.vue';
 import SectionBadge from '@/components/common/SectionBadge.vue';
@@ -56,8 +57,8 @@ const workflowSteps = [
   <div>
     <PageHero
       badge="研究方向"
-      title="围绕智能影像、云端协同与临床应用持续推进重点研究方向。"
-      description="团队聚焦宫颈智能影像分析、业务协同支撑、数据治理规范和成果推广服务等方向，形成协同联动、持续推进的研究布局。"
+      :title="`${siteConfig.brandName}围绕智能影像、云端协同与临床应用持续推进重点研究方向。`"
+      :description="`${siteConfig.brandName}聚焦${siteConfig.projectName}建设需求，持续推进宫颈智能影像分析、业务协同支撑、数据治理规范和成果推广服务等方向。`"
     />
 
     <section class="section">
@@ -66,7 +67,7 @@ const workflowSteps = [
           <SectionBadge label="方向布局" />
           <h2 class="section-title">面向技术研究、平台建设与应用服务形成系统化布局。</h2>
           <p class="section-description">
-            团队围绕核心技术、业务协同、规范管理和成果服务持续推进建设工作，不断提升研究深度和应用价值。
+            团队围绕核心技术、业务协同、规范管理和成果服务持续推进建设工作，不断提升{{ siteConfig.projectName }}的研究深度和应用价值。
           </p>
         </div>
         <div class="product-grid">
@@ -106,7 +107,7 @@ const workflowSteps = [
         <div class="callout-card">
           <h2 class="callout-card__title">以持续研究与务实应用推动团队发展。</h2>
           <p class="callout-card__description">
-            团队将继续围绕关键技术攻关、平台能力完善、服务场景拓展和成果应用推广等方面开展工作，不断增强对临床与合作场景的支撑能力。
+            团队将继续围绕关键技术攻关、平台能力完善、服务场景拓展和成果应用推广等方面开展工作，不断增强对{{ siteConfig.cooperationDirections.join('、') }}等场景的支撑能力。
           </p>
           <div class="callout-card__actions">
             <AppButton to="/news">查看团队动态</AppButton>

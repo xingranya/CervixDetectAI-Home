@@ -86,9 +86,10 @@ const componentProps = computed(() => {
   letter-spacing: -0.02em;
   overflow: hidden;
   transition:
-    transform 0.2s var(--ease-spring),
+    transform 0.2s var(--ease-smooth),
     background-color 0.2s var(--ease-smooth),
     color 0.2s var(--ease-smooth),
+    border-color 0.2s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth);
 }
 
@@ -109,7 +110,7 @@ const componentProps = computed(() => {
 
 .app-button:hover,
 .app-button:focus-visible {
-  transform: scale(1.05) translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .app-button:focus-visible {
@@ -118,7 +119,7 @@ const componentProps = computed(() => {
 }
 
 .app-button:active {
-  transform: scale(0.98);
+  transform: translateY(0);
 }
 
 .app-button__arrow {
@@ -157,12 +158,14 @@ const componentProps = computed(() => {
 
 .app-button--secondary {
   color: var(--foreground);
-  background: var(--muted);
+  border: 1px solid var(--card-border-strong);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .app-button--secondary:hover,
 .app-button--secondary:focus-visible {
-  background: #e5e7eb;
+  background: white;
+  border-color: rgba(13, 94, 170, 0.2);
   box-shadow: var(--shadow-md);
 }
 

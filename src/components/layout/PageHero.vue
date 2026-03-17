@@ -28,12 +28,13 @@ defineProps<{
 .page-hero__surface {
   position: relative;
   padding: clamp(36px, 5vw, 62px);
-  border: 1px solid rgba(13, 94, 170, 0.12);
-  border-radius: 20px;
+  border: 1px solid var(--card-border-strong);
+  border-radius: var(--card-radius-xl);
   background:
-    linear-gradient(90deg, rgba(13, 94, 170, 0.08) 0 8px, transparent 8px 100%),
+    linear-gradient(90deg, rgba(181, 40, 47, 0.08) 0 8px, transparent 8px 100%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 252, 0.98));
   overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
 
 .page-hero__surface::after {
@@ -46,6 +47,20 @@ defineProps<{
   border-radius: 50%;
   border: 1px solid rgba(13, 94, 170, 0.08);
   opacity: 0.5;
+}
+
+.page-hero__surface::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  bottom: -24px;
+  width: 240px;
+  height: 140px;
+  background:
+    linear-gradient(90deg, rgba(13, 94, 170, 0.08) 0 1px, transparent 1px),
+    linear-gradient(rgba(13, 94, 170, 0.08) 0 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.3;
 }
 
 .page-hero__title {

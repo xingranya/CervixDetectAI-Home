@@ -1,303 +1,337 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue';
 import { siteConfig } from '@/config/site';
 import { getFeaturedNews, newsArticles } from '@/lib/news';
 import AppButton from '@/components/common/AppButton.vue';
+import DateBadgeCard from '@/components/common/DateBadgeCard.vue';
+import PortalSectionHeading from '@/components/common/PortalSectionHeading.vue';
+import QuickEntryCard from '@/components/common/QuickEntryCard.vue';
+
+const { heroSlides, overviewCard, researchUpdates, notices, topicColumns, quickLinks, servicePanel } =
+  siteConfig.home;
 
 const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount);
-const leadNews = featuredNews[0] ?? newsArticles[0];
-const secondaryNews = newsArticles.filter((article) => article.slug !== leadNews.slug).slice(0, 4);
+const headlineNews = featuredNews.length > 0 ? featuredNews : newsArticles.slice(0, 2);
+const newsList = newsArticles.slice(0, 6);
+const heroShortcuts = quickLinks.slice(0, 4);
 
-const focusItems = [
-  '坚持以临床需求为导向，持续推进智能影像分析能力建设。',
-  '围绕筛查业务协同、成果应用与服务支持完善平台体系。',
-  '强化新闻发布、成果展示与合作交流，提升团队对外服务能力。',
-];
+const newsIndex = ref(0);
+const heroIndex = ref(0);
+const infoTab = ref<'research' | 'notice'>('research');
 
-const notices = [
-  { title: '云端智诊团队官方网站正式上线', date: '2026-03-17' },
-  { title: '团队研究方向与成果展示栏目同步更新', date: '2026-03-15' },
-  { title: '合作交流与资料咨询统一由官方邮箱受理', date: '2026-03-12' },
-  { title: '新闻中心持续发布团队动态与建设进展', date: '2026-03-08' },
-];
+let heroTimer: ReturnType<typeof setInterval> | undefined;
+let newsTimer: ReturnType<typeof setInterval> | undefined;
 
-const researchDirections = [
-  {
-    title: '智能影像分析',
-    description: '围绕宫颈影像识别、病灶提示与风险分层开展算法研究，形成稳定的核心引擎能力。',
-    tag: '01',
-  },
-  {
-    title: '云端协同平台',
-    description: '构建病例、分析、报告与随访协同的一体化支撑平台，服务多角色业务联动。',
-    tag: '02',
-  },
-  {
-    title: '临床应用转化',
-    description: '面向筛查机构、妇幼体系与专科场景推进算法与流程的真实业务落地。',
-    tag: '03',
-  },
-  {
-    title: '数据治理与规范',
-    description: '聚焦数据安全、结构化表达和过程可追踪，支撑长期规范运营与品牌可信表达。',
-    tag: '04',
-  },
-];
+onMounted(() => {
+  heroTimer = setInterval(() => {
+    heroIndex.value = (heroIndex.value + 1) % heroSlides.length;
+  }, 5200);
 
-const achievements = [
-  { value: '3', label: '软件著作权', description: '持续完善知识产权与品牌表达材料。' },
-  { value: '4', label: '重点栏目', description: '团队概况、研究方向、成果转化与新闻中心统一呈现。' },
-  { value: '24h', label: '邮箱响应机制', description: '合作咨询与资料申请由官方邮箱统一受理。' },
-  { value: '1', label: '官方网站', description: '团队新闻发布、成果展示与合作交流集中对外展示。' },
-];
+  if (headlineNews.length > 1) {
+    newsTimer = setInterval(() => {
+      newsIndex.value = (newsIndex.value + 1) % headlineNews.length;
+    }, 4800);
+  }
+});
 
-const teamMembers = [
-  {
-    name: '团队负责人',
-    title: '总体统筹与科研组织',
-    description: '负责团队发展规划、外部合作统筹与重点项目推进，保持科研布局与品牌表达一致。',
-  },
-  {
-    name: '算法研究组',
-    title: '智能识别与模型优化',
-    description: '持续推进图像识别、辅助判读与风险提示能力建设，服务临床场景迭代。',
-  },
-  {
-    name: '平台工程组',
-    title: '云端架构与业务协同',
-    description: '负责平台工程落地、流程串联与稳定交付，支撑门户与业务系统统一演进。',
-  },
-  {
-    name: '转化合作组',
-    title: '产业对接与应用拓展',
-    description: '面向医院、筛查机构与合作伙伴开展交流，推进成果展示、资料输出与合作洽谈。',
-  },
-];
+onUnmounted(() => {
+  if (heroTimer) {
+    clearInterval(heroTimer);
+  }
 
-const topicEntries = [
-  { title: '专题专栏', description: '围绕团队建设、重点工作和学术活动发布专题内容。' },
-  { title: '成果展示', description: '集中呈现知识产权、平台能力与阶段性建设成效。' },
-  { title: '合作交流', description: '面向合作伙伴、医疗机构与行业用户提供沟通与服务支持。' },
-  { title: '资料下载', description: '提供团队介绍、成果材料与相关公开资料下载入口。' },
-];
-
-const quickLinks = [
-  '团队概况',
-  '研究方向',
-  '成果转化',
-  '新闻中心',
-  '合作交流',
-  '平台入口',
-  '资料申请',
-  '联系我们',
-];
+  if (newsTimer) {
+    clearInterval(newsTimer);
+  }
+});
 </script>
 
 <template>
   <div class="home-page">
     <section class="portal-hero">
+      <div
+        v-for="(slide, index) in heroSlides"
+        :key="slide.title"
+        class="portal-hero__slide"
+        :class="{ 'is-active': index === heroIndex }"
+      >
+        <div class="portal-hero__overlay"></div>
+      </div>
+
       <div class="container portal-hero__inner">
         <div class="portal-hero__content" v-reveal>
-          <div class="portal-hero__eyebrow">云端智诊团队官方网站</div>
-          <h1 class="portal-hero__title">以智能影像与云端协同能力，服务宫颈筛查科研与应用转化。</h1>
-          <p class="portal-hero__description">{{ siteConfig.heroSubtitle }}</p>
+          <div class="portal-hero__eyebrow">
+            <span class="portal-hero__eyebrow-tag">Official Portal</span>
+            <span>{{ siteConfig.projectName }}</span>
+          </div>
+          <div class="portal-hero__heading">
+            <p class="portal-hero__positioning">{{ heroSlides[heroIndex]?.positioning }}</p>
+            <h1 class="portal-hero__title">{{ heroSlides[heroIndex]?.title }}</h1>
+            <p class="portal-hero__description">{{ heroSlides[heroIndex]?.description }}</p>
+          </div>
           <div class="portal-hero__actions">
             <AppButton to="/about">查看团队概况</AppButton>
             <AppButton to="/news" variant="secondary">进入新闻中心</AppButton>
           </div>
+          <div class="portal-hero__shortcut-rail">
+            <RouterLink
+              v-for="item in heroShortcuts"
+              :key="item.label"
+              :to="item.to"
+              class="portal-hero__shortcut"
+            >
+              <span class="portal-hero__shortcut-label">{{ item.label }}</span>
+              <span class="portal-hero__shortcut-text">{{ item.description }}</span>
+            </RouterLink>
+          </div>
           <div class="portal-hero__meta">
-            <span>科研导向</span>
-            <span>平台建设</span>
-            <span>成果转化</span>
-            <span>合作交流</span>
+            <span v-for="tag in heroSlides[heroIndex]?.tags" :key="tag">{{ tag }}</span>
           </div>
         </div>
 
-        <aside class="portal-hero__focus" v-reveal="'100ms'">
-          <div class="portal-hero__focus-label">团队简介</div>
-          <div class="portal-hero__focus-title">聚焦智能影像与云端协同服务</div>
-          <ul class="portal-hero__focus-list">
-            <li v-for="item in focusItems" :key="item">{{ item }}</li>
-          </ul>
-          <div class="portal-hero__focus-footer">
-            <span>科研引领</span>
-            <span>服务临床</span>
+        <aside class="portal-hero__overview" v-reveal="'120ms'">
+          <div class="portal-hero__overview-label">{{ overviewCard.label }}</div>
+          <h2 class="portal-hero__overview-title">{{ overviewCard.title }}</h2>
+          <div class="portal-hero__overview-grid">
+            <div v-for="item in overviewCard.items" :key="item.label" class="portal-hero__overview-item">
+              <div class="portal-hero__overview-key">{{ item.label }}</div>
+              <div class="portal-hero__overview-value">{{ item.value }}</div>
+            </div>
+          </div>
+          <div class="portal-hero__overview-footer">
+            <span v-for="item in overviewCard.footer" :key="item">{{ item }}</span>
           </div>
         </aside>
       </div>
-      <div class="container portal-hero__dots" aria-hidden="true">
-        <span class="is-active"></span>
-        <span></span>
-        <span></span>
-        <span></span>
+
+      <div class="container portal-hero__controller">
+        <div class="portal-hero__controller-title">首页焦点轮播</div>
+        <div class="portal-hero__dots" aria-label="首页轮播切换">
+          <button
+            v-for="(slide, index) in heroSlides"
+            :key="slide.title"
+            type="button"
+            class="portal-hero__dot"
+            :class="{ 'is-active': index === heroIndex }"
+            @click="heroIndex = index"
+          >
+            <span class="portal-hero__dot-index">0{{ index + 1 }}</span>
+            <span class="portal-hero__dot-title">{{ slide.title }}</span>
+          </button>
+        </div>
       </div>
     </section>
 
-    <section class="section portal-section">
-      <div class="container portal-grid">
-        <article class="portal-panel portal-panel--news" v-reveal>
-          <div class="portal-panel__head">
-            <div>
-              <div class="portal-panel__title">团队要闻</div>
-              <div class="portal-panel__subtitle">News</div>
-            </div>
-            <RouterLink to="/news" class="portal-panel__more">更多</RouterLink>
-          </div>
-
-          <div class="lead-story">
-            <div class="lead-story__cover" :style="{ backgroundImage: `url(${leadNews.cover})` }"></div>
-            <div class="lead-story__content">
-              <div class="lead-story__meta">{{ leadNews.category }} · {{ leadNews.publishedAt }}</div>
-              <RouterLink :to="`/news/${leadNews.slug}`" class="lead-story__title">
-                {{ leadNews.title }}
-              </RouterLink>
-              <p class="lead-story__excerpt">{{ leadNews.excerpt }}</p>
-            </div>
-          </div>
-
-          <div class="story-list">
-            <RouterLink
-              v-for="article in secondaryNews"
-              :key="article.slug"
-              :to="`/news/${article.slug}`"
-              class="story-item"
-            >
-              <span class="story-item__title">{{ article.title }}</span>
-              <span class="story-item__date">{{ article.publishedAt }}</span>
-            </RouterLink>
-          </div>
-        </article>
-
-        <article class="portal-panel portal-panel--notice" v-reveal="'120ms'">
-          <div class="portal-panel__head">
-            <div>
-              <div class="portal-panel__title">通知公告</div>
-              <div class="portal-panel__subtitle">Notice</div>
-            </div>
-          </div>
-
-          <div class="notice-list">
-            <div v-for="notice in notices" :key="notice.title" class="notice-item">
-              <span class="notice-item__title">{{ notice.title }}</span>
-              <span class="notice-item__date">{{ notice.date }}</span>
-            </div>
-          </div>
-
-          <div class="notice-stats">
-            <div v-for="item in achievements.slice(0, 2)" :key="item.label" class="notice-stat">
-              <strong>{{ item.value }}</strong>
-              <span>{{ item.label }}</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section section--paper">
+    <section class="section section--news">
       <div class="container">
-        <div class="section-head" v-reveal>
-          <h2 class="section-title">研究方向</h2>
-          <p class="section-description">围绕智能影像、云端协同、临床应用与数据治理组织团队科研工作与工程建设。</p>
-        </div>
-        <div class="direction-grid">
-          <article
-            v-for="(direction, index) in researchDirections"
-            :key="direction.title"
-            v-reveal="`${index * 70}ms`"
-            class="direction-card"
-          >
-            <div class="direction-card__tag">{{ direction.tag }}</div>
-            <h3>{{ direction.title }}</h3>
-            <p>{{ direction.description }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
+        <PortalSectionHeading
+          title="项目动态"
+          english-label="Project Updates"
+          description="集中发布项目建设进展、阶段成果与公开信息，强化首页主次分明的门户动态结构。"
+          v-reveal
+        >
+          <template #action>
+            <AppButton to="/news" variant="secondary">查看更多</AppButton>
+          </template>
+        </PortalSectionHeading>
 
-    <section class="section section--blue">
-      <div class="container results-layout">
-        <div v-reveal>
-          <h2 class="section-title section-title--light">核心成果</h2>
-          <p class="section-description section-description--light">
-            围绕团队建设、知识产权、平台能力和服务体系，持续提升宫颈智能影像领域的研究与应用水平。
-          </p>
-        </div>
-        <div class="achievement-grid">
-          <div
-            v-for="(item, index) in achievements"
-            :key="item.label"
-            v-reveal="`${index * 70}ms`"
-            class="achievement-card"
-          >
-            <div class="achievement-card__value">{{ item.value }}</div>
-            <div class="achievement-card__label">{{ item.label }}</div>
-            <p>{{ item.description }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--paper">
-      <div class="container team-layout">
-        <div class="section-head" v-reveal>
-          <h2 class="section-title">团队组织</h2>
-          <p class="section-description">团队下设科研统筹、算法研究、平台工程与合作交流等方向，形成分工明确、协同推进的工作机制。</p>
-        </div>
-        <div class="team-grid">
-          <article v-for="(member, index) in teamMembers" :key="member.name" v-reveal="`${index * 70}ms`" class="team-card">
-            <div class="team-card__avatar">{{ member.name.slice(0, 2) }}</div>
-            <div class="team-card__name">{{ member.name }}</div>
-            <div class="team-card__title">{{ member.title }}</div>
-            <p>{{ member.description }}</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section portal-bottom">
-      <div class="container portal-bottom__grid">
-        <div class="topic-board" v-reveal>
-          <div class="portal-panel__head">
-            <div>
-              <div class="portal-panel__title">专题栏目</div>
-              <div class="portal-panel__subtitle">Columns</div>
+        <div class="news-layout">
+          <article class="news-feature" v-reveal>
+            <div
+              v-for="(article, index) in headlineNews"
+              :key="article.slug"
+              class="news-feature__slide"
+              :class="{ 'is-active': index === newsIndex }"
+            >
+              <div class="news-feature__cover" :style="{ backgroundImage: `url(${article.cover})` }"></div>
+              <div class="news-feature__mask"></div>
+              <div class="news-feature__content">
+                <div class="news-feature__kicker">焦点发布</div>
+                <div class="news-feature__meta-row">
+                  <span class="news-feature__date">{{ article.publishedAt }}</span>
+                  <span>{{ article.category }}</span>
+                </div>
+                <RouterLink :to="`/news/${article.slug}`" class="news-feature__title">
+                  {{ article.title }}
+                </RouterLink>
+                <p class="news-feature__summary">{{ article.excerpt }}</p>
+                <div class="news-feature__actions">
+                  <AppButton :to="`/news/${article.slug}`">阅读全文</AppButton>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="topic-grid">
-            <article v-for="topic in topicEntries" :key="topic.title" class="topic-card">
-              <h3>{{ topic.title }}</h3>
-              <p>{{ topic.description }}</p>
-            </article>
-          </div>
-        </div>
 
-        <div class="quick-board" v-reveal="'100ms'">
-          <div class="portal-panel__head">
-            <div>
-              <div class="portal-panel__title">快捷通道</div>
-              <div class="portal-panel__subtitle">Quick Links</div>
+            <div class="news-feature__indicators">
+              <button
+                v-for="(article, index) in headlineNews"
+                :key="article.slug"
+                type="button"
+                class="news-feature__indicator"
+                :class="{ 'is-active': index === newsIndex }"
+                @click="newsIndex = index"
+              >
+                <span class="news-feature__indicator-date">{{ article.publishedAt }}</span>
+                <span class="news-feature__indicator-title">{{ article.title }}</span>
+              </button>
             </div>
-          </div>
-          <div class="quick-grid">
-            <RouterLink v-for="item in quickLinks" :key="item" class="quick-link" to="/contact">
-              {{ item }}
+          </article>
+
+          <aside class="news-list-panel" v-reveal="'120ms'">
+            <div class="news-list-panel__head">
+              <div>
+                <div class="news-list-panel__label">更新列表</div>
+                <h3 class="news-list-panel__title">最新发布</h3>
+              </div>
+              <RouterLink to="/news" class="news-list-panel__more">全部动态</RouterLink>
+            </div>
+            <div class="news-list">
+              <RouterLink
+                v-for="article in newsList"
+                :key="article.slug"
+                :to="`/news/${article.slug}`"
+                class="news-list__item"
+              >
+                <div class="news-list__date">
+                  <strong>{{ article.publishedAt.slice(-2) }}</strong>
+                  <span>{{ article.publishedAt.slice(0, 7) }}</span>
+                </div>
+                <div class="news-list__body">
+                  <div class="news-list__category">{{ article.category }}</div>
+                  <div class="news-list__text">{{ article.title }}</div>
+                </div>
+                <span class="news-list__arrow" aria-hidden="true">↗</span>
+              </RouterLink>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tab-board">
+      <div class="container">
+        <PortalSectionHeading
+          title="研究动态与通知公告"
+          english-label="Research & Bulletin"
+          description="以更紧凑的门户信息模块呈现阶段性进展与通知公告，统一日期徽标、悬停态与阅读反馈。"
+          v-reveal
+        >
+          <template #action>
+            <div class="tab-switch">
+              <button
+                type="button"
+                class="tab-switch__button"
+                :class="{ 'is-active': infoTab === 'research' }"
+                @click="infoTab = 'research'"
+              >
+                研究动态
+              </button>
+              <button
+                type="button"
+                class="tab-switch__button"
+                :class="{ 'is-active': infoTab === 'notice' }"
+                @click="infoTab = 'notice'"
+              >
+                通知公告
+              </button>
+            </div>
+          </template>
+        </PortalSectionHeading>
+
+        <div class="tab-board__grid">
+          <DateBadgeCard
+            v-for="item in infoTab === 'research' ? researchUpdates : notices"
+            :key="item.title"
+            v-reveal
+            :day="item.day"
+            :month="item.month"
+            :title="item.title"
+            :to="'/news'"
+            :variant="infoTab === 'notice' ? 'notice' : 'default'"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--capabilities">
+      <div class="container">
+        <PortalSectionHeading
+          title="能力矩阵"
+          english-label="Capability Matrix"
+          description="围绕智能影像、云端协同、成果信息与资料服务构建专题入口，让首页栏目更接近正式机构门户。"
+          v-reveal
+        />
+
+        <div class="columns-layout">
+          <div class="columns-grid" v-reveal>
+            <RouterLink v-for="item in topicColumns" :key="item.title" :to="item.to" class="column-card">
+              <div class="column-card__kicker">{{ item.kicker }}</div>
+              <h3 class="column-card__title">{{ item.title }}</h3>
+              <p class="column-card__description">{{ item.description }}</p>
+              <span class="column-card__more">进入栏目</span>
             </RouterLink>
           </div>
+
+          <aside class="service-board" v-reveal="'120ms'">
+            <div class="service-board__label">{{ servicePanel.title }}</div>
+            <h3 class="service-board__title">{{ siteConfig.projectName }}</h3>
+            <p class="service-board__description">{{ servicePanel.description }}</p>
+            <div class="service-board__directions">
+              <span v-for="item in siteConfig.cooperationDirections" :key="item">{{ item }}</span>
+            </div>
+            <div class="service-board__actions">
+              <AppButton
+                v-if="servicePanel.primaryAction.href"
+                :href="servicePanel.primaryAction.href"
+                :variant="servicePanel.primaryAction.variant"
+              >
+                {{ servicePanel.primaryAction.label }}
+              </AppButton>
+              <AppButton
+                v-else-if="servicePanel.primaryAction.to"
+                :to="servicePanel.primaryAction.to"
+                :variant="servicePanel.primaryAction.variant"
+              >
+                {{ servicePanel.primaryAction.label }}
+              </AppButton>
+
+              <AppButton
+                v-if="servicePanel.secondaryAction.href"
+                :href="servicePanel.secondaryAction.href"
+                :variant="servicePanel.secondaryAction.variant"
+              >
+                {{ servicePanel.secondaryAction.label }}
+              </AppButton>
+              <AppButton
+                v-else-if="servicePanel.secondaryAction.to"
+                :to="servicePanel.secondaryAction.to"
+                :variant="servicePanel.secondaryAction.variant"
+              >
+                {{ servicePanel.secondaryAction.label }}
+              </AppButton>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <section class="section section--compact">
-      <div class="container" v-reveal>
-        <div class="contact-banner">
-          <div class="contact-banner__label">合作交流</div>
-          <h2 class="contact-banner__title">欢迎围绕科研合作、平台共建与场景落地开展交流。</h2>
-          <p class="contact-banner__description">
-            欢迎围绕科研合作、技术交流、平台共建、成果应用等方向与我们联系，我们将及时提供相关资料与沟通支持。
-          </p>
-          <div class="contact-banner__actions">
-            <AppButton href="mailto:support@hpvsc.icu">邮件咨询</AppButton>
-            <AppButton to="/contact" variant="secondary">查看联系方式</AppButton>
-          </div>
+    <section class="section section--quick-links">
+      <div class="container">
+        <PortalSectionHeading
+          title="服务入口"
+          english-label="Service Access"
+          description="统一入口矩阵承接概览、研究、成果、动态与联系服务，增强首页导向性与识别度。"
+          v-reveal
+        />
+
+        <div class="quick-links-grid">
+          <QuickEntryCard
+            v-for="item in quickLinks"
+            :key="item.label"
+            v-reveal
+            :label="item.label"
+            :short-label="item.shortLabel"
+            :description="item.description"
+            :to="item.to"
+          />
         </div>
       </div>
     </section>
@@ -305,546 +339,906 @@ const quickLinks = [
 </template>
 
 <style scoped>
+.home-page {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(244, 248, 252, 0.72) 100%);
+}
+
 .portal-hero {
   position: relative;
-  padding: 0 0 22px;
-  color: white;
-  background:
-    radial-gradient(circle at 22% 18%, rgba(255, 215, 120, 0.16), transparent 22%),
-    radial-gradient(circle at 80% 72%, rgba(255, 255, 255, 0.08), transparent 24%),
-    linear-gradient(180deg, rgba(140, 10, 16, 0.18), transparent 24%),
-    var(--gradient-hero);
   overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 214, 128, 0.16), transparent 16%),
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.12), transparent 26%),
+    linear-gradient(135deg, #8e0d18 0%, #b2181f 34%, #9a1420 100%);
 }
 
 .portal-hero::before,
 .portal-hero::after {
   content: '';
   position: absolute;
+  inset: auto;
   pointer-events: none;
 }
 
 .portal-hero::before {
-  inset: 0;
-  background:
-    linear-gradient(115deg, rgba(255, 208, 120, 0.08) 0 18%, transparent 18% 100%),
-    radial-gradient(circle at 50% 100%, rgba(255, 201, 91, 0.28), transparent 34%);
+  right: -80px;
+  bottom: 60px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.5;
 }
 
 .portal-hero::after {
-  left: 0;
-  right: 0;
-  bottom: 30px;
-  height: 110px;
+  left: 10%;
+  top: 120px;
+  width: 280px;
+  height: 280px;
   background:
-    linear-gradient(90deg, transparent 0 5%, rgba(255, 214, 128, 0.92) 5% 11%, transparent 11% 18%, rgba(255, 214, 128, 0.86) 18% 24%, transparent 24% 30%, rgba(255, 214, 128, 0.92) 30% 36%, transparent 36% 68%, rgba(255, 214, 128, 0.86) 68% 75%, transparent 75% 100%),
-    linear-gradient(180deg, transparent 0 72%, rgba(255, 214, 128, 0.9) 72% 76%, transparent 76% 100%);
-  opacity: 0.45;
+    radial-gradient(circle, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.3;
+}
+
+.portal-hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-smooth);
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.06) 0 22%, transparent 22% 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 38%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 70%);
+}
+
+.portal-hero__slide.is-active {
+  opacity: 1;
+}
+
+.portal-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.04) 0 1px, transparent 1px);
+  background-size: 84px 84px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 88%);
 }
 
 .portal-hero__inner {
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 32px;
-  align-items: end;
-  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-  min-height: 560px;
-  padding: 74px 0 120px;
+  gap: 42px;
+  align-items: center;
+  grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+  min-height: 760px;
+  padding: 92px 0 96px;
+}
+
+.portal-hero__content {
+  display: grid;
+  gap: 30px;
 }
 
 .portal-hero__eyebrow {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.portal-hero__eyebrow-tag {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
   padding: 0 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portal-hero__heading {
+  display: grid;
+  gap: 18px;
+}
+
+.portal-hero__positioning {
+  margin: 0;
+  color: rgba(255, 228, 197, 0.88);
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
 .portal-hero__title {
-  max-width: 760px;
-  margin: 24px 0 0;
+  max-width: 920px;
+  margin: 0;
+  color: white;
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 4.6vw, 4.8rem);
+  font-size: clamp(3.1rem, 4.8vw, 5.2rem);
   font-weight: 700;
-  line-height: 1.22;
+  line-height: 1.18;
 }
 
 .portal-hero__description {
-  max-width: 720px;
-  margin: 24px 0 0;
+  max-width: 760px;
+  margin: 0;
   color: rgba(255, 255, 255, 0.84);
-  font-size: 1.06rem;
-  line-height: 1.95;
+  font-size: 1.04rem;
+  line-height: 1.92;
 }
 
 .portal-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 34px;
+}
+
+.portal-hero__shortcut-rail {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.portal-hero__shortcut {
+  display: grid;
+  gap: 8px;
+  padding: 18px 20px;
+  border-radius: var(--card-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 18px 34px rgba(41, 7, 15, 0.12);
+  transition:
+    transform 0.2s var(--ease-smooth),
+    background-color 0.2s var(--ease-smooth),
+    border-color 0.2s var(--ease-smooth);
+}
+
+.portal-hero__shortcut:hover,
+.portal-hero__shortcut:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+.portal-hero__shortcut-label {
+  color: white;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.portal-hero__shortcut-text {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.72;
 }
 
 .portal-hero__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 26px;
-}
-
-.portal-hero__meta span {
-  padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  font-size: 0.92rem;
-}
-
-.portal-hero__focus {
-  position: relative;
-  z-index: 1;
-  padding: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 18px;
-  background: rgba(103, 10, 14, 0.32);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.portal-hero__focus-label {
-  color: rgba(255, 243, 213, 0.86);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-}
-
-.portal-hero__focus-title {
-  margin-top: 14px;
-  font-family: var(--font-display);
-  font-size: 1.62rem;
-  line-height: 1.4;
-}
-
-.portal-hero__focus-list {
-  margin: 18px 0 0;
-  padding-left: 18px;
-  line-height: 1.95;
-  color: rgba(255, 255, 255, 0.86);
-}
-
-.portal-hero__focus-footer {
-  display: flex;
   gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
 }
 
-.portal-hero__focus-footer span {
-  padding: 8px 12px;
+.portal-hero__meta span,
+.portal-hero__overview-footer span,
+.service-board__directions span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  font-size: 0.82rem;
-}
-
-.portal-hero__dots {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
-.portal-hero__dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.36);
-}
-
-.portal-hero__dots .is-active {
-  width: 28px;
-  border-radius: 999px;
-  background: white;
-}
-
-.portal-section {
-  padding-top: 34px;
-}
-
-.portal-grid,
-.portal-bottom__grid {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
-}
-
-.portal-panel,
-.topic-board,
-.quick-board {
-  padding: 28px;
-  border: 1px solid rgba(13, 94, 170, 0.1);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: var(--shadow-sm);
-}
-
-.portal-panel__head {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.portal-panel__title {
-  color: var(--accent);
-  font-size: 1.52rem;
-  font-weight: 800;
-}
-
-.portal-panel__subtitle {
-  margin-top: 2px;
-  color: var(--muted-foreground);
-  font-size: 0.82rem;
-}
-
-.portal-panel__more {
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.lead-story {
-  display: grid;
-  gap: 22px;
-  grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
-  margin-top: 24px;
-}
-
-.lead-story__cover {
-  min-height: 250px;
-  border-radius: 14px;
-  background-position: center;
-  background-size: cover;
-}
-
-.lead-story__meta {
-  color: var(--muted-foreground);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
   font-size: 0.9rem;
 }
 
-.lead-story__title {
-  display: block;
-  margin-top: 14px;
-  font-size: 1.6rem;
-  font-weight: 800;
-  line-height: 1.45;
+.portal-hero__overview {
+  position: relative;
+  padding: 34px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(122, 14, 18, 0.42), rgba(72, 9, 18, 0.28)),
+    rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px) saturate(140%);
+  -webkit-backdrop-filter: blur(30px) saturate(140%);
+  box-shadow:
+    0 28px 60px rgba(73, 11, 18, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
-.lead-story__excerpt {
-  margin: 16px 0 0;
-  color: var(--muted-foreground);
-  line-height: 1.9;
+.portal-hero__overview::after {
+  content: '';
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.story-list,
-.notice-list {
+.portal-hero__overview::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 18px;
+  bottom: 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.portal-hero__overview-label {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 228, 197, 0.88);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.portal-hero__overview-title {
+  position: relative;
+  z-index: 1;
+  margin: 18px 0 0;
+  color: white;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.34;
+}
+
+.portal-hero__overview-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 14px;
   margin-top: 24px;
 }
 
-.story-item,
-.notice-item {
+.portal-hero__overview-item {
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.portal-hero__overview-key {
+  color: rgba(255, 225, 199, 0.82);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.portal-hero__overview-value {
+  margin-top: 8px;
+  color: white;
+  line-height: 1.8;
+}
+
+.portal-hero__overview-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.portal-hero__controller {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 38px;
+}
+
+.portal-hero__controller-title {
+  color: rgba(255, 228, 197, 0.88);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portal-hero__dots {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.portal-hero__dot {
   display: grid;
   gap: 8px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  padding-bottom: 14px;
-  border-bottom: 1px dashed rgba(13, 94, 170, 0.14);
-}
-
-.story-item__title,
-.notice-item__title {
-  line-height: 1.75;
-}
-
-.story-item__date,
-.notice-item__date {
-  color: var(--muted-foreground);
-  font-size: 0.88rem;
-}
-
-.notice-stats {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 26px;
-}
-
-.notice-stat {
-  display: grid;
-  gap: 6px;
-  padding: 18px;
-  border-radius: 14px;
-  background: var(--surface-blue);
-}
-
-.notice-stat strong {
-  font-size: 1.8rem;
-  color: var(--accent);
-}
-
-.section--paper {
-  background:
-    radial-gradient(circle at 86% 16%, rgba(13, 94, 170, 0.04), transparent 18%),
-    linear-gradient(180deg, #fbfcfd 0%, #f5f8fb 100%);
-}
-
-.section-head {
-  display: grid;
-  gap: 10px;
-}
-
-.direction-grid,
-.team-grid,
-.topic-grid,
-.quick-grid,
-.achievement-grid {
-  display: grid;
-  gap: 20px;
-  margin-top: 32px;
-}
-
-.direction-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.direction-card {
-  padding: 26px 24px;
+  min-height: 88px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
-  background: white;
-  border: 1px solid rgba(13, 94, 170, 0.08);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: rgba(255, 255, 255, 0.72);
+  text-align: left;
+  transition:
+    background-color 0.2s var(--ease-smooth),
+    border-color 0.2s var(--ease-smooth),
+    color 0.2s var(--ease-smooth);
 }
 
-.direction-card__tag {
-  color: var(--secondary);
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-
-.direction-card h3 {
-  margin: 14px 0 10px;
-  font-size: 1.22rem;
-}
-
-.direction-card p {
-  margin: 0;
-  color: var(--muted-foreground);
-  line-height: 1.82;
-}
-
-.section--blue {
-  color: white;
-  background:
-    linear-gradient(135deg, rgba(15, 45, 77, 0.92), rgba(15, 45, 77, 0.92)),
-    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.08), transparent 24%);
-}
-
-.results-layout {
-  display: grid;
-  gap: 24px;
-  align-items: start;
-}
-
-.section-title--light,
-.section-description--light {
+.portal-hero__dot:hover,
+.portal-hero__dot.is-active {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.18);
   color: white;
 }
 
-.section-description--light {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.achievement-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.achievement-card {
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.achievement-card__value {
-  font-size: 2.4rem;
-  font-weight: 800;
-  color: #f3d58a;
-}
-
-.achievement-card__label {
-  margin-top: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.achievement-card p {
-  margin: 12px 0 0;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.76);
-}
-
-.team-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.team-card {
-  padding: 24px;
-  border-radius: 18px;
-  border: 1px solid rgba(13, 94, 170, 0.1);
-  background: white;
-  box-shadow: var(--shadow-sm);
-}
-
-.team-card__avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
-  color: white;
-  font-weight: 800;
-}
-
-.team-card__name {
-  margin-top: 18px;
-  font-size: 1.16rem;
-  font-weight: 800;
-}
-
-.team-card__title {
-  margin-top: 8px;
-  color: var(--accent);
-  font-size: 0.96rem;
-  font-weight: 700;
-}
-
-.team-card p {
-  margin: 14px 0 0;
-  color: var(--muted-foreground);
-  line-height: 1.82;
-}
-
-.topic-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.topic-card {
-  min-height: 180px;
-  padding: 22px;
-  border-radius: 16px;
-  color: white;
-  background:
-    linear-gradient(135deg, rgba(13, 94, 170, 0.88), rgba(15, 45, 77, 0.92)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
-}
-
-.topic-card h3 {
-  margin: 0;
-  font-size: 1.18rem;
-}
-
-.topic-card p {
-  margin: 14px 0 0;
-  line-height: 1.82;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.quick-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.quick-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60px;
-  padding: 0 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(13, 94, 170, 0.12);
-  background: var(--surface-blue);
-  font-weight: 700;
-  text-align: center;
-}
-
-.contact-banner {
-  padding: 34px;
-  border-radius: 18px;
-  border: 1px solid rgba(13, 94, 170, 0.12);
-  background: white;
-  box-shadow: var(--shadow-sm);
-}
-
-.contact-banner__label {
-  color: var(--accent);
-  font-size: 0.92rem;
+.portal-hero__dot-index {
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
 
-.contact-banner__title {
-  margin: 18px 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1.35;
+.portal-hero__dot-title {
+  font-size: 0.96rem;
+  line-height: 1.6;
 }
 
-.contact-banner__description {
-  max-width: 820px;
-  margin: 18px 0 0;
+.section--news {
+  background:
+    linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+}
+
+.news-layout {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  margin-top: 30px;
+}
+
+.news-feature {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+  border-radius: var(--card-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.news-feature__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease-smooth);
+}
+
+.news-feature__slide.is-active {
+  opacity: 1;
+}
+
+.news-feature__cover,
+.news-feature__mask {
+  position: absolute;
+  inset: 0;
+}
+
+.news-feature__cover {
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.02);
+}
+
+.news-feature__mask {
+  background:
+    linear-gradient(180deg, rgba(7, 17, 31, 0.08), rgba(7, 17, 31, 0.82)),
+    linear-gradient(90deg, rgba(142, 13, 24, 0.26), transparent 44%);
+}
+
+.news-feature__content {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  min-height: 100%;
+  padding: 34px 340px 38px 34px;
+  color: white;
+}
+
+.news-feature__kicker {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  width: fit-content;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.news-feature__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.88rem;
+}
+
+.news-feature__date {
+  color: rgba(255, 226, 196, 0.92);
+}
+
+.news-feature__title {
+  max-width: 100%;
+  color: white;
+  font-size: clamp(1.72rem, 2.2vw, 2.26rem);
+  font-weight: 800;
+  line-height: 1.36;
+}
+
+.news-feature__summary {
+  max-width: 100%;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.84);
+  line-height: 1.82;
+}
+
+.news-feature__actions {
+  margin-top: 4px;
+}
+
+.news-feature__indicators {
+  position: absolute;
+  top: 28px;
+  right: 24px;
+  bottom: 28px;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+  width: 280px;
+  align-content: end;
+}
+
+.news-feature__indicator {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.72);
+  text-align: left;
+  transition:
+    background-color 0.2s var(--ease-smooth),
+    border-color 0.2s var(--ease-smooth),
+    color 0.2s var(--ease-smooth);
+}
+
+.news-feature__indicator.is-active {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+}
+
+.news-feature__indicator-date {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.news-feature__indicator-title {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.62;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@media (min-width: 1181px) {
+  .news-feature {
+    min-height: 610px;
+  }
+}
+
+.news-list-panel {
+  padding: 30px;
+  border-radius: var(--card-radius-xl);
+  border: 1px solid var(--card-border-strong);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(248, 251, 255, 0.84));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-md);
+}
+
+.news-list-panel__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.news-list-panel__label {
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.news-list-panel__title {
+  margin: 12px 0 0;
+  font-size: 1.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.news-list-panel__more {
   color: var(--muted-foreground);
-  line-height: 1.9;
+  font-size: 0.94rem;
+  font-weight: 700;
 }
 
-.contact-banner__actions {
+.news-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.news-list__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px dashed rgba(13, 94, 170, 0.12);
+  transition: transform 0.2s var(--ease-smooth);
+}
+
+.news-list__item:hover,
+.news-list__item:focus-visible {
+  transform: translateX(3px);
+  outline: none;
+}
+
+.news-list__date {
+  width: 64px;
+  padding: 10px 8px;
+  border-radius: 16px;
+  background: var(--surface-blue);
+  text-align: center;
+}
+
+.news-list__date strong {
+  display: block;
+  color: var(--accent);
+  font-size: 1.34rem;
+  line-height: 1;
+}
+
+.news-list__date span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted-foreground);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.news-list__category {
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.news-list__text {
+  margin-top: 8px;
+  color: var(--foreground);
+  line-height: 1.72;
+}
+
+.news-list__arrow {
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.section--tab-board {
+  background:
+    linear-gradient(180deg, #f2f6fa 0%, #edf3f8 100%);
+}
+
+.tab-switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(13, 94, 170, 0.06);
+}
+
+.tab-switch__button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #66788d;
+  font-weight: 700;
+  transition:
+    background-color 0.2s var(--ease-smooth),
+    color 0.2s var(--ease-smooth),
+    box-shadow 0.2s var(--ease-smooth);
+}
+
+.tab-switch__button.is-active {
+  background: white;
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-board__grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 34px;
+}
+
+.section--capabilities {
+  background: white;
+}
+
+.columns-layout {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.92fr);
+  margin-top: 34px;
+}
+
+.columns-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.column-card {
+  display: grid;
+  gap: 16px;
+  min-height: 236px;
+  padding: 26px;
+  border-radius: var(--card-radius-xl);
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 253, 0.96));
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.22s var(--ease-smooth),
+    border-color 0.22s var(--ease-smooth),
+    box-shadow 0.22s var(--ease-smooth);
+}
+
+.column-card:hover,
+.column-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(13, 94, 170, 0.24);
+  box-shadow: var(--shadow-md);
+  outline: none;
+}
+
+.column-card__kicker {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.column-card__title {
+  margin: 0;
+  font-size: 1.32rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.column-card__description {
+  margin: 0;
+  color: var(--muted-foreground);
+  line-height: 1.84;
+}
+
+.column-card__more {
+  align-self: end;
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.service-board {
+  display: grid;
+  gap: 20px;
+  padding: 32px;
+  border-radius: var(--card-radius-xl);
+  border: 1px solid rgba(181, 40, 47, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 247, 247, 0.86), rgba(255, 255, 255, 0.82));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
+}
+
+.service-board__label {
+  color: var(--secondary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.service-board__title {
+  margin: 0;
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.38;
+}
+
+.service-board__description {
+  margin: 0;
+  color: var(--muted-foreground);
+  line-height: 1.92;
+}
+
+.service-board__directions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.service-board__directions span {
+  border-color: rgba(181, 40, 47, 0.12);
+  background: rgba(181, 40, 47, 0.06);
+  color: var(--secondary);
+}
+
+.service-board__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 24px;
 }
 
-@media (max-width: 1120px) {
+.section--quick-links {
+  background:
+    linear-gradient(180deg, #fbfdff 0%, #f3f7fb 100%);
+}
+
+.quick-links-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 34px;
+}
+
+@media (max-width: 1180px) {
   .portal-hero__inner,
-  .portal-grid,
-  .portal-bottom__grid,
-  .lead-story,
-  .direction-grid,
-  .team-grid,
-  .achievement-grid {
+  .news-layout,
+  .columns-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-hero__dots {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-hero__controller {
+    padding-bottom: 28px;
+  }
+
+  .news-feature__indicators {
+    position: static;
+    width: auto;
+    padding: 20px 22px 22px;
+    background: rgba(7, 17, 31, 0.88);
+  }
+}
+
+@media (max-width: 1024px) {
+  .portal-hero__inner {
+    min-height: auto;
+    padding: 74px 0 78px;
+  }
+
+  .tab-board__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .columns-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 820px) {
-  .topic-grid,
-  .quick-grid,
-  .notice-stats {
+@media (max-width: 768px) {
+  .portal-hero__title {
+    font-size: clamp(2.4rem, 10vw, 3.6rem);
+  }
+
+  .portal-hero__shortcut-rail {
     grid-template-columns: 1fr;
   }
 
-  .story-item,
-  .notice-item {
+  .portal-hero__overview,
+  .news-list-panel,
+  .service-board {
+    padding: 24px;
+  }
+
+  .news-feature {
+    min-height: 460px;
+  }
+
+  .news-feature__content {
+    padding: 24px;
+  }
+
+  .tab-board__grid,
+  .quick-links-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .portal-hero__inner {
+    padding: 62px 0 64px;
+  }
+
+  .portal-hero__content {
+    gap: 20px;
   }
 
   .portal-hero__title {
-    font-size: clamp(2.2rem, 10vw, 3.4rem);
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .portal-hero__description,
+  .service-board__description {
+    font-size: 0.96rem;
+  }
+
+  .news-feature {
+    min-height: 420px;
+  }
+
+  .news-feature__title {
+    font-size: 1.5rem;
+  }
+
+  .news-list__item {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+
+  .news-list__arrow {
+    display: none;
   }
 }
 </style>

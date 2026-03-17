@@ -8,7 +8,7 @@ import PageHero from '@/components/layout/PageHero.vue';
 const contactNotes = [
   '请在邮件中简要说明单位名称、联系人信息和沟通事项。',
   '如需资料支持，可注明所需材料名称与使用场景，便于及时准备。',
-  '如涉及合作交流，请同步说明合作方向和初步需求，以便进一步对接。',
+  `如涉及合作交流，请同步说明${siteConfig.cooperationDirections.join('、')}等方向的初步需求，以便进一步对接。`,
 ];
 </script>
 
@@ -16,8 +16,8 @@ const contactNotes = [
   <div>
     <PageHero
       badge="联系我们"
-      title="欢迎围绕科研合作、资料交流与应用服务开展沟通。"
-      description="如需了解团队研究方向、建设成果、合作方式或相关服务信息，可通过以下方式与我们联系，我们将及时回复。"
+      :title="`欢迎围绕${siteConfig.cooperationDirections.join('、')}等方向开展沟通。`"
+      :description="`如需了解${siteConfig.brandName}、${siteConfig.projectName}、建设成果、合作方式或相关服务信息，可通过以下方式与我们联系，我们将及时回复。`"
     />
 
     <section class="section section-blue-tint">
@@ -25,7 +25,7 @@ const contactNotes = [
         <div v-reveal class="contact-head">
           <SectionBadge label="联系渠道" />
           <h2 class="section-title">提供稳定、清晰、统一的官方联系渠道。</h2>
-          <p class="section-description">团队当前以官方邮箱为主要沟通方式，用于承接合作咨询、资料申请、业务交流和相关问题反馈。</p>
+          <p class="section-description">团队当前以官方邮箱为主要沟通方式，用于承接{{ siteConfig.cooperationDirections.join('、') }}等相关咨询、资料申请、业务交流和问题反馈。</p>
         </div>
         <div class="contact-grid">
           <ContactCard
@@ -39,7 +39,7 @@ const contactNotes = [
             v-reveal="'80ms'"
             title="官方网站"
             :value="siteConfig.siteUrl"
-            description="用于查看团队概况、研究方向、成果展示和新闻动态等公开信息。"
+            description="用于查看团队概况、研究方向、成果信息和项目动态等公开信息。"
             :link="siteConfig.siteUrl"
           />
           <ContactCard

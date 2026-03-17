@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { siteConfig } from '@/config/site';
 import AppButton from '@/components/common/AppButton.vue';
 import FeatureCard from '@/components/common/FeatureCard.vue';
 import SectionBadge from '@/components/common/SectionBadge.vue';
@@ -36,8 +37,8 @@ const serviceRows = [
   <div>
     <PageHero
       badge="成果转化"
-      title="围绕成果展示、品牌传播与合作交流持续拓展应用服务。"
-      description="团队注重研究成果的规范展示、公开传播与合作服务，努力推动技术研究、平台建设和应用支撑更好服务于相关场景。"
+      :title="`${siteConfig.brandName}围绕成果展示、品牌传播与合作交流持续拓展应用服务。`"
+      :description="`${siteConfig.brandName}注重${siteConfig.projectName}研究成果的规范展示、公开传播与合作服务，努力推动技术研究、平台建设和应用支撑更好服务于相关场景。`"
     />
 
     <section class="section">
@@ -46,7 +47,7 @@ const serviceRows = [
           <SectionBadge label="转化方向" />
           <h2 class="section-title">以展示、传播、服务相结合的方式推进成果转化应用。</h2>
           <p class="section-description">
-            团队围绕公开展示、专题传播和合作支撑等方向持续完善官网内容与服务体系，不断增强成果对外表达能力。
+            团队围绕公开展示、专题传播和合作支撑等方向持续完善官网内容与服务体系，重点面向{{ siteConfig.cooperationDirections.join('、') }}等方向增强成果对外表达能力。
           </p>
         </div>
         <div class="solutions-grid">
@@ -72,7 +73,7 @@ const serviceRows = [
           <SectionBadge label="服务内容" />
           <h2 class="section-title">围绕实际交流需求提供清晰、稳定、规范的服务支持。</h2>
           <p class="section-description">
-            官网聚焦团队介绍、方向说明、成果展示和咨询服务等内容，方便合作单位及时了解团队情况并开展进一步沟通。
+            官网聚焦团队介绍、方向说明、成果展示和咨询服务等内容，方便合作单位及时了解{{ siteConfig.projectName }}建设情况并开展进一步沟通。
           </p>
         </div>
         <div v-reveal="'120ms'" class="fit-card">

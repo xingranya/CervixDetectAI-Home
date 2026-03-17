@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { siteConfig } from '@/config/site';
 import CopyrightGrid from '@/components/common/CopyrightGrid.vue';
 import SectionBadge from '@/components/common/SectionBadge.vue';
 import PageHero from '@/components/layout/PageHero.vue';
@@ -32,8 +33,8 @@ const missionItems = [
   <div>
     <PageHero
       badge="团队概况"
-      title="云端智诊团队聚焦宫颈智能影像、云端协同与临床应用服务。"
-      description="团队围绕宫颈智能影像分析、筛查协同平台建设和成果转化应用持续开展研究与服务工作，致力于为相关场景提供可靠支持。"
+      :title="`${siteConfig.brandName}聚焦宫颈智能影像、云端协同与临床应用服务。`"
+      :description="`${siteConfig.brandName}围绕${siteConfig.projectName}持续开展研究与服务工作，致力于为宫颈疾病筛查与诊疗相关场景提供可靠支持。`"
     />
 
     <section class="section section-blue-tint">
@@ -42,7 +43,8 @@ const missionItems = [
           <SectionBadge label="团队简介" />
           <h2 class="section-title">坚持科研引领、协同创新、服务应用的发展思路。</h2>
           <p class="section-description">
-            云端智诊团队以宫颈疾病筛查场景为基础，围绕智能影像识别、云端业务协同、成果规范展示和合作交流服务开展相关工作。
+            {{ siteConfig.brandName }}以宫颈疾病筛查场景为基础，围绕{{ siteConfig.projectName }}开展建设工作，
+            重点面向{{ siteConfig.cooperationDirections.join('、') }}等方向提供服务支持。
             团队重视科研积累与应用实践相结合，努力推动技术研究、平台建设和服务支撑协同发展。
           </p>
         </div>
