@@ -4,30 +4,35 @@ import { siteConfig } from '@/config/site';
 
 <template>
   <footer class="site-footer">
-    <div class="site-footer__bg-pattern"></div>
     <div class="container site-footer__inner">
       <div class="site-footer__brand-block">
-        <div class="site-footer__brand">CervixDetectAI</div>
+        <div class="site-footer__brand-wrap">
+          <img :src="siteConfig.logoUrl" :alt="siteConfig.brandName" class="site-footer__logo" />
+          <div>
+            <div class="site-footer__brand">{{ siteConfig.brandName }}</div>
+            <div class="site-footer__subtitle">{{ siteConfig.tagline }}</div>
+          </div>
+        </div>
         <p class="site-footer__description">
-          面向医疗机构的宫颈影像智能辅助筛查平台，围绕影像分析、结构化报告与随访协同建立统一工作流。
+          面向临床筛查、智能影像分析与云端协同研究，持续推进团队品牌展示、新闻发布、科研交流与成果转化服务。
         </p>
       </div>
       <div class="site-footer__links">
         <div>
-          <div class="site-footer__label">联系</div>
-          <a href="mailto:support@hpvsc.icu">support@hpvsc.icu</a>
+          <div class="site-footer__label">联系方式</div>
+          <a :href="`mailto:${siteConfig.contact.email}`">{{ siteConfig.contact.email }}</a>
         </div>
         <div>
-          <div class="site-footer__label">访问</div>
-          <a :href="siteConfig.loginUrl" target="_blank" rel="noopener noreferrer">进入系统</a>
+          <div class="site-footer__label">联系地址</div>
+          <span>{{ siteConfig.contact.address }}</span>
         </div>
         <div>
-          <div class="site-footer__label">项目</div>
-          <a href="https://github.com/xingranya/CervixDetectAI" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <div class="site-footer__label">快捷访问</div>
+          <RouterLink to="/about">团队概况</RouterLink>
         </div>
       </div>
       <div class="site-footer__filing">
-        <span>&copy; 2026 CervixDetectAI</span>
+        <span>&copy; 2026 {{ siteConfig.brandName }}</span>
         <span>{{ siteConfig.filingNumber }}</span>
       </div>
     </div>
@@ -39,27 +44,10 @@ import { siteConfig } from '@/config/site';
   position: relative;
   padding: 52px 0 56px;
   color: white;
-  background: var(--dark-soft);
-  overflow: hidden;
-}
-
-.site-footer__bg-pattern {
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(circle at 85% 15%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-.site-footer__bg-pattern::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+    linear-gradient(180deg, rgba(15, 45, 77, 0.96), rgba(15, 45, 77, 0.96)),
+    linear-gradient(135deg, rgba(13, 94, 170, 0.18), transparent 60%);
+  overflow: hidden;
 }
 
 .site-footer__inner {
@@ -72,11 +60,28 @@ import { siteConfig } from '@/config/site';
   max-width: 720px;
 }
 
+.site-footer__brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.site-footer__logo {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+}
+
 .site-footer__brand {
   font-family: var(--font-display);
-  font-size: 1.68rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-size: 1.72rem;
+  font-weight: 700;
+}
+
+.site-footer__subtitle {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
 }
 
 .site-footer__description {
@@ -94,42 +99,20 @@ import { siteConfig } from '@/config/site';
 .site-footer__label {
   margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.56);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
-.site-footer__links a {
-  position: relative;
+.site-footer__links a,
+.site-footer__links span {
   display: inline-flex;
   font-weight: 700;
-  transition:
-    color 0.2s var(--ease-smooth),
-    transform 0.2s var(--ease-spring);
-}
-
-.site-footer__links a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 1px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s var(--ease-spring);
+  line-height: 1.8;
 }
 
 .site-footer__links a:hover {
-  color: var(--accent);
-  transform: translateX(4px);
-}
-
-.site-footer__links a:hover::after {
-  transform: scaleX(1);
+  color: #d7e8fb;
 }
 
 .site-footer__filing {
@@ -143,6 +126,10 @@ import { siteConfig } from '@/config/site';
 }
 
 @media (max-width: 760px) {
+  .site-footer__brand-wrap {
+    align-items: flex-start;
+  }
+
   .site-footer__links {
     grid-template-columns: 1fr;
   }

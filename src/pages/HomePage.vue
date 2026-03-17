@@ -1,250 +1,302 @@
 <script setup lang="ts">
 import { siteConfig } from '@/config/site';
-import { getFeaturedNews } from '@/lib/news';
+import { getFeaturedNews, newsArticles } from '@/lib/news';
 import AppButton from '@/components/common/AppButton.vue';
-import CopyrightGrid from '@/components/common/CopyrightGrid.vue';
-import FeatureCard from '@/components/common/FeatureCard.vue';
-import HeroVisual from '@/components/common/HeroVisual.vue';
-import MetricTile from '@/components/common/MetricTile.vue';
-import NewsCard from '@/components/common/NewsCard.vue';
-import SectionBadge from '@/components/common/SectionBadge.vue';
 
-const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount).slice(0, 3);
+const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount);
+const leadNews = featuredNews[0] ?? newsArticles[0];
+const secondaryNews = newsArticles.filter((article) => article.slug !== leadNews.slug).slice(0, 4);
 
-const capabilityCards = [
+const focusItems = [
+  '坚持以临床需求为导向，持续推进智能影像分析能力建设。',
+  '围绕筛查业务协同、成果应用与服务支持完善平台体系。',
+  '强化新闻发布、成果展示与合作交流，提升团队对外服务能力。',
+];
+
+const notices = [
+  { title: '云端智诊团队官方网站正式上线', date: '2026-03-17' },
+  { title: '团队研究方向与成果展示栏目同步更新', date: '2026-03-15' },
+  { title: '合作交流与资料咨询统一由官方邮箱受理', date: '2026-03-12' },
+  { title: '新闻中心持续发布团队动态与建设进展', date: '2026-03-08' },
+];
+
+const researchDirections = [
   {
-    title: '智能影像辅助分析',
-    description: '围绕宫颈影像识别、风险分层提示与辅助判断输出，提升筛查效率与结果一致性。',
-    tag: 'AI CORE',
-    tone: 'blue' as const,
-    icon: 'AI',
+    title: '智能影像分析',
+    description: '围绕宫颈影像识别、病灶提示与风险分层开展算法研究，形成稳定的核心引擎能力。',
+    tag: '01',
   },
   {
-    title: '病例与患者一体化管理',
-    description: '统一管理患者档案、病例记录、历史检查与结果回看，降低信息分散成本。',
-    tag: 'CASE FLOW',
-    tone: 'slate' as const,
-    highlighted: true,
-    icon: 'CM',
+    title: '云端协同平台',
+    description: '构建病例、分析、报告与随访协同的一体化支撑平台，服务多角色业务联动。',
+    tag: '02',
   },
   {
-    title: '结构化报告输出',
-    description: '围绕筛查结论、风险提示与关键字段生成结构化报告，便于规范留存与共享。',
-    tag: 'REPORT',
-    tone: 'muted' as const,
-    icon: 'RP',
+    title: '临床应用转化',
+    description: '面向筛查机构、妇幼体系与专科场景推进算法与流程的真实业务落地。',
+    tag: '03',
   },
   {
-    title: '报告与随访闭环',
-    description: '从分析结果到复查提醒、计划执行与状态回收，保持筛查流程衔接顺畅。',
-    tag: 'FOLLOW-UP',
-    tone: 'slate' as const,
-    icon: 'FU',
-  },
-  {
-    title: '通知联动',
-    description: '支持分析完成、高风险提醒与随访通知协同分发，减少关键节点遗漏。',
-    tag: 'ALERT',
-    tone: 'dark' as const,
-    icon: 'NT',
-  },
-  {
-    title: 'AI 引擎与偏好配置',
-    description: '支持机构按业务流程维护模型、分析偏好与报告规则，满足不同使用习惯。',
-    tag: 'SETTINGS',
-    tone: 'slate' as const,
-    icon: 'CF',
+    title: '数据治理与规范',
+    description: '聚焦数据安全、结构化表达和过程可追踪，支撑长期规范运营与品牌可信表达。',
+    tag: '04',
   },
 ];
 
-const scenarioCards = [
+const achievements = [
+  { value: '3', label: '软件著作权', description: '持续完善知识产权与品牌表达材料。' },
+  { value: '4', label: '重点栏目', description: '团队概况、研究方向、成果转化与新闻中心统一呈现。' },
+  { value: '24h', label: '邮箱响应机制', description: '合作咨询与资料申请由官方邮箱统一受理。' },
+  { value: '1', label: '官方网站', description: '团队新闻发布、成果展示与合作交流集中对外展示。' },
+];
+
+const teamMembers = [
   {
-    title: '基层筛查机构',
-    description: '以云端部署和标准化流程降低信息化门槛，帮助基层团队更快建立筛查工作面。',
-    tone: 'scenario-card--light',
+    name: '团队负责人',
+    title: '总体统筹与科研组织',
+    description: '负责团队发展规划、外部合作统筹与重点项目推进，保持科研布局与品牌表达一致。',
   },
   {
-    title: '妇幼与专科门诊',
-    description: '围绕病例归档、报告输出和复查安排提升日常门诊效率，减少流程切换负担。',
-    tone: 'scenario-card--light',
+    name: '算法研究组',
+    title: '智能识别与模型优化',
+    description: '持续推进图像识别、辅助判读与风险提示能力建设，服务临床场景迭代。',
   },
   {
-    title: '多点协同场景',
-    description: '让影像、分析、复核与通知在统一平台内流转，支持多角色协同与结果追踪。',
-    tone: 'scenario-card--light',
+    name: '平台工程组',
+    title: '云端架构与业务协同',
+    description: '负责平台工程落地、流程串联与稳定交付，支撑门户与业务系统统一演进。',
   },
+  {
+    name: '转化合作组',
+    title: '产业对接与应用拓展',
+    description: '面向医院、筛查机构与合作伙伴开展交流，推进成果展示、资料输出与合作洽谈。',
+  },
+];
+
+const topicEntries = [
+  { title: '专题专栏', description: '围绕团队建设、重点工作和学术活动发布专题内容。' },
+  { title: '成果展示', description: '集中呈现知识产权、平台能力与阶段性建设成效。' },
+  { title: '合作交流', description: '面向合作伙伴、医疗机构与行业用户提供沟通与服务支持。' },
+  { title: '资料下载', description: '提供团队介绍、成果材料与相关公开资料下载入口。' },
+];
+
+const quickLinks = [
+  '团队概况',
+  '研究方向',
+  '成果转化',
+  '新闻中心',
+  '合作交流',
+  '平台入口',
+  '资料申请',
+  '联系我们',
 ];
 </script>
 
 <template>
   <div class="home-page">
-    <section class="section home-hero">
-      <div class="container home-hero__grid">
-        <div v-reveal class="home-hero__content">
-          <SectionBadge label="Clinical AI Platform" pulse />
-          <h1 class="headline home-hero__title">
-            面向医疗机构的
-            <span class="gradient-text">宫颈影像智能辅助筛查平台</span>
-          </h1>
-          <p class="eyebrow home-hero__description">
-            {{ siteConfig.heroSubtitle }}
-          </p>
-          <div class="home-hero__actions">
-            <AppButton href="mailto:support@hpvsc.icu">邮件咨询</AppButton>
-            <AppButton :href="siteConfig.loginUrl" variant="ghost">进入系统</AppButton>
+    <section class="portal-hero">
+      <div class="container portal-hero__inner">
+        <div class="portal-hero__content" v-reveal>
+          <div class="portal-hero__eyebrow">云端智诊团队官方网站</div>
+          <h1 class="portal-hero__title">以智能影像与云端协同能力，服务宫颈筛查科研与应用转化。</h1>
+          <p class="portal-hero__description">{{ siteConfig.heroSubtitle }}</p>
+          <div class="portal-hero__actions">
+            <AppButton to="/about">查看团队概况</AppButton>
+            <AppButton to="/news" variant="secondary">进入新闻中心</AppButton>
           </div>
-          <div class="home-hero__facts">
-            <article class="home-fact">
-              <div class="home-fact__label">交付形态</div>
-              <div class="home-fact__value">云端 SaaS + 移动端部署</div>
-            </article>
-            <article class="home-fact">
-              <div class="home-fact__label">目标场景</div>
-              <div class="home-fact__value">基层筛查 / 门诊 / 妇幼</div>
-            </article>
-            <article class="home-fact">
-              <div class="home-fact__label">品牌背书</div>
-              <div class="home-fact__value">3 项软件著作权</div>
-            </article>
+          <div class="portal-hero__meta">
+            <span>科研导向</span>
+            <span>平台建设</span>
+            <span>成果转化</span>
+            <span>合作交流</span>
           </div>
         </div>
 
-        <div v-reveal="'100ms'">
-          <HeroVisual />
-        </div>
+        <aside class="portal-hero__focus" v-reveal="'100ms'">
+          <div class="portal-hero__focus-label">团队简介</div>
+          <div class="portal-hero__focus-title">聚焦智能影像与云端协同服务</div>
+          <ul class="portal-hero__focus-list">
+            <li v-for="item in focusItems" :key="item">{{ item }}</li>
+          </ul>
+          <div class="portal-hero__focus-footer">
+            <span>科研引领</span>
+            <span>服务临床</span>
+          </div>
+        </aside>
+      </div>
+      <div class="container portal-hero__dots" aria-hidden="true">
+        <span class="is-active"></span>
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </section>
 
-    <section class="section metrics-section">
-      <div class="container">
-        <div v-reveal>
-          <SectionBadge label="Platform Data" pulse />
-          <h2 class="section-title metrics__title">
-            以清晰、稳定、可追踪的流程支持临床筛查工作。
-          </h2>
-        </div>
-        <div v-reveal="'100ms'" class="metrics-grid">
-          <MetricTile tone="light" value="99.55%" label="辅助准确率基线" description="面向宫颈筛查场景的核心算法参考表现。" />
-          <MetricTile tone="blue" value="3 分钟" label="报告平均周转" description="分析到报告查看的关键链路保持简洁高效。" />
-          <MetricTile tone="slate" value="3 项" label="软件著作权" description="持续完善知识产权与品牌可信表达。" />
-          <MetricTile tone="dark" value="24h" label="随访提醒可配置" description="覆盖计划提醒与人工协同提醒场景。" />
-        </div>
-      </div>
-    </section>
+    <section class="section portal-section">
+      <div class="container portal-grid">
+        <article class="portal-panel portal-panel--news" v-reveal>
+          <div class="portal-panel__head">
+            <div>
+              <div class="portal-panel__title">团队要闻</div>
+              <div class="portal-panel__subtitle">News</div>
+            </div>
+            <RouterLink to="/news" class="portal-panel__more">更多</RouterLink>
+          </div>
 
-    <section class="section section--capabilities">
-      <div class="container">
-        <div v-reveal class="section-header">
-          <SectionBadge label="Capabilities" />
-          <h2 class="section-title">围绕影像分析、病例管理与结果协同构建完整业务支持链路。</h2>
-          <p class="section-description">
-            平台围绕医疗机构真实使用流程设计，兼顾筛查效率、结果表达规范性与长期协同管理能力。
-          </p>
-        </div>
-        <div class="capability-grid">
-          <FeatureCard
-            v-for="(item, index) in capabilityCards"
-            :key="item.title"
-            v-reveal="`${index * 70}ms`"
-            :title="item.title"
-            :description="item.description"
-            :tag="item.tag"
-            :highlighted="item.highlighted"
-            :tone="item.tone"
-          >
-            <template #icon>{{ item.icon }}</template>
-          </FeatureCard>
-        </div>
-      </div>
-    </section>
+          <div class="lead-story">
+            <div class="lead-story__cover" :style="{ backgroundImage: `url(${leadNews.cover})` }"></div>
+            <div class="lead-story__content">
+              <div class="lead-story__meta">{{ leadNews.category }} · {{ leadNews.publishedAt }}</div>
+              <RouterLink :to="`/news/${leadNews.slug}`" class="lead-story__title">
+                {{ leadNews.title }}
+              </RouterLink>
+              <p class="lead-story__excerpt">{{ leadNews.excerpt }}</p>
+            </div>
+          </div>
 
-    <section class="section section--scenarios">
-      <div class="container scenario-layout">
-        <div v-reveal>
-          <SectionBadge label="Scenarios" />
-          <h2 class="section-title">匹配基层筛查、门诊复查与多点协同等典型应用环境。</h2>
-          <p class="section-description">
-            从影像采集、结果输出到后续通知与随访安排，平台强调流程清晰、数据统一与机构协同效率。
-          </p>
-          <div class="scenario-list">
-            <article
-              v-for="(item, index) in scenarioCards"
-              :key="item.title"
-              v-reveal="`${index * 80}ms`"
-              class="scenario-card"
-              :class="item.tone"
+          <div class="story-list">
+            <RouterLink
+              v-for="article in secondaryNews"
+              :key="article.slug"
+              :to="`/news/${article.slug}`"
+              class="story-item"
             >
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.description }}</p>
+              <span class="story-item__title">{{ article.title }}</span>
+              <span class="story-item__date">{{ article.publishedAt }}</span>
+            </RouterLink>
+          </div>
+        </article>
+
+        <article class="portal-panel portal-panel--notice" v-reveal="'120ms'">
+          <div class="portal-panel__head">
+            <div>
+              <div class="portal-panel__title">通知公告</div>
+              <div class="portal-panel__subtitle">Notice</div>
+            </div>
+          </div>
+
+          <div class="notice-list">
+            <div v-for="notice in notices" :key="notice.title" class="notice-item">
+              <span class="notice-item__title">{{ notice.title }}</span>
+              <span class="notice-item__date">{{ notice.date }}</span>
+            </div>
+          </div>
+
+          <div class="notice-stats">
+            <div v-for="item in achievements.slice(0, 2)" :key="item.label" class="notice-stat">
+              <strong>{{ item.value }}</strong>
+              <span>{{ item.label }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section--paper">
+      <div class="container">
+        <div class="section-head" v-reveal>
+          <h2 class="section-title">研究方向</h2>
+          <p class="section-description">围绕智能影像、云端协同、临床应用与数据治理组织团队科研工作与工程建设。</p>
+        </div>
+        <div class="direction-grid">
+          <article
+            v-for="(direction, index) in researchDirections"
+            :key="direction.title"
+            v-reveal="`${index * 70}ms`"
+            class="direction-card"
+          >
+            <div class="direction-card__tag">{{ direction.tag }}</div>
+            <h3>{{ direction.title }}</h3>
+            <p>{{ direction.description }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--blue">
+      <div class="container results-layout">
+        <div v-reveal>
+          <h2 class="section-title section-title--light">核心成果</h2>
+          <p class="section-description section-description--light">
+            围绕团队建设、知识产权、平台能力和服务体系，持续提升宫颈智能影像领域的研究与应用水平。
+          </p>
+        </div>
+        <div class="achievement-grid">
+          <div
+            v-for="(item, index) in achievements"
+            :key="item.label"
+            v-reveal="`${index * 70}ms`"
+            class="achievement-card"
+          >
+            <div class="achievement-card__value">{{ item.value }}</div>
+            <div class="achievement-card__label">{{ item.label }}</div>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--paper">
+      <div class="container team-layout">
+        <div class="section-head" v-reveal>
+          <h2 class="section-title">团队组织</h2>
+          <p class="section-description">团队下设科研统筹、算法研究、平台工程与合作交流等方向，形成分工明确、协同推进的工作机制。</p>
+        </div>
+        <div class="team-grid">
+          <article v-for="(member, index) in teamMembers" :key="member.name" v-reveal="`${index * 70}ms`" class="team-card">
+            <div class="team-card__avatar">{{ member.name.slice(0, 2) }}</div>
+            <div class="team-card__name">{{ member.name }}</div>
+            <div class="team-card__title">{{ member.title }}</div>
+            <p>{{ member.description }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section portal-bottom">
+      <div class="container portal-bottom__grid">
+        <div class="topic-board" v-reveal>
+          <div class="portal-panel__head">
+            <div>
+              <div class="portal-panel__title">专题栏目</div>
+              <div class="portal-panel__subtitle">Columns</div>
+            </div>
+          </div>
+          <div class="topic-grid">
+            <article v-for="topic in topicEntries" :key="topic.title" class="topic-card">
+              <h3>{{ topic.title }}</h3>
+              <p>{{ topic.description }}</p>
             </article>
           </div>
         </div>
 
-        <div v-reveal="'120ms'" class="workflow-panel">
-          <div class="workflow-panel__label">Workflow Map</div>
-          <h3 class="workflow-panel__title">筛查协同主链路</h3>
-          <div class="workflow-steps">
-            <div>影像采集与病例创建</div>
-            <div>AI 分析与风险提示输出</div>
-            <div>结构化报告生成与结果管理</div>
-            <div>通知联动与随访执行</div>
+        <div class="quick-board" v-reveal="'100ms'">
+          <div class="portal-panel__head">
+            <div>
+              <div class="portal-panel__title">快捷通道</div>
+              <div class="portal-panel__subtitle">Quick Links</div>
+            </div>
+          </div>
+          <div class="quick-grid">
+            <RouterLink v-for="item in quickLinks" :key="item" class="quick-link" to="/contact">
+              {{ item }}
+            </RouterLink>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section section--trust" id="trust">
-      <div class="container">
-        <div v-reveal class="section-header section-header--split">
-          <div>
-            <SectionBadge label="Trust Layer" />
-            <h2 class="section-title">以知识产权、品牌信息与持续迭代构建对外可信表达。</h2>
-          </div>
-          <div class="trust-note">
-            <span>品牌信息统一</span>
-            <span>软件著作权展示</span>
-            <span>联系口径清晰</span>
-          </div>
-        </div>
-        <div v-reveal="'100ms'" style="margin-top: 34px">
-          <CopyrightGrid />
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--news">
-      <div class="container">
-        <div class="section-header section-header--news" v-reveal>
-          <div>
-            <SectionBadge label="Newsroom" />
-            <h2 class="section-title">持续发布项目进展、产品动态与合作信息。</h2>
-          </div>
-          <AppButton to="/news" variant="secondary">查看全部新闻</AppButton>
-        </div>
-        <div class="news-grid">
-          <NewsCard
-            v-for="(article, index) in featuredNews"
-            :key="article.slug"
-            v-reveal="`${index * 80}ms`"
-            :article="article"
-          />
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--contact">
-      <div class="container">
-        <div v-reveal class="contact-banner">
-          <SectionBadge label="Contact" pulse />
-          <h2 class="section-title contact-banner__title">
-            欢迎就产品能力、部署方式与合作模式进行进一步沟通。
-          </h2>
-          <p class="section-description contact-banner__description">
-            当前官网统一以固定联系方式承接咨询，不接入复杂表单，保证对外信息口径稳定且维护成本可控。
+    <section class="section section--compact">
+      <div class="container" v-reveal>
+        <div class="contact-banner">
+          <div class="contact-banner__label">合作交流</div>
+          <h2 class="contact-banner__title">欢迎围绕科研合作、平台共建与场景落地开展交流。</h2>
+          <p class="contact-banner__description">
+            欢迎围绕科研合作、技术交流、平台共建、成果应用等方向与我们联系，我们将及时提供相关资料与沟通支持。
           </p>
           <div class="contact-banner__actions">
             <AppButton href="mailto:support@hpvsc.icu">邮件咨询</AppButton>
-            <AppButton to="/contact" variant="ghost">查看联系方式</AppButton>
+            <AppButton to="/contact" variant="secondary">查看联系方式</AppButton>
           </div>
         </div>
       </div>
@@ -253,461 +305,546 @@ const scenarioCards = [
 </template>
 
 <style scoped>
-.home-hero {
-  padding: 0;
-  background: var(--gradient-primary);
+.portal-hero {
   position: relative;
+  padding: 0 0 22px;
+  color: white;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 215, 120, 0.16), transparent 22%),
+    radial-gradient(circle at 80% 72%, rgba(255, 255, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(140, 10, 16, 0.18), transparent 24%),
+    var(--gradient-hero);
   overflow: hidden;
 }
 
-.home-hero::before {
+.portal-hero::before,
+.portal-hero::after {
   content: '';
   position: absolute;
+  pointer-events: none;
+}
+
+.portal-hero::before {
   inset: 0;
   background:
-    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 40%),
-    radial-gradient(circle at 60% 80%, rgba(30, 64, 175, 0.2) 0%, transparent 40%);
-  pointer-events: none;
+    linear-gradient(115deg, rgba(255, 208, 120, 0.08) 0 18%, transparent 18% 100%),
+    radial-gradient(circle at 50% 100%, rgba(255, 201, 91, 0.28), transparent 34%);
 }
 
-.home-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 32px 32px;
-  pointer-events: none;
+.portal-hero::after {
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  height: 110px;
+  background:
+    linear-gradient(90deg, transparent 0 5%, rgba(255, 214, 128, 0.92) 5% 11%, transparent 11% 18%, rgba(255, 214, 128, 0.86) 18% 24%, transparent 24% 30%, rgba(255, 214, 128, 0.92) 30% 36%, transparent 36% 68%, rgba(255, 214, 128, 0.86) 68% 75%, transparent 75% 100%),
+    linear-gradient(180deg, transparent 0 72%, rgba(255, 214, 128, 0.9) 72% 76%, transparent 76% 100%);
+  opacity: 0.45;
 }
 
-.home-hero__grid {
-  display: grid;
-  align-items: center;
-  gap: clamp(36px, 5vw, 64px);
-  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-  min-height: min(740px, calc(100vh - 88px));
-}
-
-.home-hero__content {
-  position: relative;
-  padding: clamp(72px, 10vw, 112px) 0;
-}
-
-.home-hero__content::after {
-  content: '';
-  position: absolute;
-  left: -54px;
-  bottom: 28px;
-  width: 180px;
-  height: 180px;
-  background: rgba(255, 255, 255, 0.06);
-  transform: rotate(16deg);
-}
-
-.home-hero__title,
-.home-hero__description,
-.home-hero__actions,
-.home-hero__facts {
+.portal-hero__inner {
   position: relative;
   z-index: 1;
+  display: grid;
+  gap: 32px;
+  align-items: end;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  min-height: 560px;
+  padding: 74px 0 120px;
 }
 
-.home-hero__title {
-  max-width: 700px;
-  margin-top: 24px;
-  color: white;
-  font-size: clamp(3.1rem, 6vw, 5.35rem);
-  line-height: 1;
+.portal-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
-.home-hero__title .gradient-text {
-  color: white;
+.portal-hero__title {
+  max-width: 760px;
+  margin: 24px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4.6vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.22;
 }
 
-.home-hero__description {
-  max-width: 560px;
-  margin-top: 24px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 1.05rem;
-  line-height: 1.8;
+.portal-hero__description {
+  max-width: 720px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 1.06rem;
+  line-height: 1.95;
 }
 
-.home-hero__actions {
+.portal-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 36px;
-}
-
-.home-hero__facts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 38px;
-}
-
-.home-fact {
-  position: relative;
-  min-height: 124px;
-  padding: 18px 18px 20px;
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition:
-    transform 0.3s var(--ease-spring),
-    background-color 0.3s var(--ease-smooth);
-  overflow: hidden;
-}
-
-.home-fact::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  transform: translate(20%, -20%);
-}
-
-.home-fact:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.home-fact__label {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.home-fact__value {
-  margin-top: 10px;
-  font-size: 0.96rem;
-  font-weight: 800;
-  line-height: 1.55;
-  color: white;
-}
-
-.home-hero :deep(.section-badge) {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.home-hero :deep(.section-badge__label) {
-  color: white;
-}
-
-.home-hero :deep(.section-badge__dot) {
-  background: white;
-}
-
-.home-hero :deep(.app-button--primary) {
-  color: var(--accent);
-  background: white;
-}
-
-.home-hero :deep(.app-button--primary:hover),
-.home-hero :deep(.app-button--primary:focus-visible) {
-  background: rgba(255, 255, 255, 0.92);
-}
-
-.home-hero :deep(.app-button--ghost) {
-  color: white;
-  border-color: white;
-}
-
-.home-hero :deep(.app-button--ghost:hover),
-.home-hero :deep(.app-button--ghost:focus-visible) {
-  color: var(--accent);
-  background: white;
-}
-
-.metrics-section {
-  background:
-    radial-gradient(circle at 14% 18%, rgba(59, 130, 246, 0.08), transparent 16%),
-    radial-gradient(circle at 86% 82%, rgba(59, 130, 246, 0.05), transparent 16%),
-    linear-gradient(180deg, #f7faff 0%, #eef5ff 100%);
-}
-
-.metrics__title {
-  max-width: 760px;
-  color: var(--foreground);
-}
-
-.metrics-grid {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 34px;
 }
 
-.section--capabilities {
-  background:
-    radial-gradient(circle at 86% 24%, rgba(59, 130, 246, 0.05), transparent 16%),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+.portal-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
 }
 
-.section-header {
+.portal-hero__meta span {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.92rem;
+}
+
+.portal-hero__focus {
+  position: relative;
+  z-index: 1;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(103, 10, 14, 0.32);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.portal-hero__focus-label {
+  color: rgba(255, 243, 213, 0.86);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.portal-hero__focus-title {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-size: 1.62rem;
+  line-height: 1.4;
+}
+
+.portal-hero__focus-list {
+  margin: 18px 0 0;
+  padding-left: 18px;
+  line-height: 1.95;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.portal-hero__focus-footer {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.portal-hero__focus-footer span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.82rem;
+}
+
+.portal-hero__dots {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.portal-hero__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.portal-hero__dots .is-active {
+  width: 28px;
+  border-radius: 999px;
+  background: white;
+}
+
+.portal-section {
+  padding-top: 34px;
+}
+
+.portal-grid,
+.portal-bottom__grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1.16fr) minmax(320px, 0.84fr);
+}
+
+.portal-panel,
+.topic-board,
+.quick-board {
+  padding: 28px;
+  border: 1px solid rgba(13, 94, 170, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.portal-panel__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.portal-panel__title {
+  color: var(--accent);
+  font-size: 1.52rem;
+  font-weight: 800;
+}
+
+.portal-panel__subtitle {
+  margin-top: 2px;
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+}
+
+.portal-panel__more {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.lead-story {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
+  margin-top: 24px;
+}
+
+.lead-story__cover {
+  min-height: 250px;
+  border-radius: 14px;
+  background-position: center;
+  background-size: cover;
+}
+
+.lead-story__meta {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.lead-story__title {
+  display: block;
+  margin-top: 14px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.lead-story__excerpt {
+  margin: 16px 0 0;
+  color: var(--muted-foreground);
+  line-height: 1.9;
+}
+
+.story-list,
+.notice-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.story-item,
+.notice-item {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed rgba(13, 94, 170, 0.14);
+}
+
+.story-item__title,
+.notice-item__title {
+  line-height: 1.75;
+}
+
+.story-item__date,
+.notice-item__date {
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+.notice-stats {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 26px;
+}
+
+.notice-stat {
+  display: grid;
+  gap: 6px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--surface-blue);
+}
+
+.notice-stat strong {
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.section--paper {
+  background:
+    radial-gradient(circle at 86% 16%, rgba(13, 94, 170, 0.04), transparent 18%),
+    linear-gradient(180deg, #fbfcfd 0%, #f5f8fb 100%);
+}
+
+.section-head {
   display: grid;
   gap: 10px;
 }
 
-.capability-grid {
+.direction-grid,
+.team-grid,
+.topic-grid,
+.quick-grid,
+.achievement-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 34px;
+  margin-top: 32px;
 }
 
-.section--scenarios {
+.direction-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.direction-card {
+  padding: 26px 24px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid rgba(13, 94, 170, 0.08);
+  box-shadow: var(--shadow-sm);
+}
+
+.direction-card__tag {
+  color: var(--secondary);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.direction-card h3 {
+  margin: 14px 0 10px;
+  font-size: 1.22rem;
+}
+
+.direction-card p {
+  margin: 0;
+  color: var(--muted-foreground);
+  line-height: 1.82;
+}
+
+.section--blue {
+  color: white;
   background:
-    radial-gradient(circle at 12% 76%, rgba(59, 130, 246, 0.06), transparent 16%),
-    linear-gradient(180deg, #f7faff 0%, #eff6ff 100%);
+    linear-gradient(135deg, rgba(15, 45, 77, 0.92), rgba(15, 45, 77, 0.92)),
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.08), transparent 24%);
 }
 
-.scenario-layout {
+.results-layout {
   display: grid;
   gap: 24px;
   align-items: start;
-  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
 }
 
-.scenario-list {
-  display: grid;
-  gap: 16px;
-  margin-top: 28px;
+.section-title--light,
+.section-description--light {
+  color: white;
 }
 
-.scenario-card {
-  padding: 22px 24px;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(59, 130, 246, 0.08);
+.section-description--light {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.achievement-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.achievement-card {
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.achievement-card__value {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #f3d58a;
+}
+
+.achievement-card__label {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.achievement-card p {
+  margin: 12px 0 0;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.team-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.team-card {
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(13, 94, 170, 0.1);
   background: white;
   box-shadow: var(--shadow-sm);
-  transition:
-    transform 0.3s var(--ease-spring),
-    box-shadow 0.3s var(--ease-smooth),
-    border-color 0.3s var(--ease-smooth);
 }
 
-.scenario-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(59, 130, 246, 0.18);
-}
-
-.scenario-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.18rem;
+.team-card__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: white;
   font-weight: 800;
 }
 
-.scenario-card p {
-  margin: 0;
-  line-height: 1.78;
-}
-
-.scenario-card--light {
-  background: white;
-}
-
-.workflow-panel {
-  padding: 28px;
-  border: 1px solid rgba(59, 130, 246, 0.14);
-  border-radius: calc(var(--radius-lg) + 2px);
-  background: var(--dark-soft);
-}
-
-.workflow-panel__label {
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.workflow-panel__title {
-  margin: 16px 0 18px;
-  font-size: 1.8rem;
+.team-card__name {
+  margin-top: 18px;
+  font-size: 1.16rem;
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  color: white;
 }
 
-.workflow-steps {
-  display: grid;
-  gap: 12px;
-}
-
-.workflow-steps div {
-  min-height: 64px;
-  padding: 16px 18px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  font-weight: 700;
-  line-height: 1.55;
-}
-
-.section--trust {
-  background:
-    radial-gradient(circle at 84% 18%, rgba(59, 130, 246, 0.05), transparent 16%),
-    linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
-}
-
-.section-header--split {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-}
-
-.trust-note {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.trust-note span {
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--foreground);
-  color: white;
-  font-size: 0.8rem;
+.team-card__title {
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 0.96rem;
   font-weight: 700;
 }
 
-.section--news {
-  background:
-    radial-gradient(circle at 10% 18%, rgba(59, 130, 246, 0.06), transparent 15%),
-    linear-gradient(180deg, #f7faff 0%, #eef5ff 100%);
+.team-card p {
+  margin: 14px 0 0;
+  color: var(--muted-foreground);
+  line-height: 1.82;
 }
 
-.section-header--news {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-}
-
-.news-grid {
-  display: grid;
-  gap: 20px;
+.topic-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 34px;
 }
 
-.section--contact {
+.topic-card {
+  min-height: 180px;
+  padding: 22px;
+  border-radius: 16px;
+  color: white;
   background:
-    radial-gradient(circle at 88% 20%, rgba(59, 130, 246, 0.05), transparent 16%),
-    linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
+    linear-gradient(135deg, rgba(13, 94, 170, 0.88), rgba(15, 45, 77, 0.92)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+}
+
+.topic-card h3 {
+  margin: 0;
+  font-size: 1.18rem;
+}
+
+.topic-card p {
+  margin: 14px 0 0;
+  line-height: 1.82;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.quick-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background: var(--surface-blue);
+  font-weight: 700;
+  text-align: center;
 }
 
 .contact-banner {
-  position: relative;
-  padding: clamp(30px, 5vw, 46px);
-  border-radius: 20px;
-  background: var(--gradient-primary);
-  box-shadow: var(--shadow-accent-lg);
-  overflow: hidden;
+  padding: 34px;
+  border-radius: 18px;
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background: white;
+  box-shadow: var(--shadow-sm);
 }
 
-.contact-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 10% 90%, rgba(37, 99, 235, 0.2) 0%, transparent 40%);
-  pointer-events: none;
+.contact-banner__label {
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 
 .contact-banner__title {
-  max-width: 760px;
-  color: white;
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.35;
 }
 
 .contact-banner__description {
-  max-width: 690px;
-  color: rgba(255, 255, 255, 0.82);
+  max-width: 820px;
+  margin: 18px 0 0;
+  color: var(--muted-foreground);
+  line-height: 1.9;
 }
 
 .contact-banner__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 28px;
-}
-
-.contact-banner :deep(.section-badge) {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.contact-banner :deep(.section-badge__label) {
-  color: white;
-}
-
-.contact-banner :deep(.section-badge__dot) {
-  background: white;
-}
-
-.contact-banner :deep(.app-button--primary) {
-  color: var(--accent);
-  background: white;
-}
-
-.contact-banner :deep(.app-button--primary:hover),
-.contact-banner :deep(.app-button--primary:focus-visible) {
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.contact-banner :deep(.app-button--ghost) {
-  color: white;
-  border-color: white;
-}
-
-.contact-banner :deep(.app-button--ghost:hover),
-.contact-banner :deep(.app-button--ghost:focus-visible) {
-  color: var(--accent);
-  background: white;
+  margin-top: 24px;
 }
 
 @media (max-width: 1120px) {
-  .home-hero__grid,
-  .scenario-layout,
-  .section-header--split,
-  .section-header--news {
-    grid-template-columns: 1fr;
-  }
-
-  .capability-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .news-grid {
+  .portal-hero__inner,
+  .portal-grid,
+  .portal-bottom__grid,
+  .lead-story,
+  .direction-grid,
+  .team-grid,
+  .achievement-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 960px) {
-  .home-hero__grid {
-    min-height: auto;
-  }
-
-  .home-hero__facts,
-  .metrics-grid,
-  .capability-grid {
+@media (max-width: 820px) {
+  .topic-grid,
+  .quick-grid,
+  .notice-stats {
     grid-template-columns: 1fr;
   }
 
-  .home-hero__title {
-    font-size: clamp(2.8rem, 11vw, 4.2rem);
+  .story-item,
+  .notice-item {
+    grid-template-columns: 1fr;
   }
 
-  .home-hero__description {
-    font-size: 1rem;
+  .portal-hero__title {
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
   }
 }
 </style>

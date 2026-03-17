@@ -28,24 +28,24 @@ defineProps<{
 .page-hero__surface {
   position: relative;
   padding: clamp(36px, 5vw, 62px);
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(13, 94, 170, 0.12);
   border-radius: 20px;
   background:
-    linear-gradient(135deg, rgba(59, 130, 246, 0.07) 0 22%, transparent 22% 100%),
-    white;
+    linear-gradient(90deg, rgba(13, 94, 170, 0.08) 0 8px, transparent 8px 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 252, 0.98));
   overflow: hidden;
 }
 
 .page-hero__surface::after {
   content: '';
   position: absolute;
-  right: -28px;
-  bottom: -34px;
-  width: 150px;
-  height: 150px;
-  border-radius: 22px;
-  background: rgba(59, 130, 246, 0.08);
-  transform: rotate(16deg);
+  right: 36px;
+  top: 24px;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 1px solid rgba(13, 94, 170, 0.08);
+  opacity: 0.5;
 }
 
 .page-hero__title {
@@ -54,10 +54,9 @@ defineProps<{
   max-width: 820px;
   margin: 18px 0 14px;
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.95rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.24;
 }
 
 .page-hero__description {
@@ -67,6 +66,6 @@ defineProps<{
   margin: 0;
   color: var(--muted-foreground);
   font-size: 1rem;
-  line-height: 1.82;
+  line-height: 1.9;
 }
 </style>

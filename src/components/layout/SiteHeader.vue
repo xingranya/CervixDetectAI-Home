@@ -37,11 +37,22 @@ onUnmounted(() => {
 
 <template>
   <header class="site-header" :class="{ 'site-header--scrolled': isScrolled }">
+    <div class="site-header__topbar">
+      <div class="container site-header__topbar-inner">
+        <div class="site-header__topbar-text">{{ siteConfig.tagline }}</div>
+        <div class="site-header__topbar-links">
+          <a :href="`mailto:${siteConfig.contact.email}`">{{ siteConfig.contact.email }}</a>
+          <RouterLink to="/news">新闻中心</RouterLink>
+          <RouterLink to="/contact">合作交流</RouterLink>
+        </div>
+      </div>
+    </div>
+
     <div class="container site-header__inner">
       <RouterLink class="site-header__brand" to="/" @click="closeMobile">
-        <img :src="siteConfig.logoUrl" alt="CervixDetectAI" />
+        <img :src="siteConfig.logoUrl" :alt="siteConfig.brandName" />
         <div>
-          <div class="site-header__name">CervixDetectAI</div>
+          <div class="site-header__name">{{ siteConfig.brandName }}</div>
           <div class="site-header__tagline">{{ siteConfig.tagline }}</div>
         </div>
       </RouterLink>
@@ -68,8 +79,8 @@ onUnmounted(() => {
         >
           {{ item.label }}
         </RouterLink>
-        <AppButton href="mailto:support@hpvsc.icu" variant="primary" aria-label="邮件咨询">
-          预约演示
+        <AppButton href="mailto:support@hpvsc.icu" variant="primary" aria-label="合作咨询">
+          合作咨询
         </AppButton>
       </nav>
     </div>
@@ -81,10 +92,8 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  border-bottom: 1px solid rgba(13, 94, 170, 0.1);
   transition:
     background-color 0.3s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth),
@@ -92,9 +101,35 @@ onUnmounted(() => {
 }
 
 .site-header--scrolled {
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   box-shadow: var(--shadow-md);
-  border-bottom-color: rgba(59, 130, 246, 0.15);
+  border-bottom-color: rgba(13, 94, 170, 0.18);
+}
+
+.site-header__topbar {
+  color: rgba(255, 255, 255, 0.88);
+  background: var(--dark-soft);
+}
+
+.site-header__topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 40px;
+  font-size: 0.88rem;
+}
+
+.site-header__topbar-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.site-header__topbar-links {
+  display: inline-flex;
+  gap: 18px;
+  font-weight: 500;
 }
 
 .site-header__inner {
@@ -102,55 +137,48 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 88px;
+  min-height: 94px;
 }
 
 .site-header__brand {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  transition: transform 0.2s var(--ease-spring);
-}
-
-.site-header__brand:hover {
-  transform: scale(1.02);
 }
 
 .site-header__brand img {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-  box-shadow: var(--shadow-sm);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: contain;
 }
 
 .site-header__name {
-  font-family: var(--font-display);
-  font-size: 1.18rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-family: var(--font-brand);
+  font-size: 1.42rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .site-header__tagline {
   margin-top: 4px;
   color: var(--muted-foreground);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .site-header__nav {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .site-header__link {
   position: relative;
-  padding: 10px 14px;
+  padding: 14px 18px;
   border-radius: var(--radius-sm);
-  color: var(--muted-foreground);
-  font-weight: 600;
+  color: var(--foreground);
+  font-weight: 700;
   transition:
-    transform 0.2s var(--ease-spring),
     background-color 0.2s var(--ease-smooth),
     color 0.2s var(--ease-smooth);
 }
@@ -158,21 +186,20 @@ onUnmounted(() => {
 .site-header__link::after {
   content: '';
   position: absolute;
-  bottom: 6px;
-  left: 14px;
-  right: 14px;
-  height: 2px;
-  background: var(--accent);
+  left: 18px;
+  right: 18px;
+  bottom: 8px;
+  height: 3px;
+  background: var(--secondary);
   border-radius: 1px;
   transform: scaleX(0);
-  transition: transform 0.2s var(--ease-spring);
+  transition: transform 0.2s var(--ease-smooth);
 }
 
 .site-header__link:hover,
 .site-header__link.is-active {
   color: var(--accent);
-  background: var(--surface-blue);
-  transform: translateY(-1px);
+  background: rgba(13, 94, 170, 0.06);
 }
 
 .site-header__link.is-active::after {
@@ -184,17 +211,9 @@ onUnmounted(() => {
   width: 48px;
   height: 48px;
   padding: 0;
-  border: 2px solid var(--foreground);
+  border: 1px solid rgba(13, 94, 170, 0.22);
   border-radius: var(--radius-sm);
   background: white;
-  transition:
-    background-color 0.2s var(--ease-smooth),
-    transform 0.2s var(--ease-spring);
-}
-
-.site-header__toggle:hover {
-  background: var(--surface-blue);
-  transform: scale(1.05);
 }
 
 .site-header__toggle span {
@@ -202,8 +221,7 @@ onUnmounted(() => {
   width: 20px;
   height: 2px;
   margin: 0 auto 6px;
-  background: var(--foreground);
-  transition: transform 0.2s var(--ease-spring);
+  background: var(--accent);
 }
 
 .site-header__toggle span:last-child {
@@ -211,6 +229,15 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1040px) {
+  .site-header__topbar-inner {
+    min-height: 36px;
+    font-size: 0.8rem;
+  }
+
+  .site-header__topbar-links {
+    display: none;
+  }
+
   .site-header__toggle {
     display: inline-flex;
     flex-direction: column;
@@ -227,11 +254,9 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: stretch;
     padding: 18px;
-    border: 1px solid rgba(59, 130, 246, 0.14);
+    border: 1px solid rgba(13, 94, 170, 0.14);
     border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.99);
     box-shadow: var(--shadow-lg);
   }
 
@@ -241,6 +266,16 @@ onUnmounted(() => {
 
   .site-header__link {
     padding: 14px 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header__name {
+    font-size: 1.18rem;
+  }
+
+  .site-header__tagline {
+    font-size: 0.8rem;
   }
 }
 </style>

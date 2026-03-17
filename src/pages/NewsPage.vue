@@ -13,9 +13,9 @@ const categories = computed(() => {
 <template>
   <div>
     <PageHero
-      badge="News"
-      title="聚焦产品动态、项目进展与品牌信息发布。"
-      description="通过持续更新新闻内容，对外呈现平台建设进展、能力升级与合作交流信息。"
+      badge="新闻中心"
+      title="集中发布团队动态、建设进展与成果信息。"
+      description="新闻中心承担官网门户中的官方发布功能，用于对外展示团队进展、专题活动与阶段成果。"
     />
 
     <section class="section section-blue-tint">

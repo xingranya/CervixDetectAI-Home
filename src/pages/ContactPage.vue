@@ -4,43 +4,50 @@ import AppButton from '@/components/common/AppButton.vue';
 import ContactCard from '@/components/common/ContactCard.vue';
 import SectionBadge from '@/components/common/SectionBadge.vue';
 import PageHero from '@/components/layout/PageHero.vue';
+
+const contactNotes = [
+  '请在邮件中简要说明单位名称、联系人信息和沟通事项。',
+  '如需资料支持，可注明所需材料名称与使用场景，便于及时准备。',
+  '如涉及合作交流，请同步说明合作方向和初步需求，以便进一步对接。',
+];
 </script>
 
 <template>
   <div>
     <PageHero
-      badge="Contact"
-      title="欢迎就产品能力、应用场景与合作方式进行沟通。"
-      description="如需了解平台部署、功能配置或项目合作信息，可通过以下方式与我们联系。"
+      badge="联系我们"
+      title="欢迎围绕科研合作、资料交流与应用服务开展沟通。"
+      description="如需了解团队研究方向、建设成果、合作方式或相关服务信息，可通过以下方式与我们联系，我们将及时回复。"
     />
 
     <section class="section section-blue-tint">
       <div class="container">
         <div v-reveal class="contact-head">
-          <SectionBadge label="Touchpoints" />
-          <h2 class="section-title">提供清晰、稳定的联系渠道，便于业务咨询与后续沟通。</h2>
+          <SectionBadge label="联系渠道" />
+          <h2 class="section-title">提供稳定、清晰、统一的官方联系渠道。</h2>
+          <p class="section-description">团队当前以官方邮箱为主要沟通方式，用于承接合作咨询、资料申请、业务交流和相关问题反馈。</p>
         </div>
         <div class="contact-grid">
           <ContactCard
             v-reveal
-            title="技术与商务邮箱"
+            title="官方邮箱"
             :value="siteConfig.contact.email"
-            description="适用于产品咨询、合作沟通、资料索取与问题反馈。"
+            description="适用于合作咨询、资料索取、业务交流与相关问题反馈。"
             link="mailto:support@hpvsc.icu"
           />
           <ContactCard
             v-reveal="'80ms'"
-            title="平台地址"
+            title="官方网站"
             :value="siteConfig.siteUrl"
-            description="便于查看平台入口、项目主页与公开信息。"
+            description="用于查看团队概况、研究方向、成果展示和新闻动态等公开信息。"
             :link="siteConfig.siteUrl"
           />
           <ContactCard
             v-reveal="'160ms'"
-            title="项目仓库"
-            value="GitHub / xingranya"
-            description="用于查看公开资料、版本说明与项目文档。"
-            link="https://github.com/xingranya/CervixDetectAI"
+            title="平台入口"
+            value="云端系统访问入口"
+            description="用于访问相关业务系统入口，便于官网展示与平台服务相互衔接。"
+            :link="siteConfig.loginUrl"
           />
         </div>
       </div>
@@ -49,18 +56,16 @@ import PageHero from '@/components/layout/PageHero.vue';
     <section class="section">
       <div class="container consult-layout">
         <div v-reveal>
-          <SectionBadge label="Consultation" pulse />
-          <h2 class="section-title">建议在沟通时说明机构类型与关注重点，便于更高效对接。</h2>
+          <SectionBadge label="沟通说明" pulse />
+          <h2 class="section-title">建议来信时提供必要信息，便于高效完成沟通对接。</h2>
           <p class="section-description">
-            如能同步说明使用场景、部署计划与关注模块，将有助于更准确地提供对应资料与沟通建议。
+            为提高沟通效率，建议在来信中简要说明单位背景、合作事项或资料需求，团队将根据具体内容及时进行回复与处理。
           </p>
         </div>
         <div v-reveal="'120ms'" class="consult-card">
-          <div class="consult-item"><strong>机构类型：</strong>妇幼、门诊、基层筛查、专科等</div>
-          <div class="consult-item"><strong>关注模块：</strong>AI 分析、报告、随访、通知或订阅</div>
-          <div class="consult-item"><strong>沟通方式：</strong>邮件交流、资料发送与产品介绍</div>
+          <div v-for="item in contactNotes" :key="item" class="consult-item">{{ item }}</div>
           <div class="consult-actions">
-            <AppButton href="mailto:support@hpvsc.icu?subject=CervixDetectAI%20%E9%A2%84%E7%BA%A6%E6%BC%94%E7%A4%BA">
+            <AppButton href="mailto:support@hpvsc.icu?subject=%E4%BA%91%E7%AB%AF%E6%99%BA%E8%AF%8A%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">
               发送咨询邮件
             </AppButton>
           </div>
@@ -74,7 +79,7 @@ import PageHero from '@/components/layout/PageHero.vue';
           <h2 class="contact-summary__title">联系信息</h2>
           <p class="contact-summary__text">
             联系邮箱：{{ siteConfig.contact.email }}<br />
-            地址信息：{{ siteConfig.contact.address }}<br />
+            联系地址：{{ siteConfig.contact.address }}<br />
             备案号：{{ siteConfig.filingNumber }}
           </p>
         </div>
@@ -106,21 +111,17 @@ import PageHero from '@/components/layout/PageHero.vue';
 .consult-card {
   padding: 30px;
   border-radius: 20px;
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(13, 94, 170, 0.12);
   background: var(--surface-slate);
 }
 
 .consult-item {
-  line-height: 1.85;
+  line-height: 1.9;
   color: var(--muted-foreground);
 }
 
 .consult-item + .consult-item {
   margin-top: 14px;
-}
-
-.consult-item strong {
-  color: var(--foreground);
 }
 
 .consult-actions {
@@ -130,7 +131,7 @@ import PageHero from '@/components/layout/PageHero.vue';
 .contact-summary {
   padding: 34px;
   border-radius: 20px;
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(13, 94, 170, 0.12);
   background: white;
 }
 

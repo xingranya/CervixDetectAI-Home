@@ -12,19 +12,19 @@ const routes: RouteRecordRaw[] = [
     path: '/product',
     name: 'product',
     component: () => import('@/pages/ProductPage.vue'),
-    meta: { title: '产品能力' },
+    meta: { title: '研究方向' },
   },
   {
     path: '/solutions',
     name: 'solutions',
     component: () => import('@/pages/SolutionsPage.vue'),
-    meta: { title: '应用场景' },
+    meta: { title: '成果转化' },
   },
   {
     path: '/about',
     name: 'about',
     component: () => import('@/pages/AboutPage.vue'),
-    meta: { title: '项目介绍' },
+    meta: { title: '团队概况' },
   },
   {
     path: '/news',
