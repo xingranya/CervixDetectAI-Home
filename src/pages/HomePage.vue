@@ -6,8 +6,9 @@ import AppButton from '@/components/common/AppButton.vue';
 import DateBadgeCard from '@/components/common/DateBadgeCard.vue';
 import PortalSectionHeading from '@/components/common/PortalSectionHeading.vue';
 import QuickEntryCard from '@/components/common/QuickEntryCard.vue';
+import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 
-const { heroSlides, overviewCard, researchUpdates, notices, topicColumns, quickLinks, servicePanel } =
+const { heroSlides, overviewCard, researchUpdates, notices, topicColumns, quickLinks, servicePanel, metrics } =
   siteConfig.home;
 
 const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount);
@@ -18,6 +19,13 @@ const heroShortcuts = quickLinks.slice(0, 4);
 const newsIndex = ref(0);
 const heroIndex = ref(0);
 const infoTab = ref<'research' | 'notice'>('research');
+
+const metricsList = [
+  { key: 'accuracy', value: metrics.accuracy.value, suffix: metrics.accuracy.suffix, label: metrics.accuracy.label },
+  { key: 'hospitals', value: metrics.hospitals.value, suffix: metrics.hospitals.suffix, label: metrics.hospitals.label },
+  { key: 'cases', value: metrics.cases.value, suffix: metrics.cases.suffix, label: metrics.cases.label },
+  { key: 'detection', value: metrics.detection.value, suffix: metrics.detection.suffix, label: metrics.detection.label, decimals: 1 },
+];
 
 let heroTimer: ReturnType<typeof setInterval> | undefined;
 let newsTimer: ReturnType<typeof setInterval> | undefined;
@@ -104,7 +112,7 @@ onUnmounted(() => {
       </div>
 
       <div class="container portal-hero__controller">
-        <div class="portal-hero__controller-title">首页焦点轮播</div>
+        <div class="portal-hero__controller-title" aria-hidden="true">首页焦点轮播</div>
         <div class="portal-hero__dots" aria-label="首页轮播切换">
           <button
             v-for="(slide, index) in heroSlides"
@@ -215,9 +223,13 @@ onUnmounted(() => {
           v-reveal
         >
           <template #action>
-            <div class="tab-switch">
+            <div class="tab-switch" role="tablist" aria-label="研究动态与通知公告切换">
               <button
                 type="button"
+                role="tab"
+                :aria-selected="infoTab === 'research'"
+                aria-controls="panel-research"
+                id="tab-research"
                 class="tab-switch__button"
                 :class="{ 'is-active': infoTab === 'research' }"
                 @click="infoTab = 'research'"
@@ -226,6 +238,10 @@ onUnmounted(() => {
               </button>
               <button
                 type="button"
+                role="tab"
+                :aria-selected="infoTab === 'notice'"
+                aria-controls="panel-notice"
+                id="tab-notice"
                 class="tab-switch__button"
                 :class="{ 'is-active': infoTab === 'notice' }"
                 @click="infoTab = 'notice'"
@@ -236,17 +252,70 @@ onUnmounted(() => {
           </template>
         </PortalSectionHeading>
 
-        <div class="tab-board__grid">
-          <DateBadgeCard
-            v-for="item in infoTab === 'research' ? researchUpdates : notices"
-            :key="item.title"
-            v-reveal
-            :day="item.day"
-            :month="item.month"
-            :title="item.title"
-            :to="'/news'"
-            :variant="infoTab === 'notice' ? 'notice' : 'default'"
-          />
+        <div
+          role="tabpanel"
+          id="panel-research"
+          aria-labelledby="tab-research"
+          :hidden="infoTab !== 'research'"
+        >
+          <div class="tab-board__grid">
+            <DateBadgeCard
+              v-for="item in researchUpdates"
+              :key="item.title"
+              v-reveal
+              :day="item.day"
+              :month="item.month"
+              :title="item.title"
+              :to="'/news'"
+            />
+          </div>
+        </div>
+        <div
+          role="tabpanel"
+          id="panel-notice"
+          aria-labelledby="tab-notice"
+          :hidden="infoTab !== 'notice'"
+        >
+          <div class="tab-board__grid">
+            <DateBadgeCard
+              v-for="item in notices"
+              :key="item.title"
+              v-reveal
+              :day="item.day"
+              :month="item.month"
+              :title="item.title"
+              :to="'/news'"
+              variant="notice"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--metrics">
+      <div class="container">
+        <PortalSectionHeading
+          title="核心数据指标"
+          english-label="Key Metrics"
+          description="项目持续积累筛查数据，不断优化算法模型，为临床诊断提供可靠的技术支持。"
+          v-reveal
+        />
+
+        <div class="metrics-grid" v-reveal>
+          <div
+            v-for="item in metricsList"
+            :key="item.key"
+            class="metric-card"
+          >
+            <div class="metric-card__value">
+              <AnimatedCounter
+                :value="item.value"
+                :suffix="item.suffix"
+                :decimals="item.decimals || 0"
+              />
+            </div>
+            <div class="metric-card__label">{{ item.label }}</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1004,6 +1073,79 @@ onUnmounted(() => {
   gap: 22px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 34px;
+}
+
+.section--metrics {
+  background:
+    linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+  padding: 64px 0;
+}
+
+.metrics-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 42px;
+}
+
+.metric-card {
+  display: grid;
+  gap: 14px;
+  padding: 32px 24px;
+  border-radius: var(--card-radius-xl);
+  border: 1px solid rgba(59, 130, 246, 0.14);
+  background: white;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  transition:
+    transform 0.22s var(--ease-smooth),
+    box-shadow 0.22s var(--ease-smooth);
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.metric-card__value {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.metric-card__label {
+  color: var(--muted-foreground);
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .section--metrics {
+    padding: 48px 0;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    margin-top: 28px;
+  }
+
+  .metric-card {
+    padding: 24px 20px;
+  }
+
+  .metric-card__value {
+    font-size: 2.2rem;
+  }
 }
 
 .section--capabilities {

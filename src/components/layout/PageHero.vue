@@ -83,4 +83,11 @@ defineProps<{
   font-size: 1rem;
   line-height: 1.9;
 }
+
+@media (max-width: 768px) {
+  .page-hero__surface::before,
+  .page-hero__surface::after {
+    display: none;
+  }
+}
 </style>

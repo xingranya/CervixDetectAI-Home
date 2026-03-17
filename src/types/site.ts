@@ -10,7 +10,6 @@ export interface ConsultationLink {
 }
 
 export interface ContactInfo {
-  phone: string;
   email: string;
   wechatQr?: string;
   address?: string;
@@ -70,6 +69,19 @@ export interface HomeServicePanel {
   secondaryAction: SiteActionLink;
 }
 
+export interface MetricItem {
+  value: number;
+  suffix: string;
+  label: string;
+}
+
+export interface HomeMetrics {
+  accuracy: MetricItem;
+  hospitals: MetricItem;
+  cases: MetricItem;
+  detection: MetricItem;
+}
+
 export interface HomeConfig {
   heroSlides: HomeHeroSlide[];
   overviewCard: HomeOverviewCard;
@@ -78,6 +90,7 @@ export interface HomeConfig {
   topicColumns: HomeTopicColumn[];
   quickLinks: HomeQuickLink[];
   servicePanel: HomeServicePanel;
+  metrics: HomeMetrics;
 }
 
 export interface SiteConfig {

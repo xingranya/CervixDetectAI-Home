@@ -7,37 +7,37 @@ import PageHero from '@/components/layout/PageHero.vue';
 
 const modules = [
   {
-    tag: '方向一',
+    tag: '智能影像',
     title: '智能影像分析',
     description: '围绕宫颈影像识别、病灶提示与辅助判读开展技术研究，持续提升模型能力与应用稳定性。',
     tone: 'blue' as const,
   },
   {
-    tag: '方向二',
+    tag: '云端协同',
     title: '云端协同支撑',
     description: '建设面向筛查业务的云端协同平台，推动病例、分析、报告与随访等环节有序衔接。',
     tone: 'slate' as const,
   },
   {
-    tag: '方向三',
+    tag: '临床应用',
     title: '临床应用服务',
     description: '面向医疗机构与相关场景完善应用支撑能力，促进技术成果服务实际业务需要。',
     tone: 'muted' as const,
   },
   {
-    tag: '方向四',
+    tag: '数据治理',
     title: '数据治理规范',
     description: '加强数据管理、结构化表达和过程规范，夯实平台建设与成果应用的基础支撑。',
     tone: 'slate' as const,
   },
   {
-    tag: '方向五',
+    tag: '成果转化',
     title: '成果展示推广',
     description: '围绕知识产权、专题资料和公开内容建设，持续提升团队成果展示与传播能力。',
     tone: 'muted' as const,
   },
   {
-    tag: '方向六',
+    tag: '人才培养',
     title: '合作交流服务',
     description: '面向科研合作、平台共建和业务交流场景，提供规范、清晰、稳定的对外服务支持。',
     tone: 'dark' as const,

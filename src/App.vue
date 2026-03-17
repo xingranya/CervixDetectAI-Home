@@ -2,6 +2,7 @@
 import SiteHeader from '@/components/layout/SiteHeader.vue';
 import SiteFooter from '@/components/layout/SiteFooter.vue';
 import FloatingContact from '@/components/layout/FloatingContact.vue';
+import BackToTop from '@/components/layout/BackToTop.vue';
 </script>
 
 <template>
@@ -12,5 +13,6 @@ import FloatingContact from '@/components/layout/FloatingContact.vue';
     </main>
     <SiteFooter />
     <FloatingContact />
+    <BackToTop />
   </div>
 </template>

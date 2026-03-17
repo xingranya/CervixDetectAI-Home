@@ -72,6 +72,12 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+  /* Responsive Breakpoints (for reference, use in media queries) */
+  /* --breakpoint-xl: 1180px; Large desktop */
+  /* --breakpoint-lg: 1024px; Desktop/Tablet landscape */
+  /* --breakpoint-md: 768px; Tablet portrait */
+  /* --breakpoint-sm: 520px; Mobile */
+
   --hero-grid:
     linear-gradient(90deg, rgba(16, 38, 63, 0.05) 1px, transparent 1px),
     linear-gradient(rgba(16, 38, 63, 0.05) 1px, transparent 1px);

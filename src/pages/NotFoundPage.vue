@@ -23,7 +23,7 @@
   padding: 42px;
   text-align: center;
   border-radius: 22px;
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  border: 1px solid var(--card-border-strong);
   background: white;
 }
 
@@ -70,7 +70,7 @@
 
 .not-found-button--secondary {
   color: var(--foreground);
-  border: 1px solid rgba(59, 130, 246, 0.14);
+  border: 1px solid rgba(13, 94, 170, 0.14);
   background: var(--surface-slate);
 }
 </style>

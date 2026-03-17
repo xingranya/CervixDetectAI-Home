@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { siteConfig } from '@/config/site';
+
+const currentYear = new Date().getFullYear();
 </script>
 
 <template>
@@ -32,7 +34,7 @@ import { siteConfig } from '@/config/site';
         </div>
       </div>
       <div class="site-footer__filing">
-        <span>&copy; 2026 {{ siteConfig.brandName }}</span>
+        <span>&copy; {{ currentYear }} {{ siteConfig.brandName }}</span>
         <span>{{ siteConfig.filingNumber }}</span>
       </div>
     </div>

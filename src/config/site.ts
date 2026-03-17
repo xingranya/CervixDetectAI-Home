@@ -22,7 +22,6 @@ export const siteConfig: SiteConfig = {
     { label: '联系我们', path: '/contact' },
   ],
   contact: {
-    phone: '商务合作电话信息整理中',
     email: 'support@hpvsc.icu',
     address: '湖北省荆州市 · 云端智诊团队',
     consultationLinks: [
@@ -170,6 +169,28 @@ export const siteConfig: SiteConfig = {
         label: '查看联系方式',
         to: '/contact',
         variant: 'secondary',
+      },
+    },
+    metrics: {
+      accuracy: {
+        value: 99.55,
+        suffix: '%',
+        label: '辅助诊断准确率',
+      },
+      hospitals: {
+        value: 50,
+        suffix: '+',
+        label: '合作医院',
+      },
+      cases: {
+        value: 100000,
+        suffix: '+',
+        label: '累计筛查病例',
+      },
+      detection: {
+        value: 96.8,
+        suffix: '%',
+        label: '病变检出率',
       },
     },
   },

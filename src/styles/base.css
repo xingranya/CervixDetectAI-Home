@@ -341,16 +341,54 @@ select {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
+  /* 禁用装饰性动画 */
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  @keyframes float-card {
+    0%,
+    100% {
+      transform: none;
+    }
+  }
+
+  @keyframes shimmer {
+    0%,
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(13, 94, 170, 0.2);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes float-parallax {
+    0%,
+    100% {
+      transform: none;
+    }
   }
 
   .reveal-on-scroll {
     opacity: 1;
     transform: none;
+    transition: none;
   }
 }
 

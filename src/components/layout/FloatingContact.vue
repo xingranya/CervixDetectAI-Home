@@ -50,6 +50,8 @@
   .floating-contact {
     right: 14px;
     left: 14px;
+    bottom: 24px;
+    z-index: 50;
     justify-content: center;
   }
 }

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { siteConfig } from '@/config/site';
+
+const accuracyValue = siteConfig.home.metrics.accuracy.value;
+const accuracySuffix = siteConfig.home.metrics.accuracy.suffix;
+</script>
+
 <template>
   <div class="hero-visual">
     <div class="hero-visual__bg-shapes">
@@ -26,8 +33,8 @@
     </div>
 
     <div class="hero-visual__panel hero-visual__panel--score">
-      <div class="hero-visual__score">99.55%</div>
-      <div class="hero-visual__caption">辅助准确率基线</div>
+      <div class="hero-visual__score">{{ accuracyValue }}{{ accuracySuffix }}</div>
+      <div class="hero-visual__caption">{{ siteConfig.home.metrics.accuracy.label }}</div>
     </div>
 
     <div class="hero-visual__panel hero-visual__panel--flow">
@@ -294,25 +301,54 @@
 
 @media (max-width: 640px) {
   .hero-visual {
-    min-height: 420px;
+    min-height: 320px;
     padding: 18px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .hero-visual__bg-shapes {
+    display: none;
   }
 
   .hero-visual__panel {
-    padding: 18px;
+    padding: 16px;
   }
 
   .hero-visual__panel--primary {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: 100%;
+    display: none;
   }
 
-  .hero-visual__panel--report,
-  .hero-visual__panel--score,
+  .hero-visual__panel--report {
+    display: none;
+  }
+
+  .hero-visual__panel--score {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+  }
+
   .hero-visual__panel--flow {
     display: none;
+  }
+
+  .hero-visual__score {
+    font-size: 2.2rem;
+  }
+
+  .hero-visual__caption {
+    margin-top: 0;
+    font-size: 0.88rem;
   }
 }
 </style>
