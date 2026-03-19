@@ -9,6 +9,8 @@ interface TeamMember {
   name: string;
   specialty?: string;
   role: string;
+  summary?: string;
+  highlights?: string[];
   bio: string;
   avatar: string;
 }
@@ -56,13 +58,25 @@ const advisors: TeamMember[] = [
     name: '刘华',
     role: '首席顾问',
     avatar: 'https://img1.tucang.cc/api/image/show/9b0711132d240152d75c5f012b9150e4',
+    summary: '武汉大学人民医院东院妇科副主任医师，长期从事妇科临床诊疗与相关研究工作。',
+    highlights: ['妇科副主任医师', '主持省部级课题', '发表 SCI 论文 4 篇'],
     bio: '武汉大学人民医院东院妇科副主任医师，擅长妇科内分泌疾病诊治及妇科腹腔镜相关手术。主持湖北省自然科学基金项目 1 项，参与科研项目 5 项，以第一作者或通讯作者发表 SCI 论文 4 篇、中文核心论文 5 篇，获湖北省科技进步三等奖，并获武汉大学人民医院“医师节医疗菁英”等荣誉。',
   },
   {
     name: '陈燕',
     role: '技术顾问',
     avatar: 'https://img1.tucang.cc/api/image/show/63764991ece43a66a3a8d5a98eceb23d',
+    summary: '荆州市中心医院副主任医师、妇科一病区副主任，长期从事妇产科临床工作。',
+    highlights: ['副主任医师', '妇科肿瘤学硕士', '临床工作十余年'],
     bio: '荆州市中心医院副主任医师、妇科一病区副主任，妇科肿瘤学硕士，毕业于华中科技大学同济医学院临床医学本硕连读专业，从事妇产科临床工作十余年，发表医学学术论文十余篇。擅长妇科生殖道炎症、妇科内分泌、妊娠相关疾病及妇科良恶性肿瘤诊治，并熟练开展妇科腹腔镜微创手术。',
+  },
+  {
+    name: '熊晶',
+    role: '病理学专家顾问',
+    avatar: 'https://img1.tucang.cc/api/image/show/60f23bee31e6a70d5726c6b9c6847231',
+    summary: '华中科技大学同济医学院病理学博士，长期从事病理学临床、教学和科研工作。',
+    highlights: ['病理学博士', '主持国家自然科学基金 2 项', '发表 SCI 论文 10 余篇'],
+    bio: '2007 年毕业于华中科技大学同济医学院，获临床医学学士和硕士学位，同年留校工作。2013 年获华中科技大学同济医学院病理学与病理生理学博士学位。长期从事病理学临床、教学和科研工作，专业方向为肿瘤临床病理诊断，亚专科方向包括中枢神经系统和乳腺疾病病理诊断。曾于 2013 至 2014 年在美国 Emory 大学医学院开展博士后研究，主持国家自然科学基金项目 2 项、湖北省自然科学基金项目 1 项，以第一作者或通讯作者发表 SCI 论文 10 余篇。现任中国研究型医院学会病理学专业委员会青年委员、中国研究型医院学会超微与分子病理专业委员会委员、中国抗癌协会神经肿瘤专业委员会委员，并担任湖北省神经科学学会脑胶质瘤专业委员会委员、湖北省临床肿瘤学会脑胶质瘤专业委员会委员。',
   },
 ];
 
@@ -225,7 +239,14 @@ const overviewStats = [
                   <div class="team-member-card__divider"></div>
                   <div class="team-member-card__body">
                     <div class="team-member-card__label">专家简介</div>
-                    <p>{{ member.bio }}</p>
+                    <p>{{ member.summary ?? member.bio }}</p>
+                    <div v-if="member.highlights?.length" class="team-member-card__highlights">
+                      <span v-for="item in member.highlights" :key="item">{{ item }}</span>
+                    </div>
+                    <details class="team-member-card__details">
+                      <summary>展开详情</summary>
+                      <p>{{ member.bio }}</p>
+                    </details>
                   </div>
                 </div>
               </article>
@@ -528,6 +549,56 @@ const overviewStats = [
   color: var(--muted-foreground);
   font-size: 0.94rem;
   line-height: 1.8;
+}
+
+.team-member-card__highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.team-member-card__highlights span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(13, 94, 170, 0.06);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.team-member-card__details {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(13, 94, 170, 0.14);
+}
+
+.team-member-card__details summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+  list-style: none;
+}
+
+.team-member-card__details summary::-webkit-details-marker {
+  display: none;
+}
+
+.team-member-card__details summary::after {
+  content: '＋';
+  margin-left: 8px;
+}
+
+.team-member-card__details[open] summary::after {
+  content: '－';
+}
+
+.team-member-card__details p {
+  margin-top: 12px;
 }
 
 .about-copyrights {
