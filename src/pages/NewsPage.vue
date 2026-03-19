@@ -31,7 +31,7 @@ function selectCategory(category: string) {
     <PageHero
       badge="新闻中心"
       title="集中发布项目新闻、合作动态与一线实践内容。"
-      :description="`方便查看 ${siteConfig.projectName} 的最新动态、真实场景记录和公开报道。`"
+      :description="`${siteConfig.projectName} 的最新动态、现场记录和公开报道会持续更新在这里。`"
     />
 
     <section class="section section-blue-tint">

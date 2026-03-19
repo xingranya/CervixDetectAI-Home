@@ -25,31 +25,39 @@ withDefaults(
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 16px;
+  min-height: 42px;
+  padding: 0 16px;
   border-radius: 999px;
-  background: var(--foreground);
+  border: 1px solid rgba(13, 94, 170, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.94));
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
 .section-badge--gradient {
-  background: var(--gradient-primary);
-  box-shadow: var(--shadow-accent);
+  border-color: rgba(13, 94, 170, 0.18);
+  background:
+    linear-gradient(135deg, rgba(13, 94, 170, 0.1), rgba(40, 120, 199, 0.08)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.94));
+  box-shadow: var(--shadow-md);
 }
 
 .section-badge--glass {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.72);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: var(--shadow-sm);
 }
 
 .section-badge__dot {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   background: var(--accent-warm);
   border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(209, 162, 65, 0.14);
   transition: transform 0.3s var(--ease-spring);
 }
 
@@ -63,8 +71,8 @@ withDefaults(
 }
 
 .section-badge--gradient .section-badge__dot {
-  background: white;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(13, 94, 170, 0.12);
 }
 
 .section-badge--glass .section-badge__dot {
@@ -73,30 +81,28 @@ withDefaults(
 
 .section-badge__label {
   position: relative;
-  color: white;
+  color: var(--foreground);
   font-family: var(--font-body);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.section-badge--glass .section-badge__label {
-  color: var(--foreground);
+.section-badge--gradient .section-badge__label {
+  color: var(--accent);
 }
 
-/* Glow animation for pulse variant */
 .section-badge--pulse::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--accent-warm);
+  background: linear-gradient(90deg, rgba(209, 162, 65, 0.08), transparent 45%);
   opacity: 0;
   animation: glow-pulse 2s infinite ease-in-out;
   pointer-events: none;
 }
 
 .section-badge--pulse.section-badge--gradient::before {
-  background: white;
+  background: linear-gradient(90deg, rgba(13, 94, 170, 0.08), transparent 45%);
 }
 </style>

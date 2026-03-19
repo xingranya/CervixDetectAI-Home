@@ -336,7 +336,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="重点内容"
           english-label="Capability Matrix"
-          description="从研究方向、平台应用、成果信息和资料服务四个方面快速了解项目。"
+          description="从研究方向、平台应用、成果信息和公开资料四个方面快速了解项目。"
           v-reveal
         />
 
@@ -398,7 +398,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="服务入口"
           english-label="Service Access"
-          description="常用入口集中在这里，方便查看项目介绍、新闻动态、成果信息和平台入口。"
+          description="常用入口集中在这里，可快速查看项目介绍、新闻动态、成果信息和平台入口。"
           v-reveal
         />
 

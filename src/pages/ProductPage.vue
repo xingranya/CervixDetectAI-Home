@@ -57,7 +57,7 @@ const workflowSteps = [
   <div>
     <PageHero
       badge="研究方向"
-      :title="`${siteConfig.brandName}围绕智能影像、平台应用和临床服务持续开展项目建设。`"
+      :title="`${siteConfig.brandName}聚焦智能影像、平台应用和临床服务等重点内容。`"
       description="这里集中介绍项目的主要内容、平台应用、成果信息和合作方向。"
     />
 

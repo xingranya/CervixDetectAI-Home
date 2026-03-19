@@ -43,7 +43,7 @@ export const siteConfig: SiteConfig = {
       {
         title: '集中发布项目进展、成果信息与公开资料',
         description:
-          '方便查看项目新闻、通知信息、成果内容、公开资料和联系入口。',
+          '可在此查看项目新闻、通知信息、成果内容、公开资料和联系入口。',
         positioning: '项目动态与资料中心',
         tags: ['项目发布', '资料服务', '合作交流', '公开信息'],
         image: 'https://img1.tucang.cc/api/image/show/147a9669236d85027422d0ed5ae19ee2',
@@ -57,11 +57,11 @@ export const siteConfig: SiteConfig = {
         image: 'https://img1.tucang.cc/api/image/show/bbe5c07e013259373b4040f98d50ab6d',
       },
       {
-        title: '结合真实场景展示项目建设进展与应用实践',
+        title: '结合真实图片展示项目动态与应用情况',
         description:
-          '通过真实场景图片和新闻内容，帮助来访者更直观地了解项目工作与应用情况。',
-        positioning: '项目实践与新闻展示',
-        tags: ['医院场景', '基层实践', '轮播展示', '新闻联动'],
+          '通过真实图片和新闻内容，让来访者更直观地了解项目进展和实际应用。',
+        positioning: '项目动态与真实图片展示',
+        tags: ['医院图片', '基层实践', '首页轮播', '新闻内容'],
         image: 'https://img1.tucang.cc/api/image/show/d41453c4bd95ac41a27bb52427be2deb',
       },
     ],
@@ -82,12 +82,12 @@ export const siteConfig: SiteConfig = {
       { day: '12', month: '2026-03', title: '公开资料与成果信息同步更新' },
       { day: '08', month: '2026-03', title: '数据管理与关键字段说明进一步完善' },
       { day: '03', month: '2026-03', title: '年度重点工作与合作方向已对外发布' },
-      { day: '27', month: '2026-02', title: '系统联调与业务验证持续开展' },
+      { day: '27', month: '2026-02', title: '系统联调与业务验证持续进行' },
     ],
     notices: [
       { day: '17', month: '2026-03', title: '项目官方网站首页完成新一轮门户化精修并开放对外访问' },
       { day: '14', month: '2026-03', title: '项目公开资料已完成更新' },
-      { day: '10', month: '2026-03', title: '合作交流统一围绕科研合作、平台共建、临床应用、成果转化等方向受理' },
+      { day: '10', month: '2026-03', title: '合作咨询现已开放科研合作、平台共建、临床应用和成果转化等方向' },
       { day: '06', month: '2026-03', title: '项目动态与成果信息持续发布' },
       { day: '03', month: '2026-03', title: '项目介绍与联系页面已完成更新' },
       { day: '26', month: '2026-02', title: '官网公开内容持续完善' },
@@ -146,7 +146,7 @@ export const siteConfig: SiteConfig = {
       {
         label: '合作交流',
         shortLabel: '合作',
-        description: '围绕科研合作、平台共建等方向发起沟通。',
+        description: '查看合作说明并发起联系。',
         to: '/contact',
       },
       {
