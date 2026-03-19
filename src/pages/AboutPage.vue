@@ -10,24 +10,24 @@ const overviewItems = [
   {
     title: '团队定位',
     description:
-      '围绕宫颈疾病筛查与诊疗场景，持续推进智能影像分析、云端协同应用与临床服务支撑相关建设工作。',
+      '围绕宫颈疾病筛查与诊疗相关工作，持续开展智能影像、平台应用和临床服务内容建设。',
   },
   {
     title: '建设重点',
     description:
-      '坚持科研与应用并重，持续推动关键技术研究、平台能力提升和成果规范展示，形成稳定、可信、可持续的对外服务能力。',
+      '坚持科研与应用并重，持续完善关键技术、平台功能、成果内容和官网展示信息。',
   },
   {
     title: '服务对象',
     description:
-      '面向医疗机构、合作单位、科研伙伴与相关用户，提供合作沟通、资料服务、平台支撑与成果交流支持。',
+      '面向医疗机构、合作单位、科研伙伴与相关用户，提供项目介绍、合作沟通、资料获取和平台入口。',
   },
 ];
 
 const missionItems = [
-  '坚持以临床需求为导向，服务宫颈疾病筛查与诊疗相关工作。',
-  '坚持以技术创新为支撑，持续推进智能影像分析与平台协同建设。',
-  '坚持以规范管理为基础，做好成果展示、资料发布与对外交流工作。',
+  '围绕宫颈筛查与诊疗相关需求开展研究和应用。',
+  '持续完善智能影像分析、平台功能与服务内容。',
+  '保持公开资料、成果信息和对外沟通内容清晰准确。',
 ];
 
 const overviewStats = [
@@ -41,19 +41,18 @@ const overviewStats = [
   <div>
     <PageHero
       badge="团队概况"
-      :title="`${siteConfig.brandName}聚焦宫颈智能影像、云端协同与临床应用服务。`"
-      :description="`${siteConfig.brandName}围绕${siteConfig.projectName}持续开展研究与服务工作，致力于为宫颈疾病筛查与诊疗相关场景提供可靠支持。`"
+      :title="`${siteConfig.brandName}围绕宫颈智能影像、平台应用与临床服务持续开展项目建设。`"
+      :description="`${siteConfig.brandName}围绕${siteConfig.projectName}持续更新研究内容、成果信息、公开资料和服务入口，方便了解项目整体情况。`"
     />
 
     <section class="section section-blue-tint">
       <div class="container about-layout">
         <div v-reveal class="about-intro">
           <SectionBadge label="团队简介" />
-          <h2 class="section-title">以科研、平台与临床协同为主线，持续打磨可落地的服务能力。</h2>
+          <h2 class="section-title">围绕宫颈筛查相关工作，持续开展研究、应用与服务。</h2>
           <p class="section-description">
-            {{ siteConfig.brandName }}以宫颈疾病筛查场景为基础，围绕{{ siteConfig.projectName }}开展建设工作，
-            重点面向{{ siteConfig.cooperationDirections.join('、') }}等方向提供服务支持。
-            团队重视科研积累与应用实践相结合，努力推动技术研究、平台建设和服务支撑协同发展。
+            {{ siteConfig.brandName }}围绕{{ siteConfig.projectName }}持续更新研究方向、平台内容、成果信息和公开资料，
+            方便来访者了解项目进展，并围绕{{ siteConfig.cooperationDirections.join('、') }}等方向开展交流。
           </p>
         </div>
 
@@ -97,10 +96,10 @@ const overviewStats = [
     <section class="section section-blue-tint">
       <div class="container">
         <div v-reveal class="about-head">
-          <SectionBadge label="成果基础" />
-          <h2 class="section-title">以知识产权与规范材料支撑团队对外展示与交流合作。</h2>
+          <SectionBadge label="软件著作权" />
+          <h2 class="section-title">已登记的软件著作权与相关成果信息。</h2>
           <p class="section-description">
-            已登记的软件著作权覆盖智能阅片、云服务平台与辅助筛查等核心方向，为官网展示、合作交流与项目说明提供更直观的成果支撑。
+            已登记的软件著作权覆盖智能阅片、云服务平台与辅助筛查等方向，方便查看项目成果与相关信息。
           </p>
         </div>
         <div class="about-copyrights" v-reveal="'120ms'">

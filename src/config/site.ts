@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   tagline: '宫颈智能影像与云端筛查协同创新项目官方网站',
   heroTitle: '云端智诊团队',
   heroSubtitle:
-    '聚焦宫颈智能影像分析、云端筛查协同与临床应用转化，致力于为宫颈疾病筛查与诊疗提供可靠的技术支持与服务能力。',
+    '面向宫颈筛查与诊疗相关工作，官网集中提供项目介绍、新闻动态、成果信息、公开资料和平台入口。',
   siteUrl: 'https://hpvsc.icu',
   loginUrl: 'https://hpvsc.icu/#/login',
   filingNumber: '鄂ICP备2026006203号-2',
@@ -33,34 +33,34 @@ export const siteConfig: SiteConfig = {
   home: {
     heroSlides: [
       {
-        title: '宫颈智能影像与云端筛查协同创新项目持续推进核心能力建设',
+        title: '聚焦宫颈智能影像与云端筛查应用',
         description:
-          '依托云端智诊团队，围绕宫颈智能影像分析、云端筛查协同、临床应用支持与成果转化持续推进重点任务，形成更完整的项目展示与服务体系。',
-        positioning: '面向宫颈筛查场景的智能影像与云端协同创新门户',
+          '官网集中介绍项目背景、研究方向、成果信息和平台服务，方便快速了解项目整体情况。',
+        positioning: '项目介绍与平台服务入口',
         tags: ['智能影像', '云端协同', '临床应用', '成果转化'],
         image: 'https://img1.tucang.cc/api/image/show/7c82e065356b5f946edfc957986f29dc',
       },
       {
-        title: '以正式门户发布项目进展、阶段成果与合作服务信息',
+        title: '集中发布项目进展、成果信息与公开资料',
         description:
-          '首页集中呈现项目定位、建设进展、研究动态、通知公告、专题能力与服务入口，强化公开发布口径、信息层级与机构化呈现方式。',
-        positioning: '项目公开发布、资料服务与合作交流统一窗口',
+          '方便查看项目新闻、通知信息、成果内容、公开资料和联系入口。',
+        positioning: '项目动态与资料中心',
         tags: ['项目发布', '资料服务', '合作交流', '公开信息'],
         image: 'https://img1.tucang.cc/api/image/show/147a9669236d85027422d0ed5ae19ee2',
       },
       {
-        title: '围绕科研合作、平台共建、临床应用、成果转化形成协同表达',
+        title: '面向科研合作、平台共建与临床应用提供服务支持',
         description:
-          '通过首页、新闻中心与关键内页的统一设计语言，系统呈现项目建设方向、业务支撑能力和对外服务价值，提升整体可信度与正式感。',
-        positioning: '兼顾机构权威感与医疗科技感的项目官网首页',
+          '提供清晰的项目介绍、合作说明、联系渠道和平台入口，方便开展交流与使用。',
+        positioning: '合作交流与平台访问',
         tags: ['科研合作', '平台共建', '新闻中心', '官方门户'],
         image: 'https://img1.tucang.cc/api/image/show/bbe5c07e013259373b4040f98d50ab6d',
       },
       {
-        title: '以真实医院场景和基层实践，承接新闻稿、合作动态与专题展示',
+        title: '结合真实场景展示项目建设进展与应用实践',
         description:
-          '首页焦点区接入新的医院实景轮播图，让官网视觉表达和新闻稿内容保持一致，强化项目的真实感、现场感与可信度。',
-        positioning: '真实场景影像驱动的项目官网首屏展示',
+          '通过真实场景图片和新闻内容，帮助来访者更直观地了解项目工作与应用情况。',
+        positioning: '项目实践与新闻展示',
         tags: ['医院场景', '基层实践', '轮播展示', '新闻联动'],
         image: 'https://img1.tucang.cc/api/image/show/d41453c4bd95ac41a27bb52427be2deb',
       },
@@ -77,44 +77,44 @@ export const siteConfig: SiteConfig = {
       footer: ['科研引领', '服务临床', '可信发布'],
     },
     researchUpdates: [
-      { day: '18', month: '2026-03', title: '宫颈智能影像识别模型优化与多场景验证工作持续推进' },
-      { day: '15', month: '2026-03', title: '云端筛查协同平台核心流程梳理与首页展示体系同步完善' },
-      { day: '12', month: '2026-03', title: '结构化报告、成果材料与公开资料联动更新机制完成梳理' },
-      { day: '08', month: '2026-03', title: '项目关键字段规范化与数据治理工作进入集中推进阶段' },
-      { day: '03', month: '2026-03', title: '年度重点任务、服务方向与对外发布口径完成统一' },
-      { day: '27', month: '2026-02', title: '智能识别能力与业务协同能力联调验证工作有序开展' },
+      { day: '18', month: '2026-03', title: '宫颈智能影像识别模型持续优化' },
+      { day: '15', month: '2026-03', title: '云端筛查平台页面与功能完成新一轮更新' },
+      { day: '12', month: '2026-03', title: '公开资料与成果信息同步更新' },
+      { day: '08', month: '2026-03', title: '数据管理与关键字段说明进一步完善' },
+      { day: '03', month: '2026-03', title: '年度重点工作与合作方向已对外发布' },
+      { day: '27', month: '2026-02', title: '系统联调与业务验证持续开展' },
     ],
     notices: [
       { day: '17', month: '2026-03', title: '项目官方网站首页完成新一轮门户化精修并开放对外访问' },
-      { day: '14', month: '2026-03', title: '宫颈智能影像与云端筛查协同创新项目公开资料完成更新' },
+      { day: '14', month: '2026-03', title: '项目公开资料已完成更新' },
       { day: '10', month: '2026-03', title: '合作交流统一围绕科研合作、平台共建、临床应用、成果转化等方向受理' },
-      { day: '06', month: '2026-03', title: '项目动态、平台建设与成果信息栏目保持持续发布' },
-      { day: '03', month: '2026-03', title: '阶段性成果材料与项目介绍文案完成统一整理' },
-      { day: '26', month: '2026-02', title: '项目公开信息发布规范与栏目维护机制进一步完善' },
+      { day: '06', month: '2026-03', title: '项目动态与成果信息持续发布' },
+      { day: '03', month: '2026-03', title: '项目介绍与联系页面已完成更新' },
+      { day: '26', month: '2026-02', title: '官网公开内容持续完善' },
     ],
     topicColumns: [
       {
         title: '智能影像',
         kicker: 'Algorithm & Imaging',
-        description: '围绕宫颈影像识别、病灶提示与辅助判读，集中展示项目算法能力与技术路线。',
+        description: '介绍宫颈影像识别、病灶提示和辅助判读相关内容。',
         to: '/product',
       },
       {
         title: '云端协同',
         kicker: 'Cloud Workflow',
-        description: '面向病例、分析、报告与随访协同流程，呈现筛查业务支撑与平台协作能力。',
+        description: '展示平台在病例管理、分析、报告和随访等方面的应用。',
         to: '/product',
       },
       {
         title: '成果信息',
         kicker: 'Outcomes & IP',
-        description: '围绕知识产权、建设成果与阶段性材料，形成规范、持续更新的成果展示入口。',
+        description: '查看软件著作权、阶段成果和相关专题内容。',
         to: '/solutions',
       },
       {
         title: '资料服务',
         kicker: 'Public Resources',
-        description: '提供项目介绍、合作说明、公开资料与联系服务信息，支撑正式对外交流场景。',
+        description: '获取项目介绍、合作说明、公开资料和联系信息。',
         to: '/contact',
       },
     ],
@@ -134,13 +134,13 @@ export const siteConfig: SiteConfig = {
       {
         label: '核心成果',
         shortLabel: '成果',
-        description: '进入成果转化栏目查看知识产权与专题成果。',
+        description: '查看软件著作权与项目成果内容。',
         to: '/solutions',
       },
       {
         label: '项目动态',
         shortLabel: '动态',
-        description: '浏览项目建设进展、更新公告与公开发布信息。',
+        description: '查看项目新闻、公告和更新内容。',
         to: '/news',
       },
       {
@@ -158,20 +158,20 @@ export const siteConfig: SiteConfig = {
       {
         label: '资料服务',
         shortLabel: '资料',
-        description: '获取项目公开资料、介绍信息与服务说明。',
+        description: '获取项目介绍、公开资料和联系说明。',
         to: '/contact',
       },
       {
         label: '公开信息',
         shortLabel: '公开',
-        description: '查看正式发布内容与项目维护更新信息。',
+        description: '查看官网发布的新闻、公告和相关信息。',
         to: '/news',
       },
     ],
     servicePanel: {
-      title: '平台与服务入口',
+      title: '平台与联系入口',
       description:
-        '官网同步提供平台直达入口与联系服务窗口，便于访问系统、了解项目信息及发起合作沟通。',
+        '可直接进入平台，也可以查看项目介绍、获取公开资料或联系团队。',
       primaryAction: {
         label: '进入平台',
         href: 'https://hpvsc.icu/#/login',

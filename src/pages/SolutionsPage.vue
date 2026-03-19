@@ -9,27 +9,27 @@ const solutionCards = [
   {
     tag: '合作服务',
     title: '机构合作交流',
-    description: '面向医院、妇幼机构及相关合作单位，提供团队介绍、方向说明和合作沟通服务。',
+    description: '面向医院、妇幼机构及相关合作单位，提供项目介绍和合作联系信息。',
     tone: 'blue' as const,
   },
   {
     tag: '成果传播',
-    title: '专题宣传展示',
-    description: '依托新闻中心、专题栏目和成果板块，持续做好团队动态、建设成效和重点成果展示。',
+    title: '成果与专题内容',
+    description: '集中查看项目成果、新闻内容和专题页面。',
     tone: 'slate' as const,
   },
   {
-    tag: '资料支撑',
+    tag: '公开资料',
     title: '公开资料服务',
-    description: '围绕团队概况、研究方向、成果信息和联系方式等内容提供稳定、清晰的公开资料支撑。',
+    description: '方便查看团队概况、研究方向、成果信息和联系方式。',
     tone: 'muted' as const,
   },
 ];
 
 const serviceRows = [
-  { label: '成果展示', value: '通过官网栏目系统呈现团队研究方向、建设进展和阶段成果。' },
-  { label: '品牌传播', value: '依托新闻发布、专题内容与公开资料持续提升团队影响力。' },
-  { label: '合作沟通', value: '统一咨询入口，便于开展科研合作、项目交流和资料对接。' },
+  { label: '成果信息', value: '查看软件著作权、项目成果和相关专题内容。' },
+  { label: '新闻内容', value: '通过新闻中心了解项目动态和公开报道。' },
+  { label: '合作联系', value: '通过官网入口发起合作咨询、项目交流和资料申请。' },
 ];
 </script>
 
@@ -37,17 +37,17 @@ const serviceRows = [
   <div>
     <PageHero
       badge="成果转化"
-      :title="`${siteConfig.brandName}围绕成果展示、品牌传播与合作交流持续拓展应用服务。`"
-      :description="`${siteConfig.brandName}注重${siteConfig.projectName}研究成果的规范展示、公开传播与合作服务，努力推动技术研究、平台建设和应用支撑更好服务于相关场景。`"
+      :title="`${siteConfig.brandName}提供成果展示、公开资料与合作交流信息。`"
+      description="方便查看软件著作权、项目介绍、新闻内容和联系入口。"
     />
 
     <section class="section">
       <div class="container">
         <div v-reveal class="page-section-head">
           <SectionBadge label="转化方向" />
-          <h2 class="section-title">以展示、传播、服务相结合的方式推进成果转化应用。</h2>
+          <h2 class="section-title">围绕成果内容、公开资料和合作交流提供信息服务。</h2>
           <p class="section-description">
-            团队围绕公开展示、专题传播和合作支撑等方向持续完善官网内容与服务体系，重点面向{{ siteConfig.cooperationDirections.join('、') }}等方向增强成果对外表达能力。
+            这里集中展示项目成果、公开资料和合作联系信息，方便了解项目内容并开展进一步沟通。
           </p>
         </div>
         <div class="solutions-grid">
@@ -71,9 +71,9 @@ const serviceRows = [
       <div class="container fit-layout">
         <div v-reveal>
           <SectionBadge label="服务内容" />
-          <h2 class="section-title">围绕实际交流需求提供清晰、稳定、规范的服务支持。</h2>
+          <h2 class="section-title">围绕实际交流需求提供清晰直接的信息入口。</h2>
           <p class="section-description">
-            官网聚焦团队介绍、方向说明、成果展示和咨询服务等内容，方便合作单位及时了解{{ siteConfig.projectName }}建设情况并开展进一步沟通。
+            官网聚焦团队介绍、研究方向、成果信息和联系入口，方便合作单位及时了解项目情况。
           </p>
         </div>
         <div v-reveal="'120ms'" class="fit-card">

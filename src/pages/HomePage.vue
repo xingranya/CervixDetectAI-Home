@@ -101,7 +101,7 @@ onUnmounted(() => {
               <img :src="slide.image" :alt="slide.title" class="portal-hero__visual-image" />
               <div class="portal-hero__visual-mask"></div>
               <div class="portal-hero__visual-copy">
-                <span class="portal-hero__visual-kicker">场景轮播</span>
+                <span class="portal-hero__visual-kicker">项目展示</span>
                 <strong>{{ slide.title }}</strong>
               </div>
             </div>
@@ -211,7 +211,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="研究动态与通知公告"
           english-label="Research & Bulletin"
-          description="以更紧凑的门户信息模块呈现阶段性进展与通知公告，统一日期徽标、悬停态与阅读反馈。"
+          description="集中查看近期研究动态和通知公告。"
           v-reveal
         >
           <template #action>
@@ -317,7 +317,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="软件著作权"
           english-label="Software Copyright"
-          description="已完成登记的软件著作权成果集中展示，作为项目能力建设与成果沉淀的重要支撑。"
+          description="这里集中展示已登记的软件著作权信息。"
           v-reveal
         >
           <template #action>
@@ -334,9 +334,9 @@ onUnmounted(() => {
     <section class="section section--capabilities">
       <div class="container">
         <PortalSectionHeading
-          title="能力矩阵"
+          title="重点内容"
           english-label="Capability Matrix"
-          description="围绕智能影像、云端协同、成果信息与资料服务构建专题入口，让首页栏目更接近正式机构门户。"
+          description="从研究方向、平台应用、成果信息和资料服务四个方面快速了解项目。"
           v-reveal
         />
 
@@ -346,7 +346,7 @@ onUnmounted(() => {
               <div class="column-card__kicker">{{ item.kicker }}</div>
               <h3 class="column-card__title">{{ item.title }}</h3>
               <p class="column-card__description">{{ item.description }}</p>
-              <span class="column-card__more">进入栏目</span>
+              <span class="column-card__more">查看内容</span>
             </RouterLink>
           </div>
 
@@ -398,7 +398,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="服务入口"
           english-label="Service Access"
-          description="统一入口矩阵承接概览、研究、成果、动态与联系服务，增强首页导向性与识别度。"
+          description="常用入口集中在这里，方便查看项目介绍、新闻动态、成果信息和平台入口。"
           v-reveal
         />
 
@@ -465,19 +465,24 @@ onUnmounted(() => {
   opacity: 0.45;
 }
 
+.portal-hero .container {
+  width: min(1440px, calc(100vw - 40px));
+}
+
 .portal-hero__inner {
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 42px;
+  gap: clamp(24px, 2.8vw, 44px);
   align-items: center;
-  grid-template-columns: minmax(0, 1fr) minmax(520px, 0.98fr);
+  grid-template-columns: minmax(500px, 0.9fr) minmax(680px, 1.2fr);
   padding: 76px 0 72px;
 }
 
 .portal-hero__content {
   display: grid;
   gap: 30px;
+  max-width: 700px;
 }
 
 .portal-hero__eyebrow {
@@ -516,17 +521,18 @@ onUnmounted(() => {
 }
 
 .portal-hero__title {
-  max-width: 920px;
+  max-width: 700px;
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-display);
-  font-size: clamp(3.1rem, 4.8vw, 5.2rem);
+  font-size: clamp(2.9rem, 4vw, 4.7rem);
   font-weight: 700;
-  line-height: 1.18;
+  line-height: 1.14;
+  text-wrap: balance;
 }
 
 .portal-hero__description {
-  max-width: 760px;
+  max-width: 620px;
   margin: 0;
   color: var(--muted-foreground);
   font-size: 1.04rem;
@@ -602,12 +608,14 @@ onUnmounted(() => {
 .portal-hero__aside {
   display: flex;
   justify-content: flex-end;
+  align-items: stretch;
 }
 
 .portal-hero__visual {
   position: relative;
-  width: min(100%, 620px);
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  max-width: min(100%, 980px);
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 32px;
   border: 1px solid rgba(13, 94, 170, 0.12);
@@ -1235,6 +1243,10 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1180px) {
+  .portal-hero .container {
+    width: var(--container-width);
+  }
+
   .portal-hero__inner,
   .news-layout,
   .columns-layout {
@@ -1259,7 +1271,8 @@ onUnmounted(() => {
   }
 
   .portal-hero__visual {
-    width: min(100%, 640px);
+    max-width: min(100%, 760px);
+    aspect-ratio: 16 / 10;
   }
 
   .tab-board__grid {
@@ -1287,9 +1300,10 @@ onUnmounted(() => {
   }
 
   .portal-hero__visual {
-    width: min(100%, 560px);
+    width: min(100%, 680px);
+    max-width: 100%;
     padding: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
   }
 
   .news-feature {

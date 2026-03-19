@@ -30,8 +30,8 @@ function selectCategory(category: string) {
   <div>
     <PageHero
       badge="新闻中心"
-      title="汇集医院调研、合作进展与基层实践，让项目动态更完整地融入官方网站。"
-      :description="`围绕 ${siteConfig.projectName} 的一线走访、合作签约与基层服务实践，新闻中心集中展示阶段进展、真实场景反馈与项目对外传播内容。`"
+      title="集中发布项目新闻、合作动态与一线实践内容。"
+      :description="`方便查看 ${siteConfig.projectName} 的最新动态、真实场景记录和公开报道。`"
     />
 
     <section class="section section-blue-tint">
@@ -52,7 +52,7 @@ function selectCategory(category: string) {
             </div>
           </div>
           <p class="news-overview__text">
-            当前新闻稿已统一整理为站点标准内容，首页、新闻中心与详情页共享同一数据源，便于后续继续补充医院调研、合作动态与项目公开报道。
+            新闻内容会持续更新，首页、新闻中心和详情页展示的是同一批稿件，方便统一查看。
           </p>
         </div>
 

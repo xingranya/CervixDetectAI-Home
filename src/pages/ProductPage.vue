@@ -9,47 +9,47 @@ const modules = [
   {
     tag: '智能影像',
     title: '智能影像分析',
-    description: '围绕宫颈影像识别、病灶提示与辅助判读开展技术研究，持续提升模型能力与应用稳定性。',
+    description: '介绍宫颈影像识别、病灶提示和辅助判读相关研究内容。',
     tone: 'blue' as const,
   },
   {
     tag: '云端协同',
-    title: '云端协同支撑',
-    description: '建设面向筛查业务的云端协同平台，推动病例、分析、报告与随访等环节有序衔接。',
+    title: '云端平台应用',
+    description: '展示病例管理、分析、报告和随访等功能内容。',
     tone: 'slate' as const,
   },
   {
     tag: '临床应用',
     title: '临床应用服务',
-    description: '面向医疗机构与相关场景完善应用支撑能力，促进技术成果服务实际业务需要。',
+    description: '介绍项目在医疗机构相关工作中的应用内容与服务方向。',
     tone: 'muted' as const,
   },
   {
     tag: '数据治理',
-    title: '数据治理规范',
-    description: '加强数据管理、结构化表达和过程规范，夯实平台建设与成果应用的基础支撑。',
+    title: '数据治理与规范',
+    description: '展示数据管理、结构化表达和相关规范内容。',
     tone: 'slate' as const,
   },
   {
     tag: '成果转化',
-    title: '成果展示推广',
-    description: '围绕知识产权、专题资料和公开内容建设，持续提升团队成果展示与传播能力。',
+    title: '成果与资料',
+    description: '查看软件著作权、专题资料和公开内容。',
     tone: 'muted' as const,
   },
   {
     tag: '人才培养',
     title: '合作交流服务',
-    description: '面向科研合作、平台共建和业务交流场景，提供规范、清晰、稳定的对外服务支持。',
+    description: '提供科研合作、平台共建和业务交流相关信息。',
     tone: 'dark' as const,
   },
 ];
 
 const workflowSteps = [
-  '围绕重点需求明确研究任务与建设目标',
-  '推进关键技术研究与平台能力协同提升',
-  '形成规范成果材料并开展专题展示',
-  '依托新闻发布与公开资料做好成果传播',
-  '围绕合作交流推动应用服务与成果落地',
+  '明确研究方向和重点内容',
+  '持续完善算法、平台和应用功能',
+  '更新成果信息与公开资料',
+  '发布项目动态与应用进展',
+  '提供合作咨询与平台入口',
 ];
 </script>
 
@@ -57,17 +57,17 @@ const workflowSteps = [
   <div>
     <PageHero
       badge="研究方向"
-      :title="`${siteConfig.brandName}围绕智能影像、云端协同与临床应用持续推进重点研究方向。`"
-      :description="`${siteConfig.brandName}聚焦${siteConfig.projectName}建设需求，持续推进宫颈智能影像分析、业务协同支撑、数据治理规范和成果推广服务等方向。`"
+      :title="`${siteConfig.brandName}围绕智能影像、平台应用和临床服务持续开展项目建设。`"
+      description="这里集中介绍项目的主要内容、平台应用、成果信息和合作方向。"
     />
 
     <section class="section">
       <div class="container">
         <div v-reveal class="page-section-head">
           <SectionBadge label="方向布局" />
-          <h2 class="section-title">面向技术研究、平台建设与应用服务形成系统化布局。</h2>
+          <h2 class="section-title">从研究内容到应用服务，集中介绍项目主要方向。</h2>
           <p class="section-description">
-            团队围绕核心技术、业务协同、规范管理和成果服务持续推进建设工作，不断提升{{ siteConfig.projectName }}的研究深度和应用价值。
+            这里汇总了项目的研究内容、平台功能、数据规范、成果信息和合作交流相关内容。
           </p>
         </div>
         <div class="product-grid">
@@ -90,10 +90,10 @@ const workflowSteps = [
     <section class="section section--workflow">
       <div class="container product-layout">
         <div v-reveal>
-          <SectionBadge label="工作主线" pulse />
-          <h2 class="section-title">从研究推进到成果服务，形成衔接紧密的工作主线。</h2>
+          <SectionBadge label="内容概览" pulse />
+          <h2 class="section-title">从研究内容到公开服务，页面信息清晰衔接。</h2>
           <p class="section-description">
-            团队坚持需求牵引、协同推进、规范展示和服务应用相结合，努力推动重点方向持续取得阶段性成效。
+            通过研究介绍、成果信息、新闻内容和合作入口的组合展示，方便快速了解项目全貌。
           </p>
         </div>
         <div v-reveal="'120ms'" class="workflow-card">
@@ -105,9 +105,9 @@ const workflowSteps = [
     <section class="section section--compact">
       <div class="container" v-reveal>
         <div class="callout-card">
-          <h2 class="callout-card__title">以持续研究与务实应用推动团队发展。</h2>
+          <h2 class="callout-card__title">持续完善项目内容与服务入口。</h2>
           <p class="callout-card__description">
-            团队将继续围绕关键技术攻关、平台能力完善、服务场景拓展和成果应用推广等方面开展工作，不断增强对{{ siteConfig.cooperationDirections.join('、') }}等场景的支撑能力。
+            后续将继续更新研究进展、平台功能、公开资料和合作信息，方便及时获取最新内容。
           </p>
           <div class="callout-card__actions">
             <AppButton to="/news">查看团队动态</AppButton>
