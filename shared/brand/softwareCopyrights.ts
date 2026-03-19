@@ -7,26 +7,38 @@ export interface SoftwareCopyright {
   imageUrl?: string;
 }
 
-export const SORTED_SOFTWARE_COPYRIGHTS: SoftwareCopyright[] = [
+const parseRegistrationNo = (registrationNo: string): number => {
+  const numericPart = registrationNo.replace(/\D/g, '');
+  return Number.parseInt(numericPart, 10) || 0;
+};
+
+export const SOFTWARE_COPYRIGHTS: SoftwareCopyright[] = [
   {
-    id: '1',
-    version: 'V1.0',
-    name: 'CervixDetectAI 宫颈影像智能辅助筛查系统',
-    registrationNo: '2025SR1234567',
-    certificateNo: '软著登字第12345678号',
+    id: 'cervix-intelligent-reading-grading-v1',
+    version: 'V1.0.0',
+    name: '宫颈智能阅片与分级管理系统',
+    registrationNo: '2026SR0224083',
+    certificateNo: '软著登字第17438364号',
+    imageUrl: 'https://img1.tucang.cc/api/image/show/891726e07f8df56776b90b11f4fe801c',
   },
   {
-    id: '2',
-    version: 'V1.0',
-    name: 'CervixDetectAI 结构化报告生成系统',
-    registrationNo: '2025SR1234568',
-    certificateNo: '软著登字第12345679号',
+    id: 'primary-cervical-screening-cloud-platform-v1',
+    version: 'V1.0.0',
+    name: '基层宫颈癌筛查云服务平台',
+    registrationNo: '2026SR0218929',
+    certificateNo: '软著登字第17433210号',
+    imageUrl: 'https://img1.tucang.cc/api/image/show/0fa3bb9507fbe9c7cfc73dbeebdd0968',
   },
   {
-    id: '3',
-    version: 'V1.0',
-    name: 'CervixDetectAI 随访管理协同系统',
-    registrationNo: '2025SR1234569',
-    certificateNo: '软著登字第12345680号',
+    id: 'cervix-navigation-ai-screening-v1',
+    version: 'V1.0.0',
+    name: '宫颈护航智能辅助筛查系统',
+    registrationNo: '2026SR0207339',
+    certificateNo: '软著登字第17421620号',
+    imageUrl: 'https://img1.tucang.cc/api/image/show/a8e0b88a3384cb87a11db07a0a96d2f2',
   },
 ];
+
+export const SORTED_SOFTWARE_COPYRIGHTS: SoftwareCopyright[] = [...SOFTWARE_COPYRIGHTS].sort(
+  (a, b) => parseRegistrationNo(b.registrationNo) - parseRegistrationNo(a.registrationNo),
+);

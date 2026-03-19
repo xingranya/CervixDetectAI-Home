@@ -37,17 +37,6 @@ onUnmounted(() => {
 
 <template>
   <header class="site-header" :class="{ 'site-header--scrolled': isScrolled }">
-    <div class="site-header__topbar">
-      <div class="container site-header__topbar-inner">
-        <div class="site-header__topbar-text">{{ siteConfig.tagline }}</div>
-        <div class="site-header__topbar-links">
-          <a :href="`mailto:${siteConfig.contact.email}`">{{ siteConfig.contact.email }}</a>
-          <RouterLink to="/news">新闻中心</RouterLink>
-          <RouterLink to="/contact">合作交流</RouterLink>
-        </div>
-      </div>
-    </div>
-
     <div class="container site-header__inner">
       <RouterLink class="site-header__brand" to="/" @click="closeMobile">
         <img :src="siteConfig.logoUrl" :alt="siteConfig.brandName" />
@@ -79,8 +68,8 @@ onUnmounted(() => {
         >
           {{ item.label }}
         </RouterLink>
-        <AppButton href="mailto:support@hpvsc.icu" variant="primary" aria-label="合作咨询">
-          合作咨询
+        <AppButton :href="siteConfig.loginUrl" target="_blank" variant="primary" aria-label="平台入口">
+          平台入口
         </AppButton>
       </nav>
     </div>
@@ -104,32 +93,6 @@ onUnmounted(() => {
   background: white;
   box-shadow: var(--shadow-md);
   border-bottom-color: rgba(13, 94, 170, 0.18);
-}
-
-.site-header__topbar {
-  color: rgba(255, 255, 255, 0.88);
-  background: var(--dark-soft);
-}
-
-.site-header__topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  min-height: 40px;
-  font-size: 0.88rem;
-}
-
-.site-header__topbar-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.site-header__topbar-links {
-  display: inline-flex;
-  gap: 18px;
-  font-weight: 500;
 }
 
 .site-header__inner {
@@ -229,15 +192,6 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1040px) {
-  .site-header__topbar-inner {
-    min-height: 36px;
-    font-size: 0.8rem;
-  }
-
-  .site-header__topbar-links {
-    display: none;
-  }
-
   .site-header__toggle {
     display: inline-flex;
     flex-direction: column;

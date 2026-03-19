@@ -1,10 +1,16 @@
 <script setup lang="ts">
-defineProps<{
-  title: string;
-  value: string;
-  description: string;
-  link?: string;
-}>();
+withDefaults(
+  defineProps<{
+    title: string;
+    value: string;
+    description: string;
+    link?: string;
+    linkLabel?: string;
+  }>(),
+  {
+    linkLabel: '立即前往',
+  },
+);
 </script>
 
 <template>
@@ -13,7 +19,7 @@ defineProps<{
     <div class="contact-card__value">{{ value }}</div>
     <p class="contact-card__description">{{ description }}</p>
     <a v-if="link" class="contact-card__link" :href="link" target="_blank" rel="noopener noreferrer">
-      立即前往 ↗
+      {{ linkLabel }} ↗
     </a>
   </article>
 </template>

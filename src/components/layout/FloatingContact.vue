@@ -1,7 +1,17 @@
+<script setup lang="ts">
+import { siteConfig } from '@/config/site';
+</script>
+
 <template>
-  <a class="floating-contact" href="mailto:support@hpvsc.icu" aria-label="邮件咨询 CervixDetectAI">
+  <a
+    class="floating-contact"
+    :href="siteConfig.loginUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="进入 HPVSC 平台"
+  >
     <span class="floating-contact__dot"></span>
-    <span>商务咨询</span>
+    <span>平台入口</span>
   </a>
 </template>
 

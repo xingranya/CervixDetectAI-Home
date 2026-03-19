@@ -1,14 +1,34 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
+
+const props = defineProps<{
   label: string;
   shortLabel: string;
   description: string;
-  to: string;
+  to?: string;
+  href?: string;
 }>();
+
+const componentType = computed(() => (props.href ? 'a' : RouterLink));
+
+const componentProps = computed(() => {
+  if (props.href) {
+    return {
+      href: props.href,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    };
+  }
+
+  return {
+    to: props.to ?? '/',
+  };
+});
 </script>
 
 <template>
-  <RouterLink class="quick-entry-card" :to="to">
+  <component :is="componentType" class="quick-entry-card" v-bind="componentProps">
     <div class="quick-entry-card__icon" :data-icon="shortLabel" aria-hidden="true">
       <svg v-if="shortLabel === '概览'" viewBox="0 0 24 24" class="quick-entry-card__svg">
         <rect x="3.5" y="4" width="7" height="7" rx="2" />
@@ -70,7 +90,7 @@ defineProps<{
     </div>
 
     <span class="quick-entry-card__arrow" aria-hidden="true">↗</span>
-  </RouterLink>
+  </component>
 </template>
 
 <style scoped>

@@ -60,7 +60,8 @@ export interface HomeQuickLink {
   label: string;
   shortLabel: string;
   description: string;
-  to: string;
+  to?: string;
+  href?: string;
 }
 
 export interface HomeServicePanel {

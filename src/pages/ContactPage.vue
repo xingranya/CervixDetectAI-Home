@@ -6,9 +6,9 @@ import SectionBadge from '@/components/common/SectionBadge.vue';
 import PageHero from '@/components/layout/PageHero.vue';
 
 const contactNotes = [
-  '请在邮件中简要说明单位名称、联系人信息和沟通事项。',
-  '如需资料支持，可注明所需材料名称与使用场景，便于及时准备。',
-  `如涉及合作交流，请同步说明${siteConfig.cooperationDirections.join('、')}等方向的初步需求，以便进一步对接。`,
+  '请说明单位或机构名称、联系人姓名及联系方式，便于及时回复。',
+  '如需项目介绍、合作材料或公开资料，请注明具体用途和所需内容。',
+  '如遇平台使用问题，建议附上相关页面信息或问题截图，便于快速处理。',
 ];
 </script>
 
@@ -16,38 +16,41 @@ const contactNotes = [
   <div>
     <PageHero
       badge="联系我们"
-      :title="`欢迎围绕${siteConfig.cooperationDirections.join('、')}等方向开展沟通。`"
-      :description="`如需了解${siteConfig.brandName}、${siteConfig.projectName}、建设成果、合作方式或相关服务信息，可通过以下方式与我们联系，我们将及时回复。`"
+      title="合作咨询、资料获取与平台访问可在此快速完成。"
+      :description="`如需了解${siteConfig.projectName}相关信息，发起合作沟通，获取公开资料，或直接进入平台使用系统服务，可通过以下入口快速访问。`"
     />
 
     <section class="section section-blue-tint">
       <div class="container">
         <div v-reveal class="contact-head">
           <SectionBadge label="联系渠道" />
-          <h2 class="section-title">提供稳定、清晰、统一的官方联系渠道。</h2>
-          <p class="section-description">团队当前以官方邮箱为主要沟通方式，用于承接{{ siteConfig.cooperationDirections.join('、') }}等相关咨询、资料申请、业务交流和问题反馈。</p>
+          <h2 class="section-title">官方联系与平台入口已统一开放。</h2>
+          <p class="section-description">官网提供邮件联系、官网访问与平台登录入口，便于合作沟通、资料获取和系统使用。</p>
         </div>
         <div class="contact-grid">
           <ContactCard
             v-reveal
             title="官方邮箱"
             :value="siteConfig.contact.email"
-            description="适用于合作咨询、资料索取、业务交流与相关问题反馈。"
+            description="适用于合作咨询、资料申请、平台问题反馈及其他对外沟通事项。"
             link="mailto:support@hpvsc.icu"
+            link-label="发送邮件"
           />
           <ContactCard
             v-reveal="'80ms'"
             title="官方网站"
-            :value="siteConfig.siteUrl"
-            description="用于查看团队概况、研究方向、成果信息和项目动态等公开信息。"
+            value="hpvsc.icu"
+            description="用于查看项目介绍、研究方向、成果信息、新闻动态与公开资料。"
             :link="siteConfig.siteUrl"
+            link-label="访问官网"
           />
           <ContactCard
             v-reveal="'160ms'"
             title="平台入口"
-            value="云端系统访问入口"
-            description="用于访问相关业务系统入口，便于官网展示与平台服务相互衔接。"
+            value="进入 HPVSC 平台"
+            description="直接进入平台登录页，访问系统功能与相关业务服务。"
             :link="siteConfig.loginUrl"
+            link-label="进入平台"
           />
         </div>
       </div>
@@ -56,17 +59,23 @@ const contactNotes = [
     <section class="section">
       <div class="container consult-layout">
         <div v-reveal>
-          <SectionBadge label="沟通说明" pulse />
-          <h2 class="section-title">建议来信时提供必要信息，便于高效完成沟通对接。</h2>
+          <SectionBadge label="来信说明" pulse />
+          <h2 class="section-title">简要说明需求，我们会尽快与您对接。</h2>
           <p class="section-description">
-            为提高沟通效率，建议在来信中简要说明单位背景、合作事项或资料需求，团队将根据具体内容及时进行回复与处理。
+            如涉及合作事项、资料申请或平台问题，建议在邮件中附上基本信息和具体需求，便于我们更快完成处理与回复。
           </p>
         </div>
         <div v-reveal="'120ms'" class="consult-card">
           <div v-for="item in contactNotes" :key="item" class="consult-item">{{ item }}</div>
           <div class="consult-actions">
-            <AppButton href="mailto:support@hpvsc.icu?subject=%E4%BA%91%E7%AB%AF%E6%99%BA%E8%AF%8A%E5%9B%A2%E9%98%9F%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">
-              发送咨询邮件
+            <AppButton :href="siteConfig.loginUrl" target="_blank">
+              进入平台
+            </AppButton>
+            <AppButton
+              href="mailto:support@hpvsc.icu?subject=%E5%AE%98%E7%BD%91%E5%92%A8%E8%AF%A2"
+              variant="secondary"
+            >
+              邮件联系
             </AppButton>
           </div>
         </div>
@@ -126,6 +135,9 @@ const contactNotes = [
 
 .consult-actions {
   margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .contact-summary {

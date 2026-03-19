@@ -7,6 +7,7 @@ import DateBadgeCard from '@/components/common/DateBadgeCard.vue';
 import PortalSectionHeading from '@/components/common/PortalSectionHeading.vue';
 import QuickEntryCard from '@/components/common/QuickEntryCard.vue';
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
+import CopyrightGrid from '@/components/common/CopyrightGrid.vue';
 
 const { heroSlides, researchUpdates, notices, topicColumns, quickLinks, servicePanel, metrics } =
   siteConfig.home;
@@ -14,7 +15,9 @@ const { heroSlides, researchUpdates, notices, topicColumns, quickLinks, serviceP
 const featuredNews = getFeaturedNews(siteConfig.homeFeaturedNewsCount);
 const headlineNews = featuredNews.length > 0 ? featuredNews : newsArticles.slice(0, 2);
 const newsList = newsArticles.slice(0, 6);
-const heroShortcuts = quickLinks.slice(0, 4);
+const heroShortcuts = quickLinks
+  .filter((item): item is (typeof quickLinks)[number] & { to: string } => Boolean(item.to))
+  .slice(0, 4);
 
 const newsIndex = ref(0);
 const heroIndex = ref(0);
@@ -309,6 +312,25 @@ onUnmounted(() => {
       </div>
     </section>
 
+    <section class="section section--copyrights">
+      <div class="container">
+        <PortalSectionHeading
+          title="软件著作权"
+          english-label="Software Copyright"
+          description="已完成登记的软件著作权成果集中展示，作为项目能力建设与成果沉淀的重要支撑。"
+          v-reveal
+        >
+          <template #action>
+            <AppButton to="/about" variant="secondary">查看团队概况</AppButton>
+          </template>
+        </PortalSectionHeading>
+
+        <div class="copyright-showcase" v-reveal="'120ms'">
+          <CopyrightGrid mode="home" />
+        </div>
+      </div>
+    </section>
+
     <section class="section section--capabilities">
       <div class="container">
         <PortalSectionHeading
@@ -389,6 +411,7 @@ onUnmounted(() => {
             :short-label="item.shortLabel"
             :description="item.description"
             :to="item.to"
+            :href="item.href"
           />
         </div>
       </div>
@@ -1071,6 +1094,15 @@ onUnmounted(() => {
 
 .section--capabilities {
   background: white;
+}
+
+.section--copyrights {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f6fafe 100%);
+}
+
+.copyright-showcase {
+  margin-top: 34px;
 }
 
 .columns-layout {

@@ -152,8 +152,8 @@ export const siteConfig: SiteConfig = {
       {
         label: '平台入口',
         shortLabel: '入口',
-        description: '访问业务系统入口，衔接官网展示与应用服务。',
-        to: '/contact',
+        description: '直达 HPVSC 平台登录入口，快速进入系统服务。',
+        href: 'https://hpvsc.icu/#/login',
       },
       {
         label: '资料服务',
@@ -169,15 +169,15 @@ export const siteConfig: SiteConfig = {
       },
     ],
     servicePanel: {
-      title: '项目服务窗口',
+      title: '平台与服务入口',
       description:
-        '项目面向科研合作、平台共建、临床应用与成果转化等方向提供统一沟通窗口，支持资料服务、公开介绍与合作交流场景。',
+        '官网同步提供平台直达入口与联系服务窗口，便于访问系统、了解项目信息及发起合作沟通。',
       primaryAction: {
-        label: '邮件咨询',
-        href: 'mailto:support@hpvsc.icu',
+        label: '进入平台',
+        href: 'https://hpvsc.icu/#/login',
       },
       secondaryAction: {
-        label: '查看联系方式',
+        label: '联系我们',
         to: '/contact',
         variant: 'secondary',
       },
