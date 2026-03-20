@@ -84,6 +84,7 @@ const componentProps = computed(() => {
   font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  cursor: pointer;
   overflow: hidden;
   transition:
     transform 0.2s var(--ease-smooth),

@@ -19,7 +19,7 @@ defineProps<{
     <div class="news-card__content">
       <div class="news-card__meta">
         <span>{{ article.publishedAt }}</span>
-        <span>{{ article.readingMinutes }} 分钟阅读</span>
+        <span>{{ article.readingMinutes }}分钟阅读</span>
       </div>
       <h3 class="news-card__title">{{ article.title }}</h3>
       <p class="news-card__excerpt">{{ article.excerpt }}</p>

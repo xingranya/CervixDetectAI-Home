@@ -7,8 +7,9 @@ import BackToTop from '@/components/layout/BackToTop.vue';
 
 <template>
   <div class="site-shell">
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <SiteHeader />
-    <main>
+    <main id="main-content">
       <RouterView />
     </main>
     <SiteFooter />

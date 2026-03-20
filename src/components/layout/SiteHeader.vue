@@ -204,6 +204,7 @@ onUnmounted(() => {
     left: 20px;
     right: 20px;
     top: calc(100% + 12px);
+    z-index: 100;
     display: none;
     flex-direction: column;
     align-items: stretch;

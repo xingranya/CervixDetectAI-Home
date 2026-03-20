@@ -5,10 +5,10 @@ export const siteConfig: SiteConfig = {
   projectName: '宫颈智能影像与云端筛查协同创新项目',
   cooperationDirections: ['科研合作', '平台共建', '临床应用', '成果转化'],
   logoUrl: 'https://img1.tucang.cc/api/image/show/45b4f4864a1e97681b52b7a1e1f5cc31',
-  tagline: '宫颈智能影像与云端筛查协同创新项目官方网站',
+  tagline: '精准医疗 AI 赋能宫颈癌筛查',
   heroTitle: '云端智诊团队',
   heroSubtitle:
-    '面向宫颈筛查与诊疗相关工作，官网集中提供项目介绍、新闻动态、成果信息、公开资料和平台入口。',
+    '了解项目进展、科研成果与临床应用成果',
   siteUrl: 'https://hpvsc.icu',
   loginUrl: 'https://hpvsc.icu/#/login',
   filingNumber: '鄂ICP备2026006203号-2',
@@ -33,35 +33,35 @@ export const siteConfig: SiteConfig = {
   home: {
     heroSlides: [
       {
-        title: '聚焦宫颈智能影像与云端筛查应用',
+        title: '精准筛查 守护女性健康',
         description:
-          '官网集中介绍项目背景、研究方向、成果信息和平台服务，方便快速了解项目整体情况。',
-        positioning: '项目介绍与平台服务入口',
+          '聚焦宫颈智能影像与云端筛查应用，为临床诊断提供可靠的 AI 辅助支持。',
+        positioning: 'AI 智能筛查',
         tags: ['智能影像', '云端协同', '临床应用', '成果转化'],
         image: 'https://img1.tucang.cc/api/image/show/7c82e065356b5f946edfc957986f29dc',
       },
       {
-        title: '集中发布项目进展、成果信息与公开资料',
+        title: '成果共享 信息透明',
         description:
-          '可在此查看项目新闻、通知信息、成果内容、公开资料和联系入口。',
-        positioning: '项目动态与资料中心',
-        tags: ['项目发布', '资料服务', '合作交流', '公开信息'],
+          '了解项目最新进展、科研成果与临床应用成效。',
+        positioning: '成果共享',
+        tags: ['项目进展', '科研成果', '临床应用', '信息透明'],
         image: 'https://img1.tucang.cc/api/image/show/147a9669236d85027422d0ed5ae19ee2',
       },
       {
-        title: '面向科研合作、平台共建与临床应用提供服务支持',
+        title: '医工融合 协同创新',
         description:
-          '提供清晰的项目介绍、合作说明、联系渠道和平台入口，方便开展交流与使用。',
-        positioning: '合作交流与平台访问',
-        tags: ['科研合作', '平台共建', '新闻中心', '官方门户'],
+          '面向科研合作、平台共建与临床应用，提供技术支持与协作服务。',
+        positioning: '合作交流',
+        tags: ['科研合作', '平台共建', '医工融合', '协同创新'],
         image: 'https://img1.tucang.cc/api/image/show/bbe5c07e013259373b4040f98d50ab6d',
       },
       {
-        title: '结合真实图片展示项目动态与应用情况',
+        title: '真实案例 可靠成效',
         description:
-          '通过真实图片和新闻内容，让来访者更直观地了解项目进展和实际应用。',
-        positioning: '项目动态与真实图片展示',
-        tags: ['医院图片', '基层实践', '首页轮播', '新闻内容'],
+          '查看真实应用案例与临床使用效果，直观了解平台价值。',
+        positioning: '案例展示',
+        tags: ['医院案例', '基层实践', '临床验证', '应用成效'],
         image: 'https://img1.tucang.cc/api/image/show/d41453c4bd95ac41a27bb52427be2deb',
       },
     ],
@@ -74,7 +74,7 @@ export const siteConfig: SiteConfig = {
         { label: '合作方向', value: '科研合作、平台共建、临床应用、成果转化' },
         { label: '服务对象', value: '医疗机构、合作单位、科研伙伴与相关用户' },
       ],
-      footer: ['科研引领', '服务临床', '可信发布'],
+      footer: ['科研驱动', '服务临床', '可信可靠'],
     },
     researchUpdates: [
       { day: '18', month: '2026-03', title: '宫颈智能影像识别模型持续优化' },
@@ -85,7 +85,7 @@ export const siteConfig: SiteConfig = {
       { day: '27', month: '2026-02', title: '系统联调与业务验证持续进行' },
     ],
     notices: [
-      { day: '17', month: '2026-03', title: '项目官方网站首页完成新一轮门户化精修并开放对外访问' },
+      { day: '17', month: '2026-03', title: '平台全新上线，欢迎访问了解' },
       { day: '14', month: '2026-03', title: '项目公开资料已完成更新' },
       { day: '10', month: '2026-03', title: '合作咨询现已开放科研合作、平台共建、临床应用和成果转化等方向' },
       { day: '06', month: '2026-03', title: '项目动态与成果信息持续发布' },
@@ -95,7 +95,7 @@ export const siteConfig: SiteConfig = {
     topicColumns: [
       {
         title: '智能影像',
-        kicker: 'Algorithm & Imaging',
+        kicker: 'AI Imaging',
         description: '介绍宫颈影像识别、病灶提示和辅助判读相关内容。',
         to: '/product',
       },
@@ -107,7 +107,7 @@ export const siteConfig: SiteConfig = {
       },
       {
         title: '成果信息',
-        kicker: 'Outcomes & IP',
+        kicker: 'Results & IP',
         description: '查看软件著作权、阶段成果和相关专题内容。',
         to: '/solutions',
       },
@@ -122,7 +122,7 @@ export const siteConfig: SiteConfig = {
       {
         label: '项目概览',
         shortLabel: '概览',
-        description: '查看项目定位、建设方向与公开介绍。',
+        description: '查看项目定位、发展方向与公开介绍。',
         to: '/about',
       },
       {
@@ -152,7 +152,7 @@ export const siteConfig: SiteConfig = {
       {
         label: '平台入口',
         shortLabel: '入口',
-        description: '直达 HPVSC 平台登录入口，快速进入系统服务。',
+        description: '直达云端筛查平台登录入口，快速进入系统服务。',
         href: 'https://hpvsc.icu/#/login',
       },
       {
@@ -201,7 +201,7 @@ export const siteConfig: SiteConfig = {
       detection: {
         value: 91.5,
         suffix: '%',
-        label: '宫颈高级别病变检出率',
+        label: '癌前病变检出率（CIN2+）',
       },
     },
   },

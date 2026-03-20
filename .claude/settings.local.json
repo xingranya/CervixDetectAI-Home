@@ -11,7 +11,8 @@
       "mcp__mysql__connect_db",
       "Bash(bun run:*)",
       "mcp__MiniMax__understand_image",
-      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)"
+      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
+      "Bash(python3:*)"
     ]
   }
 }

@@ -28,21 +28,25 @@ const metricsList = [
   { key: 'accuracy', value: metrics.accuracy.value, suffix: metrics.accuracy.suffix, label: metrics.accuracy.label, desc: '基于临床验证数据', decimals: 1 },
   { key: 'hospitals', value: metrics.hospitals.value, suffix: metrics.hospitals.suffix, label: metrics.hospitals.label, desc: '覆盖湖北多个地区' },
   { key: 'cases', value: metrics.cases.value, suffix: metrics.cases.suffix, label: metrics.cases.label, desc: '来源于合作机构匿名数据' },
-  { key: 'detection', value: metrics.detection.value, suffix: metrics.detection.suffix, label: metrics.detection.label, desc: 'CIN2+病变检出率', decimals: 1 },
+  { key: 'detection', value: metrics.detection.value, suffix: metrics.detection.suffix, label: metrics.detection.label, desc: '癌前病变精准检出', decimals: 1 },
 ];
 
 let heroTimer: ReturnType<typeof setInterval> | undefined;
 let newsTimer: ReturnType<typeof setInterval> | undefined;
 
 onMounted(() => {
-  heroTimer = setInterval(() => {
-    heroIndex.value = (heroIndex.value + 1) % heroSlides.length;
-  }, 5200);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (headlineNews.length > 1) {
-    newsTimer = setInterval(() => {
-      newsIndex.value = (newsIndex.value + 1) % headlineNews.length;
-    }, 4800);
+  if (!prefersReducedMotion) {
+    heroTimer = setInterval(() => {
+      heroIndex.value = (heroIndex.value + 1) % heroSlides.length;
+    }, 5200);
+
+    if (headlineNews.length > 1) {
+      newsTimer = setInterval(() => {
+        newsIndex.value = (newsIndex.value + 1) % headlineNews.length;
+      }, 4800);
+    }
   }
 });
 
@@ -66,11 +70,13 @@ onUnmounted(() => {
             <span class="portal-hero__eyebrow-tag">Official Portal</span>
             <span>{{ siteConfig.projectName }}</span>
           </div>
-          <div class="portal-hero__heading">
-            <p class="portal-hero__positioning">{{ heroSlides[heroIndex]?.positioning }}</p>
-            <h1 class="portal-hero__title">{{ heroSlides[heroIndex]?.title }}</h1>
-            <p class="portal-hero__description">{{ heroSlides[heroIndex]?.description }}</p>
-          </div>
+          <Transition name="hero-text" mode="out-in">
+            <div class="portal-hero__heading" :key="heroIndex">
+              <p class="portal-hero__positioning">{{ heroSlides[heroIndex]?.positioning }}</p>
+              <h1 class="portal-hero__title">{{ heroSlides[heroIndex]?.title }}</h1>
+              <p class="portal-hero__description">{{ heroSlides[heroIndex]?.description }}</p>
+            </div>
+          </Transition>
           <div class="portal-hero__actions">
             <AppButton to="/about">查看团队概况</AppButton>
             <AppButton to="/news" variant="secondary">进入新闻中心</AppButton>
@@ -127,7 +133,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="项目动态"
           english-label="Project Updates"
-          description="集中发布项目建设进展、阶段成果与公开信息，强化首页主次分明的门户动态结构。"
+          description="了解项目最新进展、阶段性成果与公开信息。"
           v-reveal
         >
           <template #action>
@@ -290,7 +296,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="平台数据"
           english-label="Platform Data"
-          description="持续积累筛查数据，优化算法模型，为临床诊断提供可靠支持。"
+          description="持续积累筛查数据，优化算法模型，支持临床诊断。"
           v-reveal
         />
 
@@ -358,7 +364,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="软件著作权"
           english-label="Software Copyright"
-          description="这里集中展示已登记的软件著作权信息。"
+          description="已登记的软件著作权信息。"
           v-reveal
         >
           <template #action>
@@ -439,7 +445,7 @@ onUnmounted(() => {
         <PortalSectionHeading
           title="服务入口"
           english-label="Service Access"
-          description="常用入口集中在这里，可快速查看项目介绍、新闻动态、成果信息和平台入口。"
+          description="快速访问项目介绍、新闻动态、成果信息和平台入口。"
           v-reveal
         />
 
@@ -553,6 +559,24 @@ onUnmounted(() => {
   gap: 18px;
 }
 
+.hero-text-enter-active {
+  transition: opacity 0.45s var(--ease-smooth), transform 0.45s var(--ease-smooth);
+}
+
+.hero-text-leave-active {
+  transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
+}
+
+.hero-text-enter-from {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero-text-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 .portal-hero__positioning {
   margin: 0;
   color: var(--accent);
@@ -562,14 +586,15 @@ onUnmounted(() => {
 }
 
 .portal-hero__title {
-  max-width: 700px;
+  max-width: 680px;
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-display);
-  font-size: clamp(2.9rem, 4vw, 4.7rem);
+  font-size: clamp(2.2rem, 3.5vw, 4rem);
   font-weight: 700;
-  line-height: 1.14;
+  line-height: 1.18;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 .portal-hero__description {
@@ -740,8 +765,8 @@ onUnmounted(() => {
 }
 
 .portal-hero__visual-dot {
-  width: 9px;
-  height: 9px;
+  width: 12px;
+  height: 12px;
   padding: 0;
   border: 0;
   border-radius: 999px;
@@ -1171,7 +1196,7 @@ onUnmounted(() => {
 
 .metric-card__desc {
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: #64748b;
   line-height: 1.5;
 }
 

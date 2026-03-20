@@ -8,7 +8,7 @@ withDefaults(
     linkLabel?: string;
   }>(),
   {
-    linkLabel: '立即前往',
+    linkLabel: '立即咨询',
   },
 );
 </script>

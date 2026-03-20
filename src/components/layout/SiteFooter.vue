@@ -16,7 +16,7 @@ const currentYear = new Date().getFullYear();
           </div>
         </div>
         <p class="site-footer__description">
-          官网提供项目介绍、新闻动态、成果信息、公开资料和联系入口，方便了解项目内容并开展交流。
+          提供项目介绍、新闻动态、成果信息、公开资料和联系入口，方便了解项目并开展交流。
         </p>
       </div>
       <div class="site-footer__links">
