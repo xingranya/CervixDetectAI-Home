@@ -40,7 +40,7 @@ const contactNotes = [
           <ContactCard
             v-reveal="'80ms'"
             title="官方网站"
-            value="hpvsc.icu"
+            value="home.hpvsc.icu"
             description="用于查看项目介绍、研究方向、成果信息、新闻动态与公开资料。"
             :link="siteConfig.siteUrl"
             link-label="访问官网"

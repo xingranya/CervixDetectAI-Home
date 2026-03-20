@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
   heroTitle: '云端智诊团队',
   heroSubtitle:
     '了解项目进展、科研成果与临床应用成果',
-  siteUrl: 'https://hpvsc.icu',
+  siteUrl: 'https://home.hpvsc.icu',
   loginUrl: 'https://hpvsc.icu/#/login',
   filingNumber: '鄂ICP备2026006203号-2',
   homeFeaturedNewsCount: 4,

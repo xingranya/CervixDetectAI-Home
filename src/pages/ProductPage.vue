@@ -57,17 +57,17 @@ const workflowSteps = [
   <div>
     <PageHero
       badge="研究方向"
-      :title="`${siteConfig.brandName}聚焦智能影像、平台应用和临床服务等重点内容。`"
-      description="这里集中介绍项目的主要内容、平台应用、成果信息和合作方向。"
+      :title="`${siteConfig.brandName}聚焦智能影像与云端筛查`"
+      description="了解智能影像分析、云端平台应用与临床服务等研究重点"
     />
 
     <section class="section">
       <div class="container">
         <div v-reveal class="page-section-head">
           <SectionBadge label="方向布局" />
-          <h2 class="section-title">从研究内容到应用服务，集中介绍项目主要方向。</h2>
+          <h2 class="section-title">六大研究重点，覆盖从算法到应用的全链条</h2>
           <p class="section-description">
-            这里汇总了项目的研究内容、平台功能、数据规范、成果信息和合作交流相关内容。
+            智能影像分析、云端平台应用、临床服务、数据治理、成果转化与人才培养
           </p>
         </div>
         <div class="product-grid">
@@ -90,10 +90,10 @@ const workflowSteps = [
     <section class="section section--workflow">
       <div class="container product-layout">
         <div v-reveal>
-          <SectionBadge label="内容概览" pulse />
-          <h2 class="section-title">从研究内容到公开服务，页面信息清晰衔接。</h2>
+          <SectionBadge label="工作内容" pulse />
+          <h2 class="section-title">从研究到应用，清晰呈现项目全貌</h2>
           <p class="section-description">
-            通过研究介绍、成果信息、新闻内容和合作入口的组合展示，方便快速了解项目全貌。
+            通过六个研究方向的组合展示，方便快速了解项目整体情况
           </p>
         </div>
         <div v-reveal="'120ms'" class="workflow-card">

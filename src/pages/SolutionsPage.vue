@@ -27,9 +27,9 @@ const solutionCards = [
 ];
 
 const serviceRows = [
-  { label: '成果信息', value: '查看软件著作权、项目成果和相关专题内容。' },
-  { label: '新闻内容', value: '通过新闻中心了解项目动态和公开报道。' },
-  { label: '合作联系', value: '通过官网入口发起合作咨询、项目交流和资料申请。' },
+  { label: '成果信息', value: '查看软件著作权与科研项目成果。' },
+  { label: '新闻动态', value: '了解项目最新进展与媒体报道。' },
+  { label: '合作联系', value: '发起合作咨询、项目交流与资料申请。' },
 ];
 </script>
 
@@ -37,17 +37,17 @@ const serviceRows = [
   <div>
     <PageHero
       badge="成果转化"
-      :title="`${siteConfig.brandName}提供成果展示、公开资料与合作交流信息。`"
-      description="这里可查看软件著作权、项目介绍、新闻内容和联系入口。"
+      :title="`${siteConfig.brandName}成果展示与合作交流`"
+      description="查看软件著作权、科研成果与合作联系信息"
     />
 
     <section class="section">
       <div class="container">
         <div v-reveal class="page-section-head">
-          <SectionBadge label="转化方向" />
-          <h2 class="section-title">集中展示成果内容、公开资料和合作交流信息。</h2>
+          <SectionBadge label="成果服务" />
+          <h2 class="section-title">成果展示、公开资料与合作交流</h2>
           <p class="section-description">
-            这里集中展示项目成果、公开资料和合作联系信息，方便了解项目内容并开展进一步沟通。
+            了解项目科研成果、软件著作权和合作联系信息
           </p>
         </div>
         <div class="solutions-grid">
@@ -71,9 +71,9 @@ const serviceRows = [
       <div class="container fit-layout">
         <div v-reveal>
           <SectionBadge label="服务内容" />
-          <h2 class="section-title">提供清晰直接的信息入口，便于查看与联系。</h2>
+          <h2 class="section-title">清晰的信息入口，便于查看与联系</h2>
           <p class="section-description">
-            官网聚焦团队介绍、研究方向、成果信息和联系入口，方便合作单位及时了解项目情况。
+            团队介绍、研究方向、成果信息和联系入口，方便合作单位了解项目情况
           </p>
         </div>
         <div v-reveal="'120ms'" class="fit-card">
