@@ -6,7 +6,12 @@
       "mcp__playwright__browser_type",
       "mcp__playwright__browser_click",
       "mcp__bingcn__bing_search",
-      "mcp__fetch__fetch"
+      "mcp__fetch__fetch",
+      "mcp__MiniMax__web_search",
+      "mcp__mysql__connect_db",
+      "Bash(bun run:*)",
+      "mcp__MiniMax__understand_image",
+      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)"
     ]
   }
 }

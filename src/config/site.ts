@@ -205,4 +205,13 @@ export const siteConfig: SiteConfig = {
       },
     },
   },
+  hospitals: [
+    { id: 'JZ_CENTRAL', name: '荆州市中心医院', icon: 'local_hospital', iconUrl: '/icons/hospitals/jz_central.png' },
+    { id: 'JZ_JINDUN', name: '荆州区金盾门诊', icon: 'health_and_safety', iconUrl: '/icons/hospitals/jz_jindun.svg' },
+    { id: 'WH_PEOPLE', name: '武汉大学人民医院', icon: 'medical_services', iconUrl: '/icons/hospitals/wh_people.png' },
+    { id: 'HUST_TONGJI', name: '华中科技大学同济医学院', icon: 'school', iconUrl: '/icons/hospitals/hust_tongji.png' },
+    { id: 'JL_SANHU', name: '江陵县三湖管理区卫生院', icon: 'healing', iconUrl: '/icons/hospitals/jl_sanhu.svg' },
+    { id: 'JZ_BAOHETANG', name: '荆州保和堂中医诊所', icon: 'spa', iconUrl: '/icons/hospitals/jz_baohetang.svg' },
+    { id: 'JZ_FUYOU', name: '荆州市妇幼保健院', icon: 'child_care', iconUrl: '/icons/hospitals/jz_fuyou.png' },
+  ],
 };

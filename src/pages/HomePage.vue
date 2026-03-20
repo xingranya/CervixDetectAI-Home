@@ -8,6 +8,7 @@ import PortalSectionHeading from '@/components/common/PortalSectionHeading.vue';
 import QuickEntryCard from '@/components/common/QuickEntryCard.vue';
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import CopyrightGrid from '@/components/common/CopyrightGrid.vue';
+import HospitalPartners from '@/components/common/HospitalPartners.vue';
 
 const { heroSlides, researchUpdates, notices, topicColumns, quickLinks, servicePanel, metrics } =
   siteConfig.home;
@@ -308,6 +309,21 @@ onUnmounted(() => {
             </div>
             <div class="metric-card__label">{{ item.label }}</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--partners">
+      <div class="container">
+        <PortalSectionHeading
+          title="合作医院"
+          english-label="Partner Hospitals"
+          description="已合作医疗机构持续增加中，覆盖筛查、诊疗与科研等多种应用场景。"
+          v-reveal
+        />
+
+        <div v-reveal="'120ms'">
+          <HospitalPartners :hospitals="siteConfig.hospitals" />
         </div>
       </div>
     </section>
@@ -1107,6 +1123,10 @@ onUnmounted(() => {
 .section--copyrights {
   background:
     linear-gradient(180deg, #ffffff 0%, #f6fafe 100%);
+}
+
+.section--partners {
+  background: white;
 }
 
 .copyright-showcase {

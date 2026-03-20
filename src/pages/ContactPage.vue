@@ -4,6 +4,7 @@ import AppButton from '@/components/common/AppButton.vue';
 import ContactCard from '@/components/common/ContactCard.vue';
 import SectionBadge from '@/components/common/SectionBadge.vue';
 import PageHero from '@/components/layout/PageHero.vue';
+import HospitalPartners from '@/components/common/HospitalPartners.vue';
 
 const contactNotes = [
   '请说明单位或机构名称、联系人姓名及联系方式，便于及时回复。',
@@ -91,6 +92,19 @@ const contactNotes = [
             联系地址：{{ siteConfig.contact.address }}<br />
             备案号：{{ siteConfig.filingNumber }}
           </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div v-reveal class="contact-head">
+          <SectionBadge label="合作医院" />
+          <h2 class="section-title">已合作医疗机构，持续增加中。</h2>
+          <p class="section-description">覆盖筛查、诊疗与科研等多种应用场景，提供宫颈智能影像辅助诊断服务。</p>
+        </div>
+        <div v-reveal="'120ms'">
+          <HospitalPartners :hospitals="siteConfig.hospitals" />
         </div>
       </div>
     </section>

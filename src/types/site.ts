@@ -95,6 +95,13 @@ export interface HomeConfig {
   metrics: HomeMetrics;
 }
 
+export interface Hospital {
+  id: string;
+  name: string;
+  icon: string;
+  iconUrl?: string;
+}
+
 export interface SiteConfig {
   brandName: string;
   projectName: string;
@@ -110,6 +117,7 @@ export interface SiteConfig {
   homeFeaturedNewsCount: number;
   contact: ContactInfo;
   home: HomeConfig;
+  hospitals: Hospital[];
 }
 
 export interface NewsFrontmatter {
