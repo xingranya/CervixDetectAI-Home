@@ -25,10 +25,10 @@ const heroIndex = ref(0);
 const infoTab = ref<'research' | 'notice'>('research');
 
 const metricsList = [
-  { key: 'accuracy', value: metrics.accuracy.value, suffix: metrics.accuracy.suffix, label: metrics.accuracy.label },
-  { key: 'hospitals', value: metrics.hospitals.value, suffix: metrics.hospitals.suffix, label: metrics.hospitals.label },
-  { key: 'cases', value: metrics.cases.value, suffix: metrics.cases.suffix, label: metrics.cases.label },
-  { key: 'detection', value: metrics.detection.value, suffix: metrics.detection.suffix, label: metrics.detection.label, decimals: 1 },
+  { key: 'accuracy', value: metrics.accuracy.value, suffix: metrics.accuracy.suffix, label: metrics.accuracy.label, desc: '基于临床验证数据', decimals: 1 },
+  { key: 'hospitals', value: metrics.hospitals.value, suffix: metrics.hospitals.suffix, label: metrics.hospitals.label, desc: '覆盖湖北多个地区' },
+  { key: 'cases', value: metrics.cases.value, suffix: metrics.cases.suffix, label: metrics.cases.label, desc: '来源于合作机构匿名数据' },
+  { key: 'detection', value: metrics.detection.value, suffix: metrics.detection.suffix, label: metrics.detection.label, desc: 'CIN2+病变检出率', decimals: 1 },
 ];
 
 let heroTimer: ReturnType<typeof setInterval> | undefined;
@@ -288,26 +288,51 @@ onUnmounted(() => {
     <section class="section section--metrics">
       <div class="container">
         <PortalSectionHeading
-          title="核心数据指标"
-          english-label="Key Metrics"
-          description="项目持续积累筛查数据，不断优化算法模型，为临床诊断提供可靠的技术支持。"
+          title="平台数据"
+          english-label="Platform Data"
+          description="持续积累筛查数据，优化算法模型，为临床诊断提供可靠支持。"
           v-reveal
         />
 
-        <div class="metrics-grid" v-reveal>
-          <div
-            v-for="item in metricsList"
-            :key="item.key"
-            class="metric-card"
-          >
-            <div class="metric-card__value">
-              <AnimatedCounter
-                :value="item.value"
-                :suffix="item.suffix"
-                :decimals="item.decimals || 0"
-              />
+        <div class="metrics-showcase" v-reveal>
+          <div class="metrics-grid">
+            <div
+              v-for="(item, index) in metricsList"
+              :key="item.key"
+              class="metric-card"
+              :class="`metric-card--${item.key}`"
+            >
+              <div class="metric-card__header">
+                <span class="metric-card__icon">
+                  <svg v-if="item.key === 'accuracy'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  <svg v-else-if="item.key === 'hospitals'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-6h6v6"/>
+                  </svg>
+                  <svg v-else-if="item.key === 'cases'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                  </svg>
+                  <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                </span>
+                <span class="metric-card__label-top">{{ item.label }}</span>
+              </div>
+              <div class="metric-card__body">
+                <AnimatedCounter
+                  class="metric-card__value"
+                  :value="item.value"
+                  :suffix="item.suffix"
+                  :decimals="item.decimals || 0"
+                />
+              </div>
+              <div class="metric-card__footer">
+                <span class="metric-card__desc">{{ item.desc }}</span>
+              </div>
             </div>
-            <div class="metric-card__label">{{ item.label }}</div>
           </div>
         </div>
       </div>
@@ -1045,49 +1070,108 @@ onUnmounted(() => {
 
 .section--metrics {
   background:
-    linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
-  padding: 64px 0;
+    linear-gradient(180deg, #f8faff 0%, #f0f5fa 100%);
+  padding: 72px 0;
+}
+
+.metrics-showcase {
+  margin-top: 40px;
 }
 
 .metrics-grid {
   display: grid;
-  gap: 24px;
+  gap: 20px;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 42px;
 }
 
 .metric-card {
-  display: grid;
-  gap: 14px;
-  padding: 32px 24px;
-  border-radius: var(--card-radius-xl);
-  border: 1px solid rgba(59, 130, 246, 0.14);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 24px;
+  border-radius: 20px;
   background: white;
-  box-shadow: var(--shadow-md);
-  text-align: center;
+  box-shadow: 0 1px 3px rgba(13, 94, 170, 0.06), 0 4px 12px rgba(13, 94, 170, 0.04);
+  overflow: hidden;
   transition:
-    transform 0.22s var(--ease-smooth),
-    box-shadow 0.22s var(--ease-smooth);
+    transform 0.28s var(--ease-smooth),
+    box-shadow 0.28s var(--ease-smooth);
 }
 
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
+
+.metric-card--accuracy::before { background: linear-gradient(90deg, #0d5eaa, #3b82f6); }
+.metric-card--hospitals::before { background: linear-gradient(90deg, #059669, #10b981); }
+.metric-card--cases::before { background: linear-gradient(90deg, #d97706, #f59e0b); }
+.metric-card--detection::before { background: linear-gradient(90deg, #dc2626, #ef4444); }
+
 .metric-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(13, 94, 170, 0.12);
+}
+
+.metric-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.metric-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.metric-card--accuracy .metric-card__icon { background: rgba(13, 94, 170, 0.08); color: #0d5eaa; }
+.metric-card--hospitals .metric-card__icon { background: rgba(5, 150, 105, 0.08); color: #059669; }
+.metric-card--cases .metric-card__icon { background: rgba(217, 119, 6, 0.08); color: #d97706; }
+.metric-card--detection .metric-card__icon { background: rgba(220, 38, 38, 0.08); color: #dc2626; }
+
+.metric-card__label-top {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.metric-card__body {
+  flex: 1;
 }
 
 .metric-card__value {
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--accent);
   letter-spacing: -0.03em;
 }
 
-.metric-card__label {
-  color: var(--muted-foreground);
-  font-size: 0.96rem;
-  font-weight: 600;
+.metric-card--accuracy .metric-card__value { color: #0d5eaa; }
+.metric-card--hospitals .metric-card__value { color: #059669; }
+.metric-card--cases .metric-card__value { color: #d97706; }
+.metric-card--detection .metric-card__value { color: #dc2626; }
+
+.metric-card__footer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(13, 94, 170, 0.06);
+}
+
+.metric-card__desc {
+  font-size: 0.78rem;
+  color: #94a3b8;
   line-height: 1.5;
 }
 
@@ -1103,16 +1187,19 @@ onUnmounted(() => {
   }
 
   .metrics-grid {
-    grid-template-columns: 1fr;
-    margin-top: 28px;
+    gap: 14px;
   }
 
   .metric-card {
-    padding: 24px 20px;
+    padding: 20px 18px 18px;
   }
 
   .metric-card__value {
-    font-size: 2.2rem;
+    font-size: 2rem;
+  }
+
+  .metric-card__desc {
+    font-size: 0.72rem;
   }
 }
 

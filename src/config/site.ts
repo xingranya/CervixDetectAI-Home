@@ -184,24 +184,24 @@ export const siteConfig: SiteConfig = {
     },
     metrics: {
       accuracy: {
-        value: 99.55,
+        value: 94.2,
         suffix: '%',
         label: '辅助诊断准确率',
       },
       hospitals: {
-        value: 50,
-        suffix: '+',
-        label: '合作医院',
+        value: 7,
+        suffix: '家',
+        label: '合作医疗机构',
       },
       cases: {
-        value: 100000,
-        suffix: '+',
+        value: 12580,
+        suffix: '例',
         label: '累计筛查病例',
       },
       detection: {
-        value: 96.8,
+        value: 91.5,
         suffix: '%',
-        label: '病变检出率',
+        label: '宫颈高级别病变检出率',
       },
     },
   },
