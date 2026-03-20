@@ -63,11 +63,7 @@ const relatedArticles = computed(() => {
 
         <aside class="article-aside" v-reveal="'120ms'">
           <div class="aside-card">
-            <div class="aside-card__label">稿件信息</div>
-            <h2 class="aside-card__title">项目报道已接入官网统一新闻系统</h2>
-            <p class="aside-card__description">
-              当前页面已与首页动态、新闻列表和详情页样式统一，后续只需继续往 <code>content/news</code> 中补充 Markdown 稿件即可自动生成新文章页面。
-            </p>
+            <div class="aside-card__label">本文信息</div>
             <div class="aside-card__chips">
               <span>{{ article.category }}</span>
               <span>{{ article.publishedAt }}</span>
@@ -89,17 +85,16 @@ const relatedArticles = computed(() => {
           </div>
 
           <div class="aside-card aside-card--service">
-            <div class="aside-card__label">项目服务</div>
-            <h2 class="aside-card__title">欢迎进一步了解合作与项目资料</h2>
+            <div class="aside-card__label">合作交流</div>
             <p class="aside-card__description">
-              如需了解 {{ siteConfig.projectName }} 的研究方向、合作方式与公开资料，可通过官方联系方式与团队取得联系。
+              如对 {{ siteConfig.projectName }} 感兴趣，欢迎联系我们了解合作方式。
             </p>
             <div class="aside-card__chips">
               <span v-for="item in siteConfig.cooperationDirections" :key="item">{{ item }}</span>
             </div>
             <div class="aside-card__actions">
               <AppButton href="mailto:support@hpvsc.icu">邮件咨询</AppButton>
-              <AppButton to="/contact" variant="secondary">查看联系方式</AppButton>
+              <AppButton to="/contact" variant="secondary">联系方式</AppButton>
             </div>
           </div>
         </aside>
