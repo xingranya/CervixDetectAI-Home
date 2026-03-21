@@ -586,6 +586,7 @@ onUnmounted(() => {
 }
 
 .portal-hero__survey-banner {
+  position: relative;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 18px;
@@ -593,12 +594,27 @@ onUnmounted(() => {
   padding: 18px 24px;
   border: 1px solid rgba(25, 118, 210, 0.18);
   border-radius: 22px;
+  overflow: hidden;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(241, 248, 255, 0.9)),
     linear-gradient(90deg, rgba(25, 118, 210, 0.08), rgba(255, 255, 255, 0));
   box-shadow: 0 18px 42px rgba(16, 38, 63, 0.08);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
+  animation: survey-banner-glow 4.8s ease-in-out infinite;
+}
+
+.portal-hero__survey-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -18%;
+  width: 18%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  transform: skewX(-18deg);
+  animation: survey-banner-sheen 5.2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .portal-hero__survey-badge {
@@ -632,6 +648,52 @@ onUnmounted(() => {
   font-weight: 700;
   white-space: nowrap;
   box-shadow: var(--shadow-accent);
+  animation: survey-action-breathe 2.8s ease-in-out infinite;
+}
+
+@keyframes survey-banner-glow {
+  0%,
+  100% {
+    box-shadow: 0 18px 42px rgba(16, 38, 63, 0.08);
+    border-color: rgba(25, 118, 210, 0.18);
+  }
+
+  50% {
+    box-shadow: 0 20px 48px rgba(25, 118, 210, 0.14);
+    border-color: rgba(25, 118, 210, 0.28);
+  }
+}
+
+@keyframes survey-banner-sheen {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0) skewX(-18deg);
+    opacity: 0;
+  }
+
+  12%,
+  22% {
+    opacity: 1;
+  }
+
+  28% {
+    transform: translateX(640%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes survey-action-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: var(--shadow-accent);
+  }
+
+  50% {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-accent-lg);
+  }
 }
 
 .portal-hero__inner {
@@ -1838,6 +1900,14 @@ onUnmounted(() => {
 
   .news-list__arrow {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-hero__survey-banner,
+  .portal-hero__survey-banner::after,
+  .portal-hero__survey-action {
+    animation: none;
   }
 }
 </style>

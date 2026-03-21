@@ -168,12 +168,6 @@ export const siteConfig: SiteConfig = {
         description: '查看官网发布的新闻、公告和相关信息。',
         to: '/news',
       },
-      {
-        label: '问卷调研',
-        shortLabel: '问卷',
-        description: '参与项目调查问卷，帮助我们持续优化服务与研究方向。',
-        href: 'https://wj.qq.com/s2/25214446/3453/',
-      },
     ],
     servicePanel: {
       title: '平台与联系入口',
