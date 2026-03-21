@@ -19,6 +19,9 @@ const newsList = newsArticles.slice(0, 6);
 const heroShortcuts = quickLinks
   .filter((item): item is (typeof quickLinks)[number] & { to: string } => Boolean(item.to))
   .slice(0, 4);
+const surveyUrl =
+  siteConfig.contact.consultationLinks?.find((item) => item.label === '项目问卷')?.href ??
+  'https://wj.qq.com/s2/25214446/3453/';
 
 const newsIndex = ref(0);
 const heroIndex = ref(0);
@@ -88,6 +91,21 @@ onUnmounted(() => {
 <template>
   <div class="home-page">
     <section class="portal-hero">
+      <div class="container portal-hero__top">
+        <a
+          v-reveal
+          class="portal-hero__survey-banner"
+          :href="surveyUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="参与项目调查问卷"
+        >
+          <span class="portal-hero__survey-badge">问卷调研</span>
+          <span class="portal-hero__survey-text">我们团队正在征集项目反馈与合作需求，欢迎填写调查问卷，帮助我们持续优化平台与公开服务。</span>
+          <span class="portal-hero__survey-action">立即参与 ↗</span>
+        </a>
+      </div>
+
       <div class="container portal-hero__inner">
         <div class="portal-hero__content" v-reveal>
           <div class="portal-hero__eyebrow">
@@ -468,6 +486,14 @@ onUnmounted(() => {
                 {{ servicePanel.secondaryAction.label }}
               </AppButton>
             </div>
+            <a
+              class="service-board__survey"
+              href="https://wj.qq.com/s2/25214446/3453/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              参与项目调查问卷 ↗
+            </a>
           </aside>
         </div>
       </div>
@@ -553,6 +579,61 @@ onUnmounted(() => {
   width: var(--container-width);
 }
 
+.portal-hero__top {
+  position: relative;
+  z-index: 1;
+  padding-top: 22px;
+}
+
+.portal-hero__survey-banner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 24px;
+  border: 1px solid rgba(25, 118, 210, 0.18);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(241, 248, 255, 0.9)),
+    linear-gradient(90deg, rgba(25, 118, 210, 0.08), rgba(255, 255, 255, 0));
+  box-shadow: 0 18px 42px rgba(16, 38, 63, 0.08);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+.portal-hero__survey-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(181, 40, 47, 0.08);
+  color: var(--secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portal-hero__survey-text {
+  color: var(--foreground);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.portal-hero__survey-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: var(--shadow-accent);
+}
+
 .portal-hero__inner {
   position: relative;
   z-index: 1;
@@ -560,7 +641,7 @@ onUnmounted(() => {
   gap: clamp(24px, 2.8vw, 44px);
   align-items: center;
   grid-template-columns: minmax(500px, 0.9fr) minmax(680px, 1.2fr);
-  padding: 76px 0 72px;
+  padding: 34px 0 72px;
 }
 
 .portal-hero__content {
@@ -1424,6 +1505,15 @@ onUnmounted(() => {
   gap: 14px;
 }
 
+.service-board__survey {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
 .section--quick-links {
   background:
     linear-gradient(180deg, #fbfdff 0%, #f3f7fb 100%);
@@ -1460,6 +1550,12 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1024px) {
+  .portal-hero__survey-banner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    justify-items: start;
+  }
+
   .portal-hero__inner {
     padding: 68px 0 64px;
   }
@@ -1479,6 +1575,26 @@ onUnmounted(() => {
 }
 
 @media (max-width: 768px) {
+  .portal-hero__top {
+    padding-top: 14px;
+  }
+
+  .portal-hero__survey-banner {
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 18px;
+  }
+
+  .portal-hero__survey-text {
+    font-size: 0.94rem;
+    line-height: 1.66;
+  }
+
+  .portal-hero__survey-action {
+    min-height: 40px;
+    padding: 0 16px;
+  }
+
   .portal-hero__title {
     font-size: clamp(2.4rem, 10vw, 3.6rem);
   }
@@ -1566,6 +1682,25 @@ onUnmounted(() => {
 }
 
 @media (max-width: 520px) {
+  .portal-hero__survey-banner {
+    padding: 14px 14px 16px;
+  }
+
+  .portal-hero__survey-badge {
+    min-height: 34px;
+    padding: 0 14px;
+    font-size: 0.74rem;
+  }
+
+  .portal-hero__survey-text {
+    font-size: 0.9rem;
+  }
+
+  .portal-hero__survey-action {
+    width: 100%;
+    justify-content: center;
+  }
+
   .portal-hero__inner {
     gap: 28px;
     padding: 56px 0 54px;
@@ -1592,6 +1727,16 @@ onUnmounted(() => {
   .portal-hero__description,
   .service-board__description {
     font-size: 0.96rem;
+  }
+
+  .column-card {
+    min-height: auto;
+    gap: 14px;
+    padding: 22px 20px;
+  }
+
+  .column-card__title {
+    font-size: 1.18rem;
   }
 
   .portal-hero__visual {
@@ -1638,6 +1783,30 @@ onUnmounted(() => {
 
   .news-list-panel {
     padding: 20px 16px;
+  }
+
+  .service-board {
+    gap: 16px;
+    padding: 22px 18px;
+  }
+
+  .service-board__title {
+    font-size: 1.5rem;
+    line-height: 1.42;
+  }
+
+  .service-board__actions {
+    display: grid;
+    gap: 12px;
+  }
+
+  .service-board__actions :deep(.app-button) {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .service-board__survey {
+    font-size: 0.94rem;
   }
 
   .news-list-panel__head {

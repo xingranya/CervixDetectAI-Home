@@ -53,6 +53,14 @@ const contactNotes = [
             :link="siteConfig.loginUrl"
             link-label="进入平台"
           />
+          <ContactCard
+            v-reveal="'240ms'"
+            title="项目问卷"
+            value="参与调查问卷"
+            description="欢迎填写项目调查问卷，帮助我们持续优化研究方向、平台体验与公开服务。"
+            link="https://wj.qq.com/s2/25214446/3453/"
+            link-label="立即填写"
+          />
         </div>
       </div>
     </section>
@@ -77,6 +85,13 @@ const contactNotes = [
               variant="secondary"
             >
               邮件联系
+            </AppButton>
+            <AppButton
+              href="https://wj.qq.com/s2/25214446/3453/"
+              target="_blank"
+              variant="secondary"
+            >
+              填写问卷
             </AppButton>
           </div>
         </div>
@@ -120,7 +135,7 @@ const contactNotes = [
 .contact-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   margin-top: 34px;
 }
 
@@ -176,6 +191,37 @@ const contactNotes = [
   .consult-layout,
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-grid {
+    margin-top: 26px;
+  }
+
+  .consult-card,
+  .contact-summary {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .consult-actions {
+    display: grid;
+    gap: 12px;
+  }
+
+  .consult-actions :deep(.app-button) {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .contact-summary__title {
+    font-size: 1.42rem;
+  }
+
+  .contact-summary__text {
+    margin-top: 12px;
+    line-height: 1.8;
   }
 }
 </style>

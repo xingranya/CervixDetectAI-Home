@@ -28,6 +28,7 @@ export const siteConfig: SiteConfig = {
       { label: '邮件咨询', href: 'mailto:support@hpvsc.icu' },
       { label: '新闻中心', href: '/news' },
       { label: '平台入口', href: 'https://hpvsc.icu/#/login' },
+      { label: '项目问卷', href: 'https://wj.qq.com/s2/25214446/3453/' },
     ],
   },
   home: {
@@ -166,6 +167,12 @@ export const siteConfig: SiteConfig = {
         shortLabel: '公开',
         description: '查看官网发布的新闻、公告和相关信息。',
         to: '/news',
+      },
+      {
+        label: '问卷调研',
+        shortLabel: '问卷',
+        description: '参与项目调查问卷，帮助我们持续优化服务与研究方向。',
+        href: 'https://wj.qq.com/s2/25214446/3453/',
       },
     ],
     servicePanel: {

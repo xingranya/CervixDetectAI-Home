@@ -60,4 +60,25 @@ withDefaults(
   font-weight: 700;
   color: var(--accent);
 }
+
+@media (max-width: 640px) {
+  .contact-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .contact-card__value {
+    margin-top: 12px;
+    font-size: 1.14rem;
+  }
+
+  .contact-card__description {
+    margin-top: 12px;
+    line-height: 1.72;
+  }
+
+  .contact-card__link {
+    margin-top: 14px;
+  }
+}
 </style>

@@ -76,6 +76,13 @@ const componentProps = computed(() => {
         <path d="M9.5 11h5M9.5 14h5M9.5 17h3.5" />
       </svg>
 
+      <svg v-else-if="shortLabel === '问卷'" viewBox="0 0 24 24" class="quick-entry-card__svg" aria-hidden="true">
+        <path d="M7 4.5h10v15H7z" />
+        <path d="M9.5 9.5h5" />
+        <path d="M9.5 13.5h5" />
+        <path d="m8.8 17 1.2 1.2 2.2-2.4" />
+      </svg>
+
       <svg v-else viewBox="0 0 24 24" class="quick-entry-card__svg" aria-hidden="true">
         <path d="M4.5 14.5c4.5-1.2 7.4-1.2 11.8 0" />
         <path d="M6.2 11.3c3.1-.8 5.1-.8 8.2 0" />
@@ -174,6 +181,10 @@ const componentProps = computed(() => {
   color: #8b4f98;
 }
 
+.quick-entry-card__icon[data-icon='问卷'] {
+  color: #2a6bb3;
+}
+
 .quick-entry-card__icon[data-icon='公开'] {
   color: #bc5a2c;
 }
@@ -224,6 +235,29 @@ const componentProps = computed(() => {
   .quick-entry-card {
     grid-template-columns: auto 1fr;
     min-height: 136px;
+    gap: 14px;
+    padding: 18px 18px 20px;
+  }
+
+  .quick-entry-card__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+
+  .quick-entry-card__svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .quick-entry-card__title {
+    font-size: 1rem;
+  }
+
+  .quick-entry-card__description {
+    margin-top: 8px;
+    font-size: 0.88rem;
+    line-height: 1.68;
   }
 
   .quick-entry-card__arrow {
