@@ -24,6 +24,30 @@ const newsIndex = ref(0);
 const heroIndex = ref(0);
 const infoTab = ref<'research' | 'notice'>('research');
 
+// 键盘导航支持
+const handleHeroDotKeydown = (event: KeyboardEvent, index: number): void => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    heroIndex.value = index;
+  }
+};
+
+const handleNewsIndicatorKeydown = (event: KeyboardEvent, index: number): void => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    newsIndex.value = index;
+  }
+};
+
+// 日期格式化
+const formatDate = (dateStr: string): { day: string; month: string } => {
+  const parts = dateStr.split('-');
+  if (parts.length >= 3) {
+    return { day: parts[2], month: `${parts[0]}-${parts[1]}` };
+  }
+  return { day: dateStr.slice(-2), month: dateStr.slice(0, 7) };
+};
+
 const metricsList = [
   { key: 'accuracy', value: metrics.accuracy.value, suffix: metrics.accuracy.suffix, label: metrics.accuracy.label, desc: '基于临床验证数据', decimals: 1 },
   { key: 'hospitals', value: metrics.hospitals.value, suffix: metrics.hospitals.suffix, label: metrics.hospitals.label, desc: '覆盖湖北多个地区' },
@@ -105,22 +129,25 @@ onUnmounted(() => {
               class="portal-hero__visual-slide"
               :class="{ 'is-active': index === heroIndex }"
             >
-              <img :src="slide.image" :alt="slide.title" class="portal-hero__visual-image" />
+              <img :src="slide.image" :alt="`${slide.title} - 项目展示图片`" class="portal-hero__visual-image" width="980" height="612" />
               <div class="portal-hero__visual-mask"></div>
               <div class="portal-hero__visual-copy">
                 <span class="portal-hero__visual-kicker">项目展示</span>
                 <strong>{{ slide.title }}</strong>
               </div>
             </div>
-            <div class="portal-hero__visual-dots" aria-label="首页轮播切换">
+            <div class="portal-hero__visual-dots" role="tablist" :aria-label="`首页轮播，共 ${heroSlides.length} 张，当前第 ${heroIndex + 1} 张`">
               <button
                 v-for="(slide, index) in heroSlides"
                 :key="`visual-${slide.title}`"
                 type="button"
+                role="tab"
                 class="portal-hero__visual-dot"
                 :class="{ 'is-active': index === heroIndex }"
-                :aria-label="`切换到第 ${index + 1} 张轮播图`"
+                :aria-selected="index === heroIndex"
+                :aria-label="`第 ${index + 1} 张轮播图`"
                 @click="heroIndex = index"
+                @keydown="handleHeroDotKeydown($event, index)"
               ></button>
             </div>
           </div>
@@ -167,14 +194,18 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="news-feature__indicators">
+            <div class="news-feature__indicators" role="tablist" :aria-label="`新闻轮播，共 ${headlineNews.length} 篇，当前第 ${newsIndex + 1} 篇`">
               <button
                 v-for="(article, index) in headlineNews"
                 :key="article.slug"
                 type="button"
+                role="tab"
                 class="news-feature__indicator"
                 :class="{ 'is-active': index === newsIndex }"
+                :aria-selected="index === newsIndex"
+                :aria-label="`第 ${index + 1} 篇：${article.title}`"
                 @click="newsIndex = index"
+                @keydown="handleNewsIndicatorKeydown($event, index)"
               >
                 <span class="news-feature__indicator-date">{{ article.publishedAt }}</span>
                 <span class="news-feature__indicator-title">{{ article.title }}</span>
@@ -198,8 +229,8 @@ onUnmounted(() => {
                 class="news-list__item"
               >
                 <div class="news-list__date">
-                  <strong>{{ article.publishedAt.slice(-2) }}</strong>
-                  <span>{{ article.publishedAt.slice(0, 7) }}</span>
+                  <strong>{{ formatDate(article.publishedAt).day }}</strong>
+                  <span>{{ formatDate(article.publishedAt).month }}</span>
                 </div>
                 <div class="news-list__body">
                   <div class="news-list__category">{{ article.category }}</div>
@@ -255,7 +286,8 @@ onUnmounted(() => {
           role="tabpanel"
           id="panel-research"
           aria-labelledby="tab-research"
-          :hidden="infoTab !== 'research'"
+          :aria-hidden="infoTab !== 'research'"
+          :class="{ 'is-hidden': infoTab !== 'research' }"
         >
           <div class="tab-board__grid">
             <DateBadgeCard
@@ -273,7 +305,8 @@ onUnmounted(() => {
           role="tabpanel"
           id="panel-notice"
           aria-labelledby="tab-notice"
-          :hidden="infoTab !== 'notice'"
+          :aria-hidden="infoTab !== 'notice'"
+          :class="{ 'is-hidden': infoTab !== 'notice' }"
         >
           <div class="tab-board__grid">
             <DateBadgeCard
@@ -467,6 +500,10 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.is-hidden {
+  display: none;
+}
+
 .home-page {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(244, 248, 252, 0.72) 100%);
@@ -513,7 +550,7 @@ onUnmounted(() => {
 }
 
 .portal-hero .container {
-  width: min(1440px, calc(100vw - 40px));
+  width: var(--container-width);
 }
 
 .portal-hero__inner {
@@ -695,15 +732,11 @@ onUnmounted(() => {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: scale(1.03);
-  transition:
-    opacity 0.55s var(--ease-smooth),
-    transform 4.8s var(--ease-smooth);
+  transition: opacity 0.55s var(--ease-smooth);
 }
 
 .portal-hero__visual-slide.is-active {
   opacity: 1;
-  transform: scale(1);
 }
 
 .portal-hero__visual-image,
@@ -735,10 +768,11 @@ onUnmounted(() => {
   gap: 10px;
   padding: 16px 18px;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.84);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
   box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .portal-hero__visual-kicker {
@@ -785,6 +819,11 @@ onUnmounted(() => {
 
 .portal-hero__visual-dot:hover {
   transform: scale(1.08);
+}
+
+.portal-hero__visual-dot:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent);
 }
 
 .section--news {
@@ -882,6 +921,14 @@ onUnmounted(() => {
   font-size: clamp(1.72rem, 2.2vw, 2.26rem);
   font-weight: 800;
   line-height: 1.36;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  text-underline-offset: 4px;
+}
+
+.news-feature__title:hover,
+.news-feature__title:focus-visible {
+  text-decoration-color: white;
 }
 
 .news-feature__summary {
@@ -911,11 +958,11 @@ onUnmounted(() => {
   display: grid;
   gap: 6px;
   padding: 14px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   color: rgba(255, 255, 255, 0.72);
   text-align: left;
   transition:
@@ -925,9 +972,16 @@ onUnmounted(() => {
 }
 
 .news-feature__indicator.is-active {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
   color: white;
+}
+
+.news-feature__indicator:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent);
 }
 
 .news-feature__indicator-date {
@@ -955,9 +1009,9 @@ onUnmounted(() => {
   border-radius: var(--card-radius-xl);
   border: 1px solid var(--card-border-strong);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(248, 251, 255, 0.84));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 251, 255, 0.88));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow: var(--shadow-md);
 }
 
@@ -1008,7 +1062,11 @@ onUnmounted(() => {
 .news-list__item:hover,
 .news-list__item:focus-visible {
   transform: translateX(3px);
-  outline: none;
+}
+
+.news-list__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .news-list__date {
@@ -1133,10 +1191,10 @@ onUnmounted(() => {
   border-radius: 20px 20px 0 0;
 }
 
-.metric-card--accuracy::before { background: linear-gradient(90deg, #0d5eaa, #3b82f6); }
-.metric-card--hospitals::before { background: linear-gradient(90deg, #059669, #10b981); }
-.metric-card--cases::before { background: linear-gradient(90deg, #d97706, #f59e0b); }
-.metric-card--detection::before { background: linear-gradient(90deg, #dc2626, #ef4444); }
+.metric-card--accuracy::before { background: linear-gradient(90deg, var(--metric-accuracy), #3b82f6); }
+.metric-card--hospitals::before { background: linear-gradient(90deg, var(--metric-hospitals), #10b981); }
+.metric-card--cases::before { background: linear-gradient(90deg, var(--metric-cases), #f59e0b); }
+.metric-card--detection::before { background: linear-gradient(90deg, var(--metric-detection), #ef4444); }
 
 .metric-card:hover {
   transform: translateY(-5px);
@@ -1159,15 +1217,15 @@ onUnmounted(() => {
   border-radius: 10px;
 }
 
-.metric-card--accuracy .metric-card__icon { background: rgba(13, 94, 170, 0.08); color: #0d5eaa; }
-.metric-card--hospitals .metric-card__icon { background: rgba(5, 150, 105, 0.08); color: #059669; }
-.metric-card--cases .metric-card__icon { background: rgba(217, 119, 6, 0.08); color: #d97706; }
-.metric-card--detection .metric-card__icon { background: rgba(220, 38, 38, 0.08); color: #dc2626; }
+.metric-card--accuracy .metric-card__icon { background: var(--metric-accuracy-light); color: var(--metric-accuracy); }
+.metric-card--hospitals .metric-card__icon { background: var(--metric-hospitals-light); color: var(--metric-hospitals); }
+.metric-card--cases .metric-card__icon { background: var(--metric-cases-light); color: var(--metric-cases); }
+.metric-card--detection .metric-card__icon { background: var(--metric-detection-light); color: var(--metric-detection); }
 
 .metric-card__label-top {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-secondary);
   letter-spacing: 0.02em;
 }
 
@@ -1183,10 +1241,10 @@ onUnmounted(() => {
   letter-spacing: -0.03em;
 }
 
-.metric-card--accuracy .metric-card__value { color: #0d5eaa; }
-.metric-card--hospitals .metric-card__value { color: #059669; }
-.metric-card--cases .metric-card__value { color: #d97706; }
-.metric-card--detection .metric-card__value { color: #dc2626; }
+.metric-card--accuracy .metric-card__value { color: var(--metric-accuracy); }
+.metric-card--hospitals .metric-card__value { color: var(--metric-hospitals); }
+.metric-card--cases .metric-card__value { color: var(--metric-cases); }
+.metric-card--detection .metric-card__value { color: var(--metric-detection); }
 
 .metric-card__footer {
   margin-top: 12px;
@@ -1196,7 +1254,7 @@ onUnmounted(() => {
 
 .metric-card__desc {
   font-size: 0.78rem;
-  color: #64748b;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -1279,7 +1337,11 @@ onUnmounted(() => {
   transform: translateY(-4px);
   border-color: rgba(13, 94, 170, 0.24);
   box-shadow: var(--shadow-md);
-  outline: none;
+}
+
+.column-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .column-card__kicker {
@@ -1316,9 +1378,9 @@ onUnmounted(() => {
   border-radius: var(--card-radius-xl);
   border: 1px solid rgba(181, 40, 47, 0.14);
   background:
-    linear-gradient(180deg, rgba(255, 247, 247, 0.86), rgba(255, 255, 255, 0.82));
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+    linear-gradient(180deg, rgba(255, 247, 247, 0.92), rgba(255, 255, 255, 0.88));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow: var(--shadow-md);
 }
 

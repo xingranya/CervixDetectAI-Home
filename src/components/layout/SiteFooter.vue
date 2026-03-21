@@ -22,7 +22,7 @@ const currentYear = new Date().getFullYear();
       <div class="site-footer__links">
         <div>
           <div class="site-footer__label">联系方式</div>
-          <a :href="`mailto:${siteConfig.contact.email}`">{{ siteConfig.contact.email }}</a>
+          <a :href="`mailto:${siteConfig.contact.email}`" :aria-label="`发送邮件至 ${siteConfig.contact.email}`">{{ siteConfig.contact.email }}</a>
         </div>
         <div>
           <div class="site-footer__label">联系地址</div>
@@ -88,7 +88,7 @@ const currentYear = new Date().getFullYear();
 
 .site-footer__description {
   margin: 12px 0 0;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.74);
   line-height: 1.86;
 }
 
@@ -100,7 +100,7 @@ const currentYear = new Date().getFullYear();
 
 .site-footer__label {
   margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.56);
+  color: rgba(255, 255, 255, 0.64);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -121,7 +121,7 @@ const currentYear = new Date().getFullYear();
   display: flex;
   flex-wrap: wrap;
   gap: 12px 18px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.64);
   font-size: 0.95rem;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);

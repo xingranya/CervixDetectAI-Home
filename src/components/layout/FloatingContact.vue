@@ -29,8 +29,11 @@ import { siteConfig } from '@/config/site';
   border: 2px solid var(--foreground);
   border-radius: var(--radius-md);
   color: var(--foreground);
-  background: white;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   font-weight: 700;
+  box-shadow: var(--shadow-md);
   transition:
     transform 0.2s ease-out,
     background-color 0.2s ease-out,

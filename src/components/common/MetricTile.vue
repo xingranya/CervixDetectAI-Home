@@ -100,9 +100,7 @@ withDefaults(
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, currentColor 0%, currentColor 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  color: inherit;
 }
 
 .metric-tile--blue .metric-tile__value,

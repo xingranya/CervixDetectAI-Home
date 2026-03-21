@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { siteConfig } from '@/config/site';
 import AppButton from '@/components/common/AppButton.vue';
@@ -7,11 +7,17 @@ import AppButton from '@/components/common/AppButton.vue';
 const route = useRoute();
 const mobileOpen = ref(false);
 const isScrolled = ref(false);
+const toggleRef = ref<HTMLButtonElement | null>(null);
+const navRef = ref<HTMLElement | null>(null);
+const firstNavLink = ref<HTMLAnchorElement | null>(null);
 
 const links = computed(() => siteConfig.navigation);
 
 const closeMobile = (): void => {
   mobileOpen.value = false;
+  nextTick(() => {
+    toggleRef.value?.focus();
+  });
 };
 
 const isActiveLink = (path: string): boolean => {
@@ -25,6 +31,16 @@ const isActiveLink = (path: string): boolean => {
 const handleScroll = (): void => {
   isScrolled.value = window.scrollY > 10;
 };
+
+// 移动端菜单焦点管理
+watch(mobileOpen, async (isOpen) => {
+  if (isOpen) {
+    await nextTick();
+    // 打开时聚焦到第一个导航链接
+    const firstLink = navRef.value?.querySelector('.site-header__link') as HTMLAnchorElement;
+    firstLink?.focus();
+  }
+});
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true });
@@ -47,6 +63,7 @@ onUnmounted(() => {
       </RouterLink>
 
       <button
+        ref="toggleRef"
         class="site-header__toggle"
         type="button"
         :aria-expanded="mobileOpen"
@@ -57,7 +74,7 @@ onUnmounted(() => {
         <span></span>
       </button>
 
-      <nav class="site-header__nav" :class="{ 'site-header__nav--open': mobileOpen }">
+      <nav ref="navRef" class="site-header__nav" :class="{ 'site-header__nav--open': mobileOpen }">
         <RouterLink
           v-for="item in links"
           :key="item.path"
@@ -81,7 +98,9 @@ onUnmounted(() => {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid rgba(13, 94, 170, 0.1);
   transition:
     background-color 0.3s var(--ease-smooth),
@@ -90,7 +109,9 @@ onUnmounted(() => {
 }
 
 .site-header--scrolled {
-  background: white;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
   box-shadow: var(--shadow-md);
   border-bottom-color: rgba(13, 94, 170, 0.18);
 }
@@ -160,9 +181,15 @@ onUnmounted(() => {
 }
 
 .site-header__link:hover,
+.site-header__link:focus-visible,
 .site-header__link.is-active {
   color: var(--accent);
   background: rgba(13, 94, 170, 0.06);
+}
+
+.site-header__link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
 }
 
 .site-header__link.is-active::after {
@@ -191,6 +218,11 @@ onUnmounted(() => {
   margin-bottom: 0;
 }
 
+.site-header__toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px var(--ring);
+}
+
 @media (max-width: 1040px) {
   .site-header__toggle {
     display: inline-flex;
@@ -211,7 +243,9 @@ onUnmounted(() => {
     padding: 18px;
     border: 1px solid rgba(13, 94, 170, 0.14);
     border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.99);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow: var(--shadow-lg);
   }
 

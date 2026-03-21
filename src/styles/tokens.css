@@ -22,6 +22,17 @@
   --hero-red-soft: #c93b31;
   --ring: rgba(25, 118, 210, 0.28);
 
+  /* Semantic Colors for Metric Cards */
+  --metric-accuracy: #0d5eaa;
+  --metric-accuracy-light: rgba(13, 94, 170, 0.08);
+  --metric-hospitals: #059669;
+  --metric-hospitals-light: rgba(5, 150, 105, 0.08);
+  --metric-cases: #d97706;
+  --metric-cases-light: rgba(217, 119, 6, 0.08);
+  --metric-detection: #dc2626;
+  --metric-detection-light: rgba(220, 38, 38, 0.08);
+  --text-secondary: #64748b;
+
   /* Enhanced Shadow System */
   --shadow-sm: 0 8px 20px rgba(16, 38, 63, 0.05);
   --shadow-md: 0 16px 32px rgba(16, 38, 63, 0.08);
@@ -70,15 +81,15 @@
   /* Animation Timing */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
 
-  /* Responsive Breakpoints (for reference, use in media queries) */
-  /* --breakpoint-xl: 1180px; Large desktop */
-  /* --breakpoint-lg: 1024px; Desktop/Tablet landscape */
-  /* --breakpoint-md: 768px; Tablet portrait */
-  /* --breakpoint-sm: 520px; Mobile */
-
-  --hero-grid:
-    linear-gradient(90deg, rgba(16, 38, 63, 0.05) 1px, transparent 1px),
-    linear-gradient(rgba(16, 38, 63, 0.05) 1px, transparent 1px);
+  /* Z-index Scale */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 50;
+  --z-fixed: 100;
+  --z-modal-backdrop: 200;
+  --z-modal: 300;
+  --z-tooltip: 400;
+  --z-skip-link: 1000;
 }

@@ -174,7 +174,7 @@ const componentProps = computed(() => {
   min-height: 48px;
   padding-inline: 18px;
   color: var(--foreground);
-  border: 4px solid var(--foreground);
+  border: 2px solid var(--foreground);
   background: transparent;
 }
 
