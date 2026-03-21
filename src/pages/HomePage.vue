@@ -1483,6 +1483,10 @@ onUnmounted(() => {
     font-size: clamp(2.4rem, 10vw, 3.6rem);
   }
 
+  .portal-hero__actions {
+    width: 100%;
+  }
+
   .portal-hero__shortcut-rail {
     grid-template-columns: 1fr;
   }
@@ -1501,11 +1505,58 @@ onUnmounted(() => {
   }
 
   .news-feature {
-    min-height: 460px;
+    min-height: 500px;
+    border-radius: 24px;
   }
 
   .news-feature__content {
-    padding: 24px;
+    gap: 10px;
+    padding: 24px 20px 20px;
+  }
+
+  .news-feature__meta-row {
+    gap: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  .news-feature__title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: clamp(1.5rem, 5vw, 1.86rem);
+    line-height: 1.32;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .news-feature__summary {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.93rem;
+    line-height: 1.72;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .news-feature__actions :deep(.app-button) {
+    min-height: 50px;
+    padding-inline: 18px;
+  }
+
+  .news-feature__indicators {
+    display: none;
+  }
+
+  .news-list-panel {
+    padding: 24px 20px;
+    border-radius: 24px;
+  }
+
+  .news-list-panel__head {
+    align-items: center;
+  }
+
+  .news-list-panel__title {
+    font-size: 1.46rem;
   }
 
   .tab-board__grid,
@@ -1522,6 +1573,16 @@ onUnmounted(() => {
 
   .portal-hero__content {
     gap: 20px;
+  }
+
+  .portal-hero__actions {
+    display: grid;
+    gap: 12px;
+  }
+
+  .portal-hero__actions :deep(.app-button) {
+    width: 100%;
+    min-height: 52px;
   }
 
   .portal-hero__title {
@@ -1552,11 +1613,53 @@ onUnmounted(() => {
   }
 
   .news-feature {
-    min-height: 420px;
+    min-height: 520px;
+  }
+
+  .news-feature__content {
+    padding: 16px;
+  }
+
+  .news-feature__kicker {
+    min-height: 30px;
+    padding-inline: 12px;
+    font-size: 0.76rem;
   }
 
   .news-feature__title {
-    font-size: 1.5rem;
+    font-size: 1.36rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .news-feature__summary {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .news-list-panel {
+    padding: 20px 16px;
+  }
+
+  .news-list-panel__head {
+    gap: 10px;
+  }
+
+  .news-list-panel__more {
+    font-size: 0.88rem;
+  }
+
+  .news-list__date {
+    width: 56px;
+    padding: 8px 6px;
+  }
+
+  .news-list__date strong {
+    font-size: 1.18rem;
+  }
+
+  .news-list__text {
+    margin-top: 6px;
+    line-height: 1.64;
   }
 
   .news-list__item {

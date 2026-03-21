@@ -61,11 +61,21 @@ import { siteConfig } from '@/config/site';
 
 @media (max-width: 760px) {
   .floating-contact {
-    right: 14px;
-    left: 14px;
-    bottom: 24px;
+    right: 16px;
+    left: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
     z-index: 50;
-    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border-width: 1px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+  }
+
+  .floating-contact__dot {
+    width: 8px;
+    height: 8px;
   }
 }
 </style>

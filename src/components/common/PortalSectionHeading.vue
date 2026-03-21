@@ -83,4 +83,34 @@ defineProps<{
     flex-direction: column;
   }
 }
+
+@media (max-width: 520px) {
+  .portal-section-heading {
+    gap: 18px;
+  }
+
+  .portal-section-heading__copy {
+    gap: 8px;
+  }
+
+  .portal-section-heading__label {
+    gap: 10px;
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+  }
+
+  .portal-section-heading__line {
+    width: 40px;
+    height: 8px;
+  }
+
+  .portal-section-heading__title {
+    font-size: clamp(1.8rem, 9vw, 2.36rem);
+  }
+
+  .portal-section-heading__description {
+    font-size: 0.94rem;
+    line-height: 1.78;
+  }
+}
 </style>
