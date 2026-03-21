@@ -4,7 +4,7 @@
   position: absolute;
   top: -100%;
   left: 16px;
-  z-index: 9999;
+  z-index: 100;
   padding: 12px 24px;
   border-radius: var(--radius-md);
   background: rgba(25, 118, 210, 0.95);
@@ -36,9 +36,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top right, rgba(13, 94, 170, 0.05), transparent 22%),
-    linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+  background: rgba(255, 255, 255, 0.35);
   color: var(--foreground);
   font-family: var(--font-body);
   text-rendering: optimizeLegibility;
@@ -68,38 +66,7 @@ select {
 
 .site-shell {
   position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top right, rgba(13, 94, 170, 0.05), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.88));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.site-shell::before,
-.site-shell::after {
-  content: '';
-  position: fixed;
-  pointer-events: none;
-  z-index: -2;
-}
-
-.site-shell::before {
-  top: 118px;
-  right: -110px;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  background: rgba(13, 94, 170, 0.05);
-}
-
-.site-shell::after {
-  left: -84px;
-  top: 560px;
-  width: 280px;
-  height: 280px;
-  background: rgba(13, 94, 170, 0.04);
-  transform: rotate(16deg);
+  min-height: 100vh;
 }
 
 .container {

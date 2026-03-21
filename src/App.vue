@@ -17,3 +17,9 @@ import BackToTop from '@/components/layout/BackToTop.vue';
     <BackToTop />
   </div>
 </template>
+
+<style scoped>
+#main-content {
+  padding-top: 94px;
+}
+</style>

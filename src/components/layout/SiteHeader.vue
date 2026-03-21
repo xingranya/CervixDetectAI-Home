@@ -95,13 +95,15 @@ onUnmounted(() => {
 
 <style scoped>
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid rgba(13, 94, 170, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   transition:
     background-color 0.3s var(--ease-smooth),
     box-shadow 0.3s var(--ease-smooth),
@@ -109,11 +111,11 @@ onUnmounted(() => {
 }
 
 .site-header--scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px) saturate(200%);
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(28px) saturate(220%);
+  -webkit-backdrop-filter: blur(28px) saturate(220%);
   box-shadow: var(--shadow-md);
-  border-bottom-color: rgba(13, 94, 170, 0.18);
+  border-bottom-color: rgba(255, 255, 255, 0.6);
 }
 
 .site-header__inner {
