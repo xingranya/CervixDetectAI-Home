@@ -1139,6 +1139,7 @@ onUnmounted(() => {
   line-height: 1.62;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 @media (min-width: 1181px) {
@@ -1704,6 +1705,7 @@ onUnmounted(() => {
     line-height: 1.32;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   .news-feature__summary {
@@ -1713,6 +1715,7 @@ onUnmounted(() => {
     line-height: 1.72;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   .news-feature__actions :deep(.app-button) {
@@ -1836,11 +1839,13 @@ onUnmounted(() => {
   .news-feature__title {
     font-size: 1.36rem;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   .news-feature__summary {
     font-size: 0.9rem;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .news-list-panel {
