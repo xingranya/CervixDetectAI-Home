@@ -44,13 +44,13 @@ const teamMembers: TeamMember[] = [
     avatar: 'https://img1.tucang.cc/api/image/show/df46ea85a083c5c5ff97f3d3222eac81',
     bio: '负责团队财务与运营相关工作。曾获全国高校科学营湖北优秀营员、湖北省物理实验竞赛一等奖、CMAU 市场研究与商业策划大赛优秀市场研究员、亚太地区数学建模大赛三等奖，拥有论文成果和专利。',
   },
-  {
-    name: '汪雪菲',
-    specialty: '电子商务专业',
-    role: '团队运营',
-    avatar: 'https://img1.tucang.cc/api/image/show/c114fea87fed6804c8d99d9e85882129',
-    bio: '负责团队运营相关工作。曾获“恒企杯”湖北大学生会计技能大赛一等奖、学院一等奖学金、国家励志奖学金、中国国际大学生创新大赛湖北赛区银奖。',
-  },
+  // {
+  //   name: '汪雪菲',
+  //   specialty: '电子商务专业',
+  //   role: '团队运营',
+  //   avatar: 'https://img1.tucang.cc/api/image/show/c114fea87fed6804c8d99d9e85882129',
+  //   bio: '负责团队运营相关工作。曾获“恒企杯”湖北大学生会计技能大赛一等奖、学院一等奖学金、国家励志奖学金、中国国际大学生创新大赛湖北赛区银奖。',
+  // },
 ];
 
 const advisors: TeamMember[] = [
